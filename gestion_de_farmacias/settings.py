@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,10 +54,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'gestion_de_farmacias.urls'
 
+# URL local donde se encuentra alojado el archivo views.py
+direccion_del_proyecto = os.getcwd() + "/gestion_de_farmacias/plantillas"
+print("el proyecto esta en: " + direccion_del_proyecto)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [direccion_del_proyecto],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

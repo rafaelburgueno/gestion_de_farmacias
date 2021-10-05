@@ -16,6 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+#from gestion_de_farmacias.views import login, inicio 
+from gestion_de_farmacias import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.inicio, name="inicio"),
+    path('inicio/', views.inicio, name="inicio"),
+    #path('receta/<int:receta_numero>/<str:usuario>', views.receta, name="receta"),
+    path('recetas/', views.recetas, name="recetas"),
+    path('usuario/', views.usuario, name="usuario"),
+    path('login/', views.login, name="login"),
+
 ]
