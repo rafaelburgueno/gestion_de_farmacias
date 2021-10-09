@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-32ps7d2d8hwi^wghjy$t*yc0@mh3kbr-yw)_+6nykc=f7gbx+b
 DEBUG = True
 #DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gestionStock'
 ]
 
 MIDDLEWARE = [
@@ -96,7 +97,7 @@ DATABASES = {
         'USER': 'gestion_de_farmacias_django',
         'PASSWORD': 'UnBuenPassword',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5432', #'DATABASE_PORT': '5432',
     }
 }
 

@@ -45,6 +45,18 @@ def inicio(request):
 
 
 
+#=======
+# Stock =
+#=======
+def stock(request):
+
+	diccionario_de_contexto={"usuario":"Rafael Burgueño"}
+
+	return render(request, "stock.html", diccionario_de_contexto)
+
+
+
+
 
 #=======
 # Login =

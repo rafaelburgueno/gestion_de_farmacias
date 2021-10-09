@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.inicio, name="inicio"),
     path('inicio/', views.inicio, name="inicio"),
+    path('stock/', views.stock, name="stock"),
     #path('receta/<int:receta_numero>/<str:usuario>', views.receta, name="receta"),
     path('recetas/', views.recetas, name="recetas"),
     path('usuario/', views.usuario, name="usuario"),
