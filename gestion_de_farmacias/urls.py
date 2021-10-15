@@ -16,17 +16,28 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-#from gestion_de_farmacias.views import login, inicio 
+#from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.inicio, name="inicio"),
     path('inicio/', views.inicio, name="inicio"),
-    path('stock/', views.stock, name="stock"),
+    path('medicamentos/', views.medicamentos, name="medicamentos"),
+    #path('medicamentos/', views.MedicamentosListView.as_view(), name="medicamentos"),
+    path('buscar_medicamento/', views.buscar_medicamento, name="buscar_medicamento"),
+    path('nuevo_medicamento/', views.nuevo_medicamento, name="nuevo_medicamento"),
+
+    #path('stock/', views.stock, name="stock"),
+    path('stock/', views.StockList.as_view(), name="stock"),
+
     #path('receta/<int:receta_numero>/<str:usuario>', views.receta, name="receta"),
     path('recetas/', views.recetas, name="recetas"),
+    #path('enviar_receta/', views.enviar_receta, name="enviar_receta"),
+
     path('usuario/', views.usuario, name="usuario"),
-    path('login/', views.login, name="login"),
+    #path('login/', views.login, name="login"),
+    path('login/', views.LoginPageView.as_view(), name="login"),
+
 
 ]

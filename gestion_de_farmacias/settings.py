@@ -57,7 +57,7 @@ ROOT_URLCONF = 'gestion_de_farmacias.urls'
 
 # URL local donde se encuentra alojado el archivo views.py
 direccion_del_proyecto = os.getcwd() + "/gestion_de_farmacias/plantillas"
-print("el proyecto esta en: " + direccion_del_proyecto)
+# print("el proyecto esta en: " + direccion_del_proyecto)
 
 TEMPLATES = [
     {
@@ -144,3 +144,16 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#================
+# ENVIO DE EMAILS =
+#================
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
+EMAIL_HOST_USER="pandorasoftware0000@gmail.com"
+EMAIL_HOST_PASSWORD=""
+# comandosend_mail('el asunto aca','holis, soy un mensaje', 'sorete@pedo.com',['rafaelburg@gmail.com'],fail_silently=False)
+

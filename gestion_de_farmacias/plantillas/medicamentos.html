@@ -1,0 +1,102 @@
+<!-- Contenido estatico de la pagina -->
+{% extends 'base.html' %} 
+
+<!--Titulo de la pagina o pestaña-->
+{% block title %}
+	Medicamentos
+{% endblock  %}
+
+
+{% block content %}
+	
+	<h1>Medicamentos</h1>
+	
+	<div>
+		<h3>el usuario es: </h3>
+		<p>{{usuario}}</p>
+	</div>
+
+        {% if mensaje %}
+                <div>
+                        <h3>el mensaje es: </h3>
+                        <p>{{mensaje}}</p>
+                </div>
+        {% endif %}
+
+	<div>
+
+		<form action="/buscar_medicamento/" method="GET">
+                        <input type="text" name="termino_buscado"></input>
+                        <input type="submit" value="buscar"></input>
+                </form>
+	
+        </div>
+
+
+        {% if medicamentos %}
+                
+                <div class="container mt-3">
+                        {% if  termino_buscado %}
+                                <p>Se encontraron {{ medicamentos|length}} medicamentos que contienen el termino <strong>{{ termino_buscado }}</strong>. </p>
+                        {% endif %}
+                        
+                        <table class="table table-hover">
+                                <thead>
+                                        <tr>
+                                                <th>Nombre comercial</th>
+                                                <th>Categoria</th>
+                                                <th>Laboratorio</th>
+                                        </tr>
+                                </thead>
+                                
+                                <tbody>
+                                        {% for medicamento in medicamentos %}
+                                                <tr>
+                                                        <td>{{ medicamento.nombre_comercial }}</td>
+                                                        <td>{{ medicamento.categoria }}</td>
+                                                        <td>{{ medicamento.laboratorio }}</td>
+                                                </tr>
+                                        {% endfor %}
+                                </tbody>
+                        </table>
+
+                        
+                </div>
+                                
+        {% else %}
+                
+                {% if  termino_buscado%}
+                        <div class="container mt-3">
+                                <p>No se encontro medicamentos que coincida con el parametro:  <strong>{{ termino_buscado }}</strong></p>
+                        </div>
+                {% endif %}
+                
+        {% endif %}
+
+
+        <div>
+
+		<h3>Agregar un medicamento</h3>
+	
+		{% if formulario_nuevo_medicamento.errors %}
+			<p style="color:red;">Por favor revisa los campos</p>
+		{% endif %}
+
+		<form action="/nuevo_medicamento/" method="POST">{% csrf_token %}
+		
+			<table>
+				{{formulario_nuevo_medicamento.as_table}}
+			</table>
+
+			<input type="submit" value="Agregar">
+
+		</form>
+
+
+	</div>
+
+	
+{% endblock content %}
+
+
+	

@@ -10,20 +10,28 @@
 {% block content %}
 	
 	<h1>Recetas</h1>
+
+	{% if mensaje %}
+                <div>
+                        <h3>el mensaje es: </h3>
+                        <p>{{mensaje}}</p>
+                </div>
+        {% endif %}
 	
 	<div>
-		<h3>el usuario es: </h3>
-		<p>{{usuario}}</p>
-	</div>
+		<h3>Enviar receta </h3>
+		<form action="/recetas/" method="POST">{% csrf_token %}
+                        <p>Asunto: <input type="text" name="asunto"></input></p>
+			<p>email: <input type="text" name="email"></input></p>
+			<p>Mensaje: <textarea name="mensaje" rows="5" cols="40"></textarea></p>
 
-	<div>
-		<h3>Lista de datos: </h3>
-		<ul>
-			{% for dato in recetas %}
-			<li>{{dato}}</li>
-			{% endfor %}
-		</ul>
-	</div>
+
+                        <input type="submit" value="Enviar"></input>
+                </form>
+	
+        </div>
+
+
 	
 {% endblock content %}
 

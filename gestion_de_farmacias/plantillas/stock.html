@@ -17,13 +17,60 @@
 	</div>
 
 	<div>
-		<h3>Lista de datos: </h3>
-		<ul>
-			{% for dato in datos_json %}
-			<li>{{dato}}</li>
-			{% endfor %}
-		</ul>
+
+		<h3>Crear registro de stock</h3>
+	
+		{% if formulario_nuevo_stock.errors %}
+			<p style="color:red;">Por favor revisa este campo</p>
+		{% endif %}
+
+		<form action="" method="POST">{% csrf_token %}
+		
+			<table>
+				{{formulario_nuevo_stock.as_table}}
+			</table>
+
+			<input type="submit" value="enviar">
+
+		</form>
+
+
 	</div>
+
+
+
+
+	<div>
+
+		{% if object_list  %}
+			<table class="table table-hover">
+                                
+				<thead>
+                                        <tr>
+                                                <th>Stock</th>
+                                                <th>Medicamento</th>
+                                                <th>Ubicacion</th>
+                                        </tr>
+                                </thead>
+                                
+                                <tbody>
+					{% for registro in lotes_list %}
+                                                <tr>
+                                                        <td>{{ registro.stock }}</td>
+                                                        <td>{{ registro.medicamento }}</td>
+                                                        <td>{{ registro.ubicacion }}</td>
+                                                </tr>
+                                        {% endfor %}
+				</tbody>
+
+                        </table>
+		{% endif %}
+
+	</div>
+
+
+
+
 	
 {% endblock content %}
 
