@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
+AUTH_USER_MODEL = 'gestionUsuarios.Usuario'
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gestionStock'
+    'gestionStock',
+    'gestionUsuarios',
+    'medicamentos',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'gestion_de_farmacias.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -100,7 +103,7 @@ DATABASES = {
         'PORT': '5432', #'DATABASE_PORT': '5432',
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
