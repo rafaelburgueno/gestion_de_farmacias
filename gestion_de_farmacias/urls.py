@@ -28,8 +28,9 @@ urlpatterns = [
     path('buscar_medicamento/', views.buscar_medicamento, name="buscar_medicamento"),
     path('nuevo_medicamento/', views.nuevo_medicamento, name="nuevo_medicamento"),
 
-    #path('stock/', views.stock, name="stock"),
-    path('stock/', views.StockList.as_view(), name="stock"),
+    path('stock/', views.stock, name="stock"),
+    #path('stock/', views.StockList.as_view(), name="stock"),
+    #path('crear_stock/', views.LoteCreate.as_view(), name="cerar_stock"),
 
     #path('receta/<int:receta_numero>/<str:usuario>', views.receta, name="receta"),
     path('recetas/', views.recetas, name="recetas"),

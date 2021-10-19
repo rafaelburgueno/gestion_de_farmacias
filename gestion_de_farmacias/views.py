@@ -23,7 +23,7 @@ from django.core.mail import send_mail
 from gestionStock.models import Lotes, Medicamentos
 
 # FORMULARIOS
-from gestion_de_farmacias.forms import Formulario_lotes, Formulario_nuevo_medicamento
+from gestion_de_farmacias.forms import Formulario_nuevo_lote, Formulario_nuevo_medicamento
 
 
 # ===============================================================
@@ -64,12 +64,13 @@ def inicio(request):
 # Medicamentos =
 # ==============
 def medicamentos(request):
-    
+
     medicamentos = Medicamentos.objects.all()
 
     formulario_nuevo_medicamento = Formulario_nuevo_medicamento()
 
-    diccionario_de_contexto = {"usuario": "Rafa Burgueño", "medicamentos": medicamentos,'formulario_nuevo_medicamento': formulario_nuevo_medicamento}
+    diccionario_de_contexto = {"usuario": "Rafa Burgueño", "medicamentos": medicamentos,
+                               'formulario_nuevo_medicamento': formulario_nuevo_medicamento}
 
     return render(request, "medicamentos.html", diccionario_de_contexto)
 
@@ -102,16 +103,14 @@ def buscar_medicamento(request):
     return render(request, "medicamentos.html", diccionario_de_contexto)
 
 
-
-
-
 # ==================
 # Nuevo medicamento =
 # =================
 def nuevo_medicamento(request):
 
     if request.method == "POST":
-        formulario_nuevo_medicamento = Formulario_nuevo_medicamento(request.POST)
+        formulario_nuevo_medicamento = Formulario_nuevo_medicamento(
+            request.POST)
 
         if formulario_nuevo_medicamento.is_valid():
 
@@ -129,38 +128,63 @@ def nuevo_medicamento(request):
         formulario_nuevo_medicamento = Formulario_nuevo_medicamento()
 
     medicamentos = Medicamentos.objects.all()
-    
-    diccionario_de_contexto = {"usuario": "Rafaso", "medicamentos":medicamentos,
+
+    diccionario_de_contexto = {"usuario": "Rafaso", "medicamentos": medicamentos,
                                'formulario_nuevo_medicamento': formulario_nuevo_medicamento}
 
     return render(request, "medicamentos.html", diccionario_de_contexto)
 
 
-
-
-
-# =======
-# Stock =
-# =======
+# =======================================================================
+# Stock =================================================================
+# =====================================================================
+"""
 class StockList(ListView):
     model = Lotes
 
     template_name = 'stock.html'
 
-class CrearLote(CreateView):
+class LoteCreate(CreateView):
     model = Lotes
+    #fields = ['medicamento','stock','ubicacion','vencimiento']
     form_class = Formulario_lotes
-    template_name = 'stock.html'
+    template_name = 'crear_stock.html'
 
     success_url=reverse_lazy('stock')
-
-    
-
 """
+
 def stock(request):
 
+    # variables que se van a devolver
+    diccionario_de_contexto = {}
+
+
+    #================
+    # Stock/busqueda =
+    #================
+    if request.GET.__contains__("termino_buscado"):
+        print("ahora si llegan datos por GET al stock")
+        # print(request.GET.__contains__("termino_buscado"))
+
+        termino_buscado = request.GET["termino_buscado"]
+
+        if len(termino_buscado) > 20:
+            #mensaje = "El termino buscado es demasiado extenso."
+            diccionario_de_contexto = {"mensaje": "El termino buscado es demasiado extenso.", }
+        else:
+            # __icontains busca la palabra en elguna parte del registro
+            lotes_encontrados = Lotes.objects.filter(medicamento__icontains=termino_buscado)
+            mensaje = "Se encontraron %r medicamentos" % len(lotes_encontrados)
+            
+            diccionario_de_contexto = {"lotes_encontrados": lotes_encontrados,"termino_buscado": termino_buscado, "mensaje": mensaje}
+
+    #===========================
+    # Stock / creacion de un lote =
+    #===========================
     if request.method == "POST":
-        formulario_nuevo_stock = Formulario_lotes(request.POST)
+        print("si llegan datos por POST al stock")
+
+        formulario_nuevo_stock = Formulario_nuevo_lote(request.POST)
 
         if formulario_nuevo_stock.is_valid():
 
@@ -170,14 +194,24 @@ def stock(request):
             print("datos para el nuevo stock...")
             print(nuevo_stock)
 
-    else:
-        formulario_nuevo_stock = Formulario_lotes()
+            # limpia el form para poder volver a la pagina
+            formulario_nuevo_stock = Formulario_nuevo_lote()
 
-    diccionario_de_contexto = {"usuario": "Rafael Burgueño",
+    else:
+        formulario_nuevo_stock = Formulario_nuevo_lote()
+
+    # tabla de lotes existentes
+    lotes_list = Lotes.objects.all()
+
+    diccionario_de_contexto = {'lotes_list': lotes_list,
                                'formulario_nuevo_stock': formulario_nuevo_stock}
 
     return render(request, "stock.html", diccionario_de_contexto)
-"""
+
+
+
+
+
 
 # =======
 # Login =
@@ -235,3 +269,25 @@ def usuario(request):
     diccionario_de_contexto = {"usuario": "Rafael Burgueño"}
 
     return render(request, "usuario.html", diccionario_de_contexto)
+
+
+# =============================
+# Funcion para hacer busquedas =
+# =============================
+def buscar(termino_buscado, modelo):
+
+    mensaje = ''
+
+    if len(termino_buscado) > 20:
+        mensaje = "El termino buscado es demasiado extenso."
+        diccionario_de_contexto = {
+            "usuario": "Rafael Burgueño", "mensaje": mensaje}
+    else:
+        # __icontains busca la palabra en elguna parte del registro
+        medicamentos = modelo.objects.filter(
+            nombre_comercial__icontains=termino_buscado)
+        # mensaje = "Se encontraron %r medicamentos" % len(medicamentos)
+        diccionario_de_contexto = {"medicamentos": medicamentos,
+                                   "termino_buscado": termino_buscado, "usuario": "Rafael Burgueño", "mensaje": mensaje}
+
+    return

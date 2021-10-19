@@ -41,8 +41,10 @@
 
 
 	<div>
-
-		{% if object_list  %}
+		<!-- ==============================-->
+		<!-- Tabla con los registros de stock -->
+		<!-- ==============================-->
+		{% if lotes_list  %}
 			<table class="table table-hover">
                                 
 				<thead>
@@ -54,11 +56,12 @@
                                 </thead>
                                 
                                 <tbody>
-					{% for registro in lotes_list %}
+					{% for lote in lotes_list %}
                                                 <tr>
-                                                        <td>{{ registro.stock }}</td>
-                                                        <td>{{ registro.medicamento }}</td>
-                                                        <td>{{ registro.ubicacion }}</td>
+                                                        <td>{{ lote.stock }}</td>
+                                                        <td>{{ lote.medicamento }}</td>
+                                                        <td>{{ lote.ubicacion }}</td>
+							<td>{{ lote.vencimiento }}</td>
                                                 </tr>
                                         {% endfor %}
 				</tbody>
