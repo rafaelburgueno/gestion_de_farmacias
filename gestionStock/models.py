@@ -40,12 +40,17 @@ class Farmacias(models.Model):
 # Lotes =
 #=======
 class Lotes(models.Model):
-        #medicamento (id_medicamento)
+        
         id = models.AutoField(primary_key=True)
+        
+        #medicamento (id_medicamento)
         medicamento = models.ForeignKey(Medicamentos, on_delete=models.CASCADE)
+        
         stock = models.IntegerField()
+        
         #ubicacion (id_farmacia)
         ubicacion = models.ForeignKey(Farmacias, on_delete=models.CASCADE)
+        
         ingreso = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de ingreso",blank=True, null=True)
         vencimiento = models.DateField(blank=True, null=True, verbose_name="Fecha de vencimiento")
 
