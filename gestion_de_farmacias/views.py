@@ -1,7 +1,8 @@
+from django.db.models.query import QuerySet
 from django.http import HttpResponse
 
 # vistas basadas en clases
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, View, UpdateView
 
 #from django.core.urlresolvers import reverse_lazy
 from django.urls import reverse_lazy
@@ -11,7 +12,7 @@ import datetime
 # import os
 # import json
 # from django.template.loader import get_template
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from gestion_de_farmacias import settings
 
@@ -23,7 +24,7 @@ from django.core.mail import send_mail
 from gestionStock.models import Lotes, Medicamentos
 
 # FORMULARIOS
-from gestion_de_farmacias.forms import Formulario_nuevo_lote, Formulario_nuevo_medicamento
+from gestion_de_farmacias.forms import Formulario_nuevo_stock, Formulario_nuevo_medicamento
 
 
 # ===============================================================
@@ -138,21 +139,53 @@ def nuevo_medicamento(request):
 # =======================================================================
 # Stock =================================================================
 # =====================================================================
-"""
-class StockList(ListView):
-    model = Lotes
-
-    template_name = 'stock.html'
-
-class LoteCreate(CreateView):
+class Stock(View):
     model = Lotes
     #fields = ['medicamento','stock','ubicacion','vencimiento']
-    form_class = Formulario_lotes
-    template_name = 'crear_stock.html'
+    form_class = Formulario_nuevo_stock
+    template_name = 'stock.html'
+    #busqueda_por_farmacias = Lotes.objects.filter(ubicacion="miFarmacia")
+    #busqueda_por_farmacias = Lotes.objects.filter(ubicacion__icontains="miFarmacia")
 
-    success_url=reverse_lazy('stock')
+    # este metodo devuelve la consulta principal de la vista
+    def get_queryset(self):
+        return Lotes.objects.all()
+    
+    # este metodo devuelve el diccionario de contexto(los datos) que va a ser enviado al template
+    def get_context_data(self, **kwargs):
+        diccionario_de_contexto = {}
+        diccionario_de_contexto["lotes_list"] = self.get_queryset()
+
+        #formulario_nuevo_stock
+        diccionario_de_contexto["formulario_nuevo_stock"] = self.form_class
+        return diccionario_de_contexto
+    
+    # este metodo devuelve toda la informacion cuando se hagan este tipo de peticiones
+    def get(self,request, *args, **kwargs):
+        return render(request, self.template_name, self.get_context_data())
+    
+
+    def post(self,request, *args, **kwargs):
+        formulario_nuevo_stock = self.form_class(request.POST)
+
+        if formulario_nuevo_stock.is_valid():
+            formulario_nuevo_stock.save()
+            return redirect('stock')
+        
+
+
+# =======================================================================
+# Editar Stock ===========================================================
+# =======================================================================
+class EditarStock(UpdateView):
+    model = Lotes
+    form_class = Formulario_nuevo_stock
+    template_name = 'editar_stock.html'
+
+    success_url = reverse_lazy('stock')
+
+
 """
-
 def stock(request):
 
     # variables que se van a devolver
@@ -208,7 +241,7 @@ def stock(request):
 
     return render(request, "stock.html", diccionario_de_contexto)
 
-
+"""
 
 
 

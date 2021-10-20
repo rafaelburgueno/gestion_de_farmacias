@@ -16,7 +16,7 @@
 		<p>{{usuario}}</p>
 	</div>
 
-	<div>
+	<div class="border p-3">
 
 		<h3>Crear registro de stock</h3>
 	
@@ -24,7 +24,7 @@
 			<p style="color:red;">Por favor revisa este campo</p>
 		{% endif %}
 
-		<form action="" method="POST">{% csrf_token %}
+		<form method="POST">{% csrf_token %}
 		
 			<table>
 				{{formulario_nuevo_stock.as_table}}
@@ -38,6 +38,7 @@
 	</div>
 
 
+	<hr>
 
 
 	<div>
@@ -52,6 +53,8 @@
                                                 <th>Stock</th>
                                                 <th>Medicamento</th>
                                                 <th>Ubicacion</th>
+						<th>Vencimiento</th>
+						<th>...</th>
                                         </tr>
                                 </thead>
                                 
@@ -62,6 +65,7 @@
                                                         <td>{{ lote.medicamento }}</td>
                                                         <td>{{ lote.ubicacion }}</td>
 							<td>{{ lote.vencimiento }}</td>
+							<td><a class="btn btn-sm btn-danger" href="/editar_stock/{{ lote.id }}">Editar</a></td>
                                                 </tr>
                                         {% endfor %}
 				</tbody>

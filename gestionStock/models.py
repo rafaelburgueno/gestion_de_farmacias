@@ -6,7 +6,7 @@ import datetime
 # Medicamentos =
 #==============
 class Medicamentos(models.Model):
-
+        id = models.AutoField(primary_key=True)
         nombre_comercial = models.CharField(max_length=100)
         categoria = models.CharField(max_length=50, verbose_name='Categoria(venta libre, receta verde o FNR)')
         laboratorio = models.CharField(max_length=100)
@@ -24,6 +24,7 @@ class Medicamentos(models.Model):
 # Farmacias =
 #===========
 class Farmacias(models.Model):
+        id = models.AutoField(primary_key=True)
         nombre = models.CharField(max_length=100)
         direccion = models.CharField(max_length=100, blank=True, null=True)
         localidad = models.CharField(max_length=100)
@@ -40,6 +41,7 @@ class Farmacias(models.Model):
 #=======
 class Lotes(models.Model):
         #medicamento (id_medicamento)
+        id = models.AutoField(primary_key=True)
         medicamento = models.ForeignKey(Medicamentos, on_delete=models.CASCADE)
         stock = models.IntegerField()
         #ubicacion (id_farmacia)

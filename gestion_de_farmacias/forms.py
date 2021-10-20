@@ -1,11 +1,16 @@
 from django import forms
 import datetime
 
-from gestionStock.models import Farmacias
+from gestionStock.models import Farmacias, Lotes
 
 
-class Formulario_nuevo_lote(forms.Form):
+class Formulario_nuevo_stock(forms.ModelForm):
 
+        class Meta:
+                model = Lotes
+                fields = ['medicamento','stock','ubicacion','vencimiento']
+
+        """
         medicamento = forms.IntegerField()
         stock = forms.IntegerField()
         #ubicacion = forms.ModelChoiceField(Farmacias.objects.all())
@@ -13,7 +18,7 @@ class Formulario_nuevo_lote(forms.Form):
         #ingreso = forms.DateField(initial=datetime.date.today)
         ingreso = forms.DateField()
         vencimiento = forms.DateField()
-
+        """
 
 class Formulario_nuevo_medicamento(forms.Form):
 
