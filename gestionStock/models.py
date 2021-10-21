@@ -6,9 +6,16 @@ import datetime
 # Medicamentos =
 #==============
 class Medicamentos(models.Model):
+        CATEGORIAS_DE_MEDICAMENTOS = [
+                ('VL', 'Venta Libre'),
+                ('RV','Receta Verde'),
+                ('FNR','Fondo Nacional De Recursos')
+        ]
+
         id = models.AutoField(primary_key=True)
         nombre_comercial = models.CharField(max_length=100)
         categoria = models.CharField(max_length=50, verbose_name='Categoria(venta libre, receta verde o FNR)')
+        #categoria = models.CharField(max_length=3, choices=CATEGORIAS_DE_MEDICAMENTOS)
         laboratorio = models.CharField(max_length=100)
         principio_activo = models.CharField(max_length=200)
         forma = models.CharField(max_length=50, blank=True, null=True)

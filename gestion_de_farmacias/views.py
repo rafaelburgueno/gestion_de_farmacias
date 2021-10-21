@@ -141,7 +141,6 @@ def nuevo_medicamento(request):
 # =====================================================================
 class Stock(View):
     model = Lotes
-    #fields = ['medicamento','stock','ubicacion','vencimiento']
     form_class = Formulario_nuevo_stock
     template_name = 'stock.html'
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion="miFarmacia")
@@ -184,64 +183,6 @@ class EditarStock(UpdateView):
 
     success_url = reverse_lazy('stock')
 
-
-"""
-def stock(request):
-
-    # variables que se van a devolver
-    diccionario_de_contexto = {}
-
-
-    #================
-    # Stock/busqueda =
-    #================
-    if request.GET.__contains__("termino_buscado"):
-        print("ahora si llegan datos por GET al stock")
-        # print(request.GET.__contains__("termino_buscado"))
-
-        termino_buscado = request.GET["termino_buscado"]
-
-        if len(termino_buscado) > 20:
-            #mensaje = "El termino buscado es demasiado extenso."
-            diccionario_de_contexto = {"mensaje": "El termino buscado es demasiado extenso.", }
-        else:
-            # __icontains busca la palabra en elguna parte del registro
-            lotes_encontrados = Lotes.objects.filter(medicamento__icontains=termino_buscado)
-            mensaje = "Se encontraron %r medicamentos" % len(lotes_encontrados)
-            
-            diccionario_de_contexto = {"lotes_encontrados": lotes_encontrados,"termino_buscado": termino_buscado, "mensaje": mensaje}
-
-    #===========================
-    # Stock / creacion de un lote =
-    #===========================
-    if request.method == "POST":
-        print("si llegan datos por POST al stock")
-
-        formulario_nuevo_stock = Formulario_nuevo_lote(request.POST)
-
-        if formulario_nuevo_stock.is_valid():
-
-            nuevo_stock = formulario_nuevo_stock.cleaned_data
-
-            # seguidamente hay que enviar los datos a la base de datos
-            print("datos para el nuevo stock...")
-            print(nuevo_stock)
-
-            # limpia el form para poder volver a la pagina
-            formulario_nuevo_stock = Formulario_nuevo_lote()
-
-    else:
-        formulario_nuevo_stock = Formulario_nuevo_lote()
-
-    # tabla de lotes existentes
-    lotes_list = Lotes.objects.all()
-
-    diccionario_de_contexto = {'lotes_list': lotes_list,
-                               'formulario_nuevo_stock': formulario_nuevo_stock}
-
-    return render(request, "stock.html", diccionario_de_contexto)
-
-"""
 
 
 
