@@ -15,7 +15,7 @@ from gestionStock.models import Medicamentos
 class Roles(models.Model):
         #id= models.IntegerField(primary_key=True)
         nombre = models.CharField(max_length = 50, unique = True)
-        descripcion=models.CharField(max_length=200)
+        descripcion=models.CharField(max_length=200,blank=True, null=True)
 
         def __str__(self):
                 return str(self.nombre) + " " + str(self.descripcion)
@@ -28,14 +28,14 @@ class Roles(models.Model):
 # Usuarios =
 #==========
 class Usuarios(AbstractBaseUser):
-        cedula_de_identidad = models.IntegerField(primary_key=True,verbose_name="c.i." , help_text='Para todo usuario es el numero de CI')
+        cedula_de_identidad = models.IntegerField(primary_key=True,verbose_name="c.i." , help_text='Para todo usuario es el numero de c.i.')
         
         rol = models.ForeignKey(Roles, on_delete=models.CASCADE)
         usuario = models.CharField(max_length = 20, unique=True, verbose_name="Nombre de usuario")
         password = models.CharField(max_length = 100)
 
-        nombre = models.CharField(max_length = 100)
-        apellido = models.CharField(max_length = 100)
+        nombre = models.CharField(max_length = 100,blank=True, null=True)
+        apellido = models.CharField(max_length = 100,blank=True, null=True)
         usuario_activo = models.BooleanField(default=True)
         usuario_administrador = models.BooleanField(default=False)
         sexo = models.CharField(max_length = 50, blank=True, null=True)
@@ -43,12 +43,12 @@ class Usuarios(AbstractBaseUser):
         departmento = models.CharField(max_length = 50, blank=True, null=True)
         direccion=models.CharField(max_length=200, blank=True, null=True)
         telefono=models.IntegerField(blank=True, null=True)
-        email=models.EmailField()
+        email=models.EmailField(blank=True, null=True)
         created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
         updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 
 
-        
+
 
 
         def __str__(self):
@@ -72,6 +72,11 @@ class Usuarios(AbstractBaseUser):
 # Recetas =
 #==========
 class Recetas(models.Model):
+        ESTADOS_DE_UNA_RECETA = [
+                ('RES', 'Reservado'),
+                ('RET','Retirado')
+        ]
+
         #id = models.IntegerField(primary_key=True)
         
         medicamento = models.ForeignKey(Medicamentos, on_delete=models.CASCADE)
@@ -80,7 +85,7 @@ class Recetas(models.Model):
 
         descripcion = models.CharField(max_length = 500, blank=True, null=True)
         vencimiento= models.DateField(blank=True, null=True, verbose_name="Fecha de vencimiento")
-        estado = models.CharField(max_length = 50) # el estado se refiere a si el medicamento esta reservado o ya fue retirado
+        estado = models.CharField(max_length = 50,choices=ESTADOS_DE_UNA_RECETA,blank=True, null=True) # el estado se refiere a si el medicamento esta reservado o ya fue retirado
         created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
         updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 
