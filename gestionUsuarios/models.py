@@ -1,10 +1,41 @@
+
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from gestionStock.models import Medicamentos
 
 # segui las instrucciones de el video de youtube ...
 # "54. Curso Django2: Usuario Personalizado - modelo" del canal Developer.pe, para implementar este modelo 
 
+
+class UsuarioManager(BaseUserManager):
+        
+        def create_user(self, email, usuario, nombre, apellido, password = None):
+                if not email:
+                        raise ValueError('El usuario debe tener un correo electronico!')
+
+                usuario = self.model(
+                        usuario = usuario, 
+                        email = self.normalize_email(email), 
+                        nombre = nombre, 
+                        apellido = apellido
+                )
+
+                usuario.set_password(password)
+
+                usuario.save()
+                return usuario
+        
+        
+        def create_superuser(self, usuario, email, nombre, apellido, password):
+                usuario = self.create_user(
+                        email, 
+                        usuario = usuario, 
+                        nombre = nombre, 
+                        apellido = apellido
+                )
+                usuario.usuario_administrador = True
+                usuario.save()
+                return usuario
 
 
 
@@ -34,8 +65,8 @@ class Usuarios(AbstractBaseUser):
         cedula_de_identidad = models.IntegerField(primary_key=True,verbose_name="c.i." , help_text='Para todo usuario es el numero de c.i.')
         
         rol = models.ForeignKey(Roles, on_delete=models.CASCADE)
-        usuario = models.CharField(max_length = 20, unique=True, verbose_name="Nombre de usuario")
-        password = models.CharField(max_length = 100)
+        usuario = models.CharField(max_length = 100, unique=True, verbose_name="Nombre de usuario")
+        #password = models.CharField(max_length = 100)
 
         nombre = models.CharField(max_length = 100,blank=True, null=True)
         apellido = models.CharField(max_length = 100,blank=True, null=True)
@@ -50,7 +81,10 @@ class Usuarios(AbstractBaseUser):
         created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
         updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 
+        objects = UsuarioManager()
 
+        USERNAME_FIELD = 'usuario'
+        REQUIRED_FIELDS = ['nombre','apellido']
 
 
 
