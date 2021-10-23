@@ -24,6 +24,10 @@ class Medicamentos(models.Model):
         def __str__(self):
                 return self.nombre_comercial
         
+        class Meta:
+                verbose_name = "Medicamento"
+                verbose_name_plural = "Medicamentos"
+                ordering = ["nombre_comercial"]
 
 
 
@@ -40,6 +44,11 @@ class Farmacias(models.Model):
         def __str__(self):
                 return self.nombre + " " + self.localidad + " " + self.departamento
         
+        class Meta:
+                verbose_name = "Farmacia"
+                verbose_name_plural = "Farmacias"
+                ordering = ["nombre"]
+
 
 
 
@@ -68,6 +77,9 @@ class Lotes(models.Model):
         def __str__(self):
                 return str(self.stock) + " unidades de " + str(self.medicamento) + " con vencimiento " + str(self.vencimiento)
         
-
+        class Meta:
+                verbose_name = "Lote"
+                verbose_name_plural = "Lotes"
+                ordering = ["stock"]
 
 

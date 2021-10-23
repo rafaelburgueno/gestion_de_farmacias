@@ -20,7 +20,10 @@ class Roles(models.Model):
         def __str__(self):
                 return str(self.nombre) + " " + str(self.descripcion)
 
-
+        class Meta:
+                verbose_name = "Rol"
+                verbose_name_plural = "Roles"
+                ordering = ["nombre"]
 
 
 
@@ -64,7 +67,10 @@ class Usuarios(AbstractBaseUser):
         def is_staff(self):
                 return self.usuario_administrador
 
-
+        class Meta:
+                verbose_name = "Usuario"
+                verbose_name_plural = "Usuarios"
+                ordering = ["usuario"]
 
 
 
@@ -93,3 +99,9 @@ class Recetas(models.Model):
 
         def __str__(self):
                 return "Se receta " + str(self.medicamento) + " al usuario " +str(self.paciente)
+
+
+        class Meta:
+                verbose_name = "Receta"
+                verbose_name_plural = "Recetas"
+                ordering = ["paciente"]
