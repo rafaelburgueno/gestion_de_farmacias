@@ -48,6 +48,9 @@ class Usuarios(AbstractBaseUser):
         updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 
 
+        
+
+
         def __str__(self):
                 return self.usuario
         
