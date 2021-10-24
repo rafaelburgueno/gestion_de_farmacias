@@ -1,6 +1,8 @@
 from django import forms
 import datetime
 
+from django.forms import widgets
+
 from gestionStock.models import Farmacias, Lotes
 
 
@@ -28,3 +30,5 @@ class Formulario_nuevo_medicamento(forms.Form):
         principio_activo = forms.CharField()
         forma = forms.CharField()
         contraindicaciones = forms.CharField()
+
+

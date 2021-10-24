@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-#AUTH_USER_MODEL = 'gestionUsuarios.Usuarios'
+AUTH_USER_MODEL = 'gestionUsuarios.Usuarios'
 
 
 # Internationalization

@@ -18,6 +18,7 @@ from django.urls import path
 
 #from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
+from gestionUsuarios.views import  Usuario, RegistrarUsuario, ListaDeUsuarios
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,7 +38,10 @@ urlpatterns = [
     path('recetas/', views.recetas, name="recetas"),
     #path('enviar_receta/', views.enviar_receta, name="enviar_receta"),
 
-    path('usuario/', views.usuario, name="usuario"),
+    path('usuario/', Usuario.as_view(), name="usuario"),
+    path('lista_de_usuarios/', ListaDeUsuarios.as_view(), name="lista_de_usuarios"),
+
+    path('registrar_usuario/', RegistrarUsuario.as_view(), name="registrar_usuario"),
     #path('login/', views.login, name="login"),
     path('login/', views.LoginPageView.as_view(), name="login"),
 
