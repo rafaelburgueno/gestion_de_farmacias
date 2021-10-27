@@ -1,64 +1,50 @@
 from django import forms
 from django.forms import widgets
 
-from gestionUsuarios.models import Usuarios
+from gestionUsuarios.models import Usuarios, Recetas
 
 
 class FormularioUsuario(forms.ModelForm):
         #formulario de registro de un Usuario en la base de datos
-
+        
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['cedula_de_identidad'].widget.attrs.update({'class': 'form-control'})
+                self.fields['rol'].widget.attrs.update({'class': 'form-control'})
+                self.fields['usuario'].widget.attrs.update({'class': 'form-control'})
+                self.fields['email'].widget.attrs.update({'class': 'form-control'})
+                self.fields['nombre'].widget.attrs.update({'class': 'form-control'})
+                self.fields['apellido'].widget.attrs.update({'class': 'form-control'})
+                #self.fields['comment'].widget.attrs.update(size='40')
        
 
         #password1 es la contraseña
         #password2 es la verificacion de la contraseña
 
-        password1 = forms.CharField(label='Contraseñases', widget=forms.PasswordInput(
+        password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput(
                 attrs={
                         'class':'form-control',
-                        'placeholder': 'Ingrese su contraseña...',
+                        #'placeholder': 'Ingrese su contraseña...',
                         'id':'password1',
                         'required':'required'
                 }
         ))
         
-        password2 = forms.CharField(label='Contraseña de confirmación', widget=forms.PasswordInput(
+        password2 = forms.CharField(label='Confirmación de contraseña', widget=forms.PasswordInput(
                 attrs={
                         'class':'form-control',
-                        'placeholder': 'Ingrese nuevamente su contraseña...',
+                        #'placeholder': 'Ingrese nuevamente su contraseña...',
                         'id':'password2',
                         'required':'required',
                 }
         ))
 
-        #rol.widget.attrs.update({'class': 'btn btn-danger'})
 
         class Meta:
                 model= Usuarios
                 fields = ['cedula_de_identidad','rol','usuario','email','nombre','apellido']
                 
-                #widgets = {'apellido': forms.TextInput(attrs={'class': 'btn'}),}
-
-                """
-                widgets = {'cedula_de_identidad': forms.IntegerField(
-                                attrs={
-                                        'class':'form-control',
-                                        'placeholder':'Ingrese su cedula de identidad...',
-                                }
-                        ),
-                        'usuario': forms.TextInput(
-                                attrs={
-                                        'class':'form-control',
-                                        'placeholder':'Ingrese un usuario...',
-                                }
-                        ),
-                        'email': forms.EmailInput(
-                                attrs={
-                                        'class':'form-control',
-                                        'placeholder':'Correo Electrónico...',
-                                }
-                        ),
-                        
-                }"""
+                
 
 
         def clean_password2(self):
@@ -79,3 +65,20 @@ class FormularioUsuario(forms.ModelForm):
 
 
 
+
+
+class Formulario_nueva_receta(forms.ModelForm):
+
+        class Meta:
+                model = Recetas
+                fields = ['medicamento','paciente','medico','descripcion','vencimiento','estado']
+
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['medicamento'].widget.attrs.update({'class': 'form-control'})
+                self.fields['paciente'].widget.attrs.update({'class': 'form-control'})
+                self.fields['medico'].widget.attrs.update({'class': 'form-control'})
+                self.fields['descripcion'].widget.attrs.update({'class': 'form-control'})
+                self.fields['vencimiento'].widget.attrs.update({'class': 'form-control','type':'date'})
+                #self.fields['vencimiento'].widget.attrs.update(type='date')
+                self.fields['estado'].widget.attrs.update({'class': 'form-control'})

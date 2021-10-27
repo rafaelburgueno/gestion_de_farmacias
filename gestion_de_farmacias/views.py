@@ -61,19 +61,6 @@ def inicio(request):
     return render(request, "inicio.html", diccionario_de_contexto)
 
 
-# ==============
-# Medicamentos =
-# ==============
-def medicamentos(request):
-
-    medicamentos = Medicamentos.objects.all()
-
-    formulario_nuevo_medicamento = Formulario_nuevo_medicamento()
-
-    diccionario_de_contexto = {"usuario": "Rafa Burgueño", "medicamentos": medicamentos,
-                               'formulario_nuevo_medicamento': formulario_nuevo_medicamento}
-
-    return render(request, "medicamentos.html", diccionario_de_contexto)
 
 
 # ====================
@@ -104,36 +91,6 @@ def buscar_medicamento(request):
     return render(request, "medicamentos.html", diccionario_de_contexto)
 
 
-# ==================
-# Nuevo medicamento =
-# =================
-def nuevo_medicamento(request):
-
-    if request.method == "POST":
-        formulario_nuevo_medicamento = Formulario_nuevo_medicamento(
-            request.POST)
-
-        if formulario_nuevo_medicamento.is_valid():
-
-            nuevo_medicamento = formulario_nuevo_medicamento.cleaned_data
-
-            # seguidamente hay que enviar los datos a la base de datos
-            Medicamentos.objects.create(nuevo_medicamento)
-
-            print("el request POST dice...")
-            print(request.POST)
-            print("datos para el nuevo medicamento...")
-            print(nuevo_medicamento)
-
-    else:
-        formulario_nuevo_medicamento = Formulario_nuevo_medicamento()
-
-    medicamentos = Medicamentos.objects.all()
-
-    diccionario_de_contexto = {"usuario": "Rafaso", "medicamentos": medicamentos,
-                               'formulario_nuevo_medicamento': formulario_nuevo_medicamento}
-
-    return render(request, "medicamentos.html", diccionario_de_contexto)
 
 
 # =======================================================================

@@ -18,16 +18,16 @@ from django.urls import path
 
 #from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
-from gestionUsuarios.views import  Usuario, RegistrarUsuario, ListaDeUsuarios
+from gestionUsuarios.views import  Usuario, RegistrarUsuario, ListaDeUsuarios, ListarRecetas
+from gestionStock.views import ListarMedicamentos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.inicio, name="inicio"),
     path('inicio/', views.inicio, name="inicio"),
-    path('medicamentos/', views.medicamentos, name="medicamentos"),
-    #path('medicamentos/', views.MedicamentosListView.as_view(), name="medicamentos"),
+    #path('medicamentos/', views.medicamentos, name="medicamentos"),
+    path('medicamentos/', ListarMedicamentos.as_view(), name="medicamentos"),
     path('buscar_medicamento/', views.buscar_medicamento, name="buscar_medicamento"),
-    path('nuevo_medicamento/', views.nuevo_medicamento, name="nuevo_medicamento"),
 
     #path('stock/', views.stock, name="stock"),
     path('stock/', views.Stock.as_view(), name="stock"),
@@ -35,8 +35,8 @@ urlpatterns = [
     path('editar_stock/<int:pk>', views.EditarStock.as_view(), name="editar_stock"),
 
     #path('receta/<int:receta_numero>/<str:usuario>', views.receta, name="receta"),
-    path('recetas/', views.recetas, name="recetas"),
-    #path('enviar_receta/', views.enviar_receta, name="enviar_receta"),
+    #path('recetas/', views.recetas, name="recetas"),
+    path('recetas/', ListarRecetas.as_view(), name="recetas"),
 
     path('usuario/', Usuario.as_view(), name="usuario"),
     path('lista_de_usuarios/', ListaDeUsuarios.as_view(), name="lista_de_usuarios"),

@@ -18,18 +18,69 @@
                 </div>
         {% endif %}
 	
-	<div>
-		<h3>Enviar receta </h3>
-		<form action="/recetas/" method="POST">{% csrf_token %}
-                        <p>Asunto: <input type="text" name="asunto"></input></p>
-			<p>email: <input type="text" name="email"></input></p>
-			<p>Mensaje: <textarea name="mensaje" rows="5" cols="40"></textarea></p>
+	<div class="border p-3">
 
-
-                        <input type="submit" value="Enviar"></input>
-                </form>
+		<h3>Crear receta</h3>
 	
-        </div>
+		{% if formulario_nueva_receta.errors %}
+			<p style="color:red;">Por favor revisa este campo</p>
+		{% endif %}
+
+		<form method="POST">{% csrf_token %}
+		
+			<table>
+				{{formulario_nueva_receta.as_table}}
+			</table>
+
+			<input type="submit" value="Crear">
+
+		</form>
+
+
+	</div>
+
+
+	<hr>
+
+
+	<div>
+		<!-- ==============================-->
+		<!-- Tabla con las recetas -->
+		<!-- ==============================-->
+		{% if recetas_list  %}
+			<table class="table table-hover">
+                                
+				<thead>
+                                        <tr>
+                                                <th>Medicamento</th>
+                                                <th>Paciente</th>
+                                                <th>Medico</th>
+                                                <th>Descripcion</th>
+						<th>Vencimiento</th>
+                                                <th>Estado</th>
+						<th>...</th>
+                                        </tr>
+                                </thead>
+                                
+                                <tbody>
+					{% for receta in recetas_list %}
+                                                <tr>
+                                                        <td>{{ receta.medicamento }}</td>
+                                                        <td>{{ receta.paciente }}</td>
+                                                        <td>{{ receta.medico }}</td>
+                                                        <td>{{ receta.descripcion }}</td>
+							<td>{{ receta.vencimiento }}</td>
+                                                        <td>{{ receta.estado }}</td>
+							<td><a class="btn btn-sm btn-danger" href="/editar_receta/{{ receta.id }}">Editar</a></td>
+                                                </tr>
+                                        {% endfor %}
+				</tbody>
+
+                        </table>
+		{% endif %}
+
+	</div>
+
 
 
 	
