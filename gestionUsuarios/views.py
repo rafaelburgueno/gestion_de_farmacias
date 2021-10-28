@@ -49,8 +49,8 @@ class EditarUsuario(UpdateView):
 
 
 # =======================================================================
-# Recetas =================================================================
-# =====================================================================
+# Listar Recetas =========================================================
+# ======================================================================
 class ListarRecetas(View):
     model = Recetas
     form_class = Formulario_nueva_receta
@@ -88,12 +88,12 @@ class ListarRecetas(View):
 # =======================================================================
 # Editar Receta ===========================================================
 # =======================================================================
-class Editarreceta(UpdateView):
+class EditarReceta(UpdateView):
     model = Recetas
     form_class = Formulario_nueva_receta
+    template_name = 'editar_receta.html'
 
     success_url = reverse_lazy('recetas')
-
 
 
 

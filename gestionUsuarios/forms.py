@@ -4,6 +4,11 @@ from django.forms import widgets
 from gestionUsuarios.models import Usuarios, Recetas
 
 
+
+
+# =======================================================================
+# Crear Usuario ==========================================================
+# =======================================================================
 class FormularioCrearUsuario(forms.ModelForm):
         #formulario de registro de un Usuario en la base de datos
         
@@ -64,6 +69,11 @@ class FormularioCrearUsuario(forms.ModelForm):
                 return user
 
 
+
+
+# =======================================================================
+# Editar Usuario =========================================================
+# =======================================================================
 class FormularioEditarUsuario(forms.ModelForm):
         #formulario de registro de un Usuario en la base de datos
         
@@ -76,6 +86,7 @@ class FormularioEditarUsuario(forms.ModelForm):
                 self.fields['apellido'].widget.attrs.update({'class': 'form-control'})
                 self.fields['sexo'].widget.attrs.update({'class': 'form-control'})
                 self.fields['fecha_de_nacimiento'].widget.attrs.update({'class': 'form-control'})
+                self.fields['telefono'].widget.attrs.update({'class': 'form-control'})
 
                 #self.fields['comment'].widget.attrs.update(size='40')
        
@@ -104,7 +115,7 @@ class FormularioEditarUsuario(forms.ModelForm):
 
         class Meta:
                 model= Usuarios
-                fields = ['rol','email','nombre','apellido','sexo','fecha_de_nacimiento']
+                fields = ['rol','email','nombre','apellido','sexo','fecha_de_nacimiento','telefono']
                 
                 
 
@@ -131,13 +142,9 @@ class FormularioEditarUsuario(forms.ModelForm):
 
 
 
-
-
-
-
-
-
-
+# =======================================================================
+# Crear Receta ===========================================================
+# =======================================================================
 class Formulario_nueva_receta(forms.ModelForm):
 
         class Meta:
