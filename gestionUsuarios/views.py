@@ -6,12 +6,9 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView, T
 
 from gestionUsuarios.models import Usuarios, Recetas
 
-from gestionUsuarios.forms import FormularioUsuario, Formulario_nueva_receta
+from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario
 
-class Usuario(TemplateView):
-        model = Usuarios
 
-        template_name = 'usuario.html'
 
 
 class ListaDeUsuarios(ListView):
@@ -26,7 +23,7 @@ class ListaDeUsuarios(ListView):
 
 class RegistrarUsuario(CreateView):
         model = Usuarios
-        form_class = FormularioUsuario
+        form_class = FormularioCrearUsuario
 
         template_name = 'registrar_usuario.html'
         success_url = reverse_lazy('lista_de_usuarios')
@@ -36,16 +33,17 @@ class RegistrarUsuario(CreateView):
 
 
 
-
+# =======================================================================
+# Editar Usuario ===========================================================
+# =======================================================================
 class EditarUsuario(UpdateView):
         model = Usuarios
-        form_class = FormularioUsuario
+        form_class = FormularioEditarUsuario
 
         template_name = 'editar_usuario.html'
-        success_url = reverse_lazy('usuario')
+        success_url = reverse_lazy('lista_de_usuarios')
 
 
-#
 
 
 

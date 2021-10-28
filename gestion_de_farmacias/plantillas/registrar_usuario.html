@@ -22,10 +22,8 @@
 			</div>
 			
 
-			<form method="POST">
+			<form method="POST">{% csrf_token %}
 				<div class="card-body">
-					{% csrf_token %}
-				
 					{{form.as_p}}
 				</div>
 

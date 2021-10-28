@@ -31,7 +31,9 @@
                                         <tr>
                                                 <th>C.i.</th>
                                                 <th>Rol</th>
-                                                <th>Nombre de usuario</th>
+                                                <th>Usuario</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
 						<th>Telefono</th>
 						<th>...</th>
                                         </tr>
@@ -43,6 +45,8 @@
                                                         <td>{{ usuario.cedula_de_identidad }}</td>
                                                         <td>{{ usuario.rol }}</td>
                                                         <td>{{ usuario.usuario }}</td>
+                                                        <td>{{ usuario.nombre }}</td>
+                                                        <td>{{ usuario.apellido }}</td>
 							<td>{{ usuario.telefono }}</td>
 							<td><a class="btn btn-sm btn-primary" href="/editar_usuario/{{ usuario.cedula_de_identidad }}">Editar</a></td>
                                                 </tr>

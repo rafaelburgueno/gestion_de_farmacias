@@ -16,23 +16,26 @@
 		<p>{{usuario}}</p>
 	</div>
 
-	<div class="border p-3">
-
-		<h3>Crear registro de stock</h3>
+	<div class="">
 	
 		{% if formulario_nuevo_stock.errors %}
 			<p style="color:red;">Por favor revisa este campo</p>
 		{% endif %}
 
-		<form method="POST">{% csrf_token %}
+		<div class="card">
+			<div class="card-header">
+				<h3>Registrar stock</h3>
+			</div>
 		
-			<table>
-				{{formulario_nuevo_stock.as_table}}
-			</table>
-
-			<input type="submit" value="enviar">
-
-		</form>
+			<form method="POST">{% csrf_token %}
+				<div class="card-body">
+					{{formulario_nuevo_stock.as_p}}
+				</div>
+				<div class="card-footer">
+					<input class="btn btn-primary" type="submit" value="Registrar">
+				</div>
+			</form>
+		</div>
 
 
 	</div>

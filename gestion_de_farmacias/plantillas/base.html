@@ -9,7 +9,8 @@
 
         {% load static %}
 
-        <!--<link type="text/css" href="{% static 'css/login.css' %}" rel="stylesheet"/>-->
+        <link href="{% static 'css/estilos.css' %}" rel="stylesheet"/>
+        
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,14 +48,15 @@
 
         <script type="text/javascript">
 
-                let datos = Array({{datos_json}});
+                //let datos = Array({{datos_json}});
                 //let personas = "{{persona}}"
-                console.log(typeof datos)
-                console.log(datos[0])
+                //console.log(typeof datos)
+                //console.log(datos[0])
 
 
 
         </script>
+        <script src="{% static 'js/mi_script.js' %}"></script>
 
 </body>
 </html>

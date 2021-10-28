@@ -18,24 +18,27 @@
                 </div>
         {% endif %}
 	
-	<div class="border p-3">
-
-		<h3>Crear receta</h3>
+	<div class="">
 	
 		{% if formulario_nueva_receta.errors %}
 			<p style="color:red;">Por favor revisa este campo</p>
 		{% endif %}
 
-		<form method="POST">{% csrf_token %}
-		
-			<table>
-				{{formulario_nueva_receta.as_table}}
-			</table>
+		<div class="card">
+			<div class="card-header">
+				<h3>Crear receta</h3>
+			</div>
+			
+			<form method="POST">{% csrf_token %}
+				<div class="card-body">
+					{{formulario_nueva_receta.as_p}}
+				</div>
 
-			<input type="submit" value="Crear">
-
-		</form>
-
+				<div class="card-footer">
+					<input class="btn btn-primary" type="submit" value="Crear">
+				</div>
+			</form>
+		</div>
 
 	</div>
 

@@ -3,13 +3,11 @@
 
 <!--Titulo de la pagina o pestaña-->
 {% block title %}
-	Editar Stock
+	Editar Usuario
 {% endblock  %}
 
 
 {% block content %}
-	
-	<h1>Editar Stock</h1>
 	
 	<div>
 		<h3>el usuario es: </h3>
@@ -19,12 +17,12 @@
 	<div class="">
 	
 		{% if form.errors %}
-			<p style="color:red;">Por favor revisa este campo</p>
+			<p style="color:red;">Por favor revisa los campos</p>
 		{% endif %}
 
 		<div class="card">
 			<div class="card-header">
-				<h3>Editar registro de stock</h3>
+				<h3>Editar registro de Usuario</h3>
 			</div>
 
 			<form method="POST">{% csrf_token %}
@@ -38,12 +36,12 @@
 
 	</div>
 
-	<script type="text/javascript">
+        <script type="text/javascript">
                 // esto corrije el tipo del campo imput 'id_vencimiento' en el formulario para crear recetas
                 // por alguna razon no quiere cambiar el type a date
                 window.onload = function() {
-                document.getElementById('id_vencimiento').type = 'date';
-                //document.getElementById('id_fecha_de_nacimiento').type = 'date';
+                //document.getElementById('id_vencimiento').type = 'date';
+                document.getElementById('id_fecha_de_nacimiento').type = 'date';
                 }
         </script>
 	

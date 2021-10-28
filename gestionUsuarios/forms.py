@@ -4,7 +4,7 @@ from django.forms import widgets
 from gestionUsuarios.models import Usuarios, Recetas
 
 
-class FormularioUsuario(forms.ModelForm):
+class FormularioCrearUsuario(forms.ModelForm):
         #formulario de registro de un Usuario en la base de datos
         
         def __init__(self, *args, **kwargs):
@@ -62,6 +62,77 @@ class FormularioUsuario(forms.ModelForm):
                 if commit:
                         user.save()
                 return user
+
+
+class FormularioEditarUsuario(forms.ModelForm):
+        #formulario de registro de un Usuario en la base de datos
+        
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                #self.fields['cedula_de_identidad'].widget.attrs.update({'class': 'form-control'})
+                self.fields['rol'].widget.attrs.update({'class': 'form-control'})
+                self.fields['email'].widget.attrs.update({'class': 'form-control'})
+                self.fields['nombre'].widget.attrs.update({'class': 'form-control'})
+                self.fields['apellido'].widget.attrs.update({'class': 'form-control'})
+                self.fields['sexo'].widget.attrs.update({'class': 'form-control'})
+                self.fields['fecha_de_nacimiento'].widget.attrs.update({'class': 'form-control'})
+
+                #self.fields['comment'].widget.attrs.update(size='40')
+       
+
+        #password1 es la contraseña
+        #password2 es la verificacion de la contraseña
+
+        password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput(
+                attrs={
+                        'class':'form-control',
+                        #'placeholder': 'Ingrese su contraseña...',
+                        'id':'password1',
+                        'required':'required'
+                }
+        ))
+        
+        password2 = forms.CharField(label='Confirmación de contraseña', widget=forms.PasswordInput(
+                attrs={
+                        'class':'form-control',
+                        #'placeholder': 'Ingrese nuevamente su contraseña...',
+                        'id':'password2',
+                        'required':'required',
+                }
+        ))
+
+
+        class Meta:
+                model= Usuarios
+                fields = ['rol','email','nombre','apellido','sexo','fecha_de_nacimiento']
+                
+                
+
+
+        def clean_password2(self):
+                #validacion de contraseñas
+
+                password1 = self.cleaned_data.get("password1")
+                password2 = self.cleaned_data.get("password2")
+                if password1 and password2 and password1 != password2:
+                        raise forms.ValidationError("Las contraseñas no coinciden.")
+                return password2
+
+        def save(self, commit = True):
+                user = super().save(commit = False)
+                user.set_password(self.cleaned_data.get('password1'))
+                if commit:
+                        user.save()
+                return user
+
+
+
+
+
+
+
+
+
 
 
 
