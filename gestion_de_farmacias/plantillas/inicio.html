@@ -13,17 +13,17 @@
 	
 	<div>
 		<h3>el usuario es: </h3>
-		<p>{{usuario}}</p>
+		<p>user.usuario: {{user.usuario }}</p>
+		<p>user.rol: {{user.rol }}</p>
+		<p>user.nombre: {{user.nombre | upper}}</p>
+		<p>user.apellido: {{user.apellido }}</p>
+		<p>user.usuario_activo: {{user.usuario_activo }}</p>
+		<p>request.user.username: {{request.user.username | upper}}</p>
+		<p>request.user.nombre: {{request.user.nombre }}</p>
+		<p>request.user: {{request.user }}</p>
+		<p>request: {{request }}</p>
 	</div>
 
-	<div>
-		<h3>Lista de datos: </h3>
-		<ul>
-			{% for dato in datos_json %}
-			<li>{{dato}}</li>
-			{% endfor %}
-		</ul>
-	</div>
 	
 {% endblock content %}
 
