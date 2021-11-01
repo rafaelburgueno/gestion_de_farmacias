@@ -11,10 +11,51 @@
 	
 	<h1>Inicio</h1>
 	
+<div class="alert alert-success">
+{% if  user.usuario_activo %}
+
+	<p>el usuario SI es activo</p>
+{% else %}
+	<p>el usuario NOOOO es activo</p>
+{% endif %}
+</div>
+
+<div class="alert alert-success">
+
+<!--
+el user.rol trae un objeto de la clase Roles, 
+por lo tanto hay que hacer la verificacion  -> if user.rol.nombre == "medico" 
+user.rol.nombre hace referencia a la propiedad "nombre" de los objetos de la clase Roles
+-->
+{% if  user.rol.nombre == "medico"  %}
+	<p>el rol.nombre == "medico"</p>
+
+{% else %}
+	<p>el rol.nombre != "medico"</p>
+{% endif %}
+
+{% if  user.rol.nombre == "farmacia"  %}
+	<p>el rol.nombre == "farmacia"</p>
+
+{% else %}
+	<p>el rol.nombre != "farmacia"</p>
+{% endif %}
+
+{% if  user.rol.nombre == "usuario"  %}
+	<p>el rol.nombre == "usuario"</p>
+
+{% else %}
+	<p>el rol.nombre != "usuario"</p>
+{% endif %}
+
+</div>
+
 	<div>
-		<h3>el usuario es: </h3>
-		<p>user.usuario: {{user.usuario }}</p>
 		<p>user.rol: {{user.rol }}</p>
+		<p>user.usuario | length: {{user.usuario | length }}</p>
+		<p>user.usuario: {{user.usuario }}</p>
+		<p>*****user.rol.nombre: {{user.rol.nombre }} *****</p>
+		<p>*****user.rol.nombre: {{user.rol.nombre }} *****</p>
 		<p>user.nombre: {{user.nombre | upper}}</p>
 		<p>user.apellido: {{user.apellido }}</p>
 		<p>user.usuario_activo: {{user.usuario_activo }}</p>
