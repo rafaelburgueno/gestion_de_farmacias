@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView, logout_then_login
 
 #from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
@@ -25,6 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.inicio, name="inicio"),
     path('inicio/', views.inicio, name="inicio"),
+    #path('login/', views.login, name="login"),
+    path('login/', LoginView.as_view(template_name='login.html'), name="login"),
+
     #path('medicamentos/', views.medicamentos, name="medicamentos"),
     path('medicamentos/', ListarMedicamentos.as_view(), name="medicamentos"),
     #path('buscar_medicamento/', buscar_medicamento, name="buscar_medicamento"),
@@ -46,8 +50,4 @@ urlpatterns = [
     path('editar_usuario/<int:pk>', EditarUsuario.as_view(), name="editar_usuario"),
     
     
-    #path('login/', views.login, name="login"),
-    path('login/', views.LoginPageView.as_view(), name="login"),
-
-
 ]

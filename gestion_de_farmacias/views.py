@@ -44,7 +44,7 @@ def inicio(request):
         'email': 'walshgibbs@pearlesex.com'
     },
     ]
-
+    print("el request.user.rol.nombre dice: " + str(request.user.rol.nombre) )
     # json_personas= json.dumps(lista_personas)
     # json_personas= json.dumps([11,12,13,14,15])
     json_personas = [11, 12, 13, 14, 15]

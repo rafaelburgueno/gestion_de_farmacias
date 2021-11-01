@@ -49,7 +49,9 @@ class Roles(models.Model):
         descripcion=models.CharField(max_length=200,blank=True, null=True)
 
         def __str__(self):
-                return str(self.nombre) 
+                return self.nombre
+                #return str(self.nombre)
+                #return "medicosarasa"
                 
         class Meta:
                 verbose_name = "Rol"
