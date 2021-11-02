@@ -9,15 +9,17 @@ from gestionStock.models import Medicamentos
 
 class UsuarioManager(BaseUserManager):
         
-        def create_user(self, email, usuario, nombre, apellido, password = None):
+        def create_user(self,cedula_de_identidad, usuario, nombre, apellido, email, password ):
                 if not email:
-                        raise ValueError('El usuario debe tener un correo electronico!')
+                       raise ValueError('El usuario debe tener un correo electronico!')
 
                 usuario = self.model(
+                        cedula_de_identidad = cedula_de_identidad,
                         usuario = usuario, 
-                        email = self.normalize_email(email), 
                         nombre = nombre, 
-                        apellido = apellido
+                        apellido = apellido,
+                        email = self.normalize_email(email) 
+                        #email = email, 
                 )
 
                 usuario.set_password(password)
@@ -26,12 +28,14 @@ class UsuarioManager(BaseUserManager):
                 return usuario
         
         
-        def create_superuser(self, usuario, email, nombre, apellido, password):
+        def create_superuser(self,cedula_de_identidad , usuario, nombre, apellido, email, password):
                 usuario = self.create_user(
-                        email, 
+                        cedula_de_identidad = cedula_de_identidad,
                         usuario = usuario, 
                         nombre = nombre, 
-                        apellido = apellido
+                        apellido = apellido,
+                        email=email,
+                        password=password
                 )
                 usuario.usuario_administrador = True
                 usuario.save()
@@ -66,7 +70,7 @@ class Roles(models.Model):
 class Usuarios(AbstractBaseUser):
         cedula_de_identidad = models.IntegerField(primary_key=True,verbose_name="c.i." , help_text='Para todo usuario es el numero de c.i.')
         
-        rol = models.ForeignKey(Roles, on_delete=models.CASCADE)
+        rol = models.ForeignKey(Roles, on_delete=models.CASCADE,blank=True, null=True)
         usuario = models.CharField(max_length = 100, unique=True, verbose_name="Nombre de usuario")
         #password = models.CharField(max_length = 100)
 
@@ -86,7 +90,7 @@ class Usuarios(AbstractBaseUser):
         objects = UsuarioManager()
 
         USERNAME_FIELD = 'usuario'
-        REQUIRED_FIELDS = ['nombre','apellido']
+        REQUIRED_FIELDS = ['cedula_de_identidad','nombre','apellido','email']
 
 
 
