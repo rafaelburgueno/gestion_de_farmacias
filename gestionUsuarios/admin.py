@@ -9,6 +9,7 @@ from gestionUsuarios.models import Roles, Usuarios, Recetas
 class RolesAdmin(admin.ModelAdmin):
         # asi se determinan los filtros que se le pueden aplicar a la derecha de los registros
         list_filter=("nombre",)
+        list_display=("id","nombre", "descripcion")
 
 
 class UsuariosAdmin(admin.ModelAdmin):

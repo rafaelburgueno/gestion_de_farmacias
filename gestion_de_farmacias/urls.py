@@ -50,4 +50,8 @@ urlpatterns = [
     path('editar_usuario/<int:pk>', EditarUsuario.as_view(), name="editar_usuario"),
     
     
+    path('carga_medicamentos/', views.carga_medicamentos, name="carga_medicamentos"),
+    path('carga_usuarios/', views.carga_usuarios, name="carga_usuarios"),
+
+    
 ]
