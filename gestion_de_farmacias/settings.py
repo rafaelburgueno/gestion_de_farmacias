@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestionStock',
-    'gestionUsuarios'
+    'gestionUsuarios',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-#AUTH_USER_MODEL = 'gestionUsuarios.Usuarios'
+AUTH_USER_MODEL = 'gestionUsuarios.Usuarios'
 
 
 # Internationalization
