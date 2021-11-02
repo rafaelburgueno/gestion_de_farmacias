@@ -27,25 +27,28 @@ el user.rol trae un objeto de la clase Roles,
 por lo tanto hay que hacer la verificacion  -> if user.rol.nombre == "medico" 
 user.rol.nombre hace referencia a la propiedad "nombre" de los objetos de la clase Roles
 -->
-{% if  user.rol.nombre == "medico"  %}
-	<p>el rol.nombre == "medico"</p>
+{% if user.is_authenticated%}
 
-{% else %}
-	<p>el rol.nombre != "medico"</p>
-{% endif %}
+	{% if  user.rol.nombre == "medico"  %}
+		<p>el rol.nombre == "medico"</p>
+	{% else %}
+		<p>el rol.nombre != "medico"</p>
+	{% endif %}
 
-{% if  user.rol.nombre == "farmacia"  %}
-	<p>el rol.nombre == "farmacia"</p>
 
-{% else %}
-	<p>el rol.nombre != "farmacia"</p>
-{% endif %}
+	{% if  user.rol.nombre == "farmacia"  %}
+		<p>el rol.nombre == "farmacia"</p>
+	{% else %}
+		<p>el rol.nombre != "farmacia"</p>
+	{% endif %}
 
-{% if  user.rol.nombre == "usuario"  %}
-	<p>el rol.nombre == "usuario"</p>
 
-{% else %}
-	<p>el rol.nombre != "usuario"</p>
+	{% if  user.rol.nombre == "usuario"  %}
+		<p>el rol.nombre == "usuario"</p>
+	{% else %}
+		<p>el rol.nombre != "usuario"</p>
+	{% endif %}
+
 {% endif %}
 
 </div>
