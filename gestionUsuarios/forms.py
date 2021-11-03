@@ -15,11 +15,19 @@ class FormularioCrearUsuario(forms.ModelForm):
         def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 self.fields['cedula_de_identidad'].widget.attrs.update({'class': 'form-control'})
-                self.fields['rol'].widget.attrs.update({'class': 'form-control'})
+                #self.fields['rol'].widget.attrs.update({'class': 'form-control'})
                 self.fields['usuario'].widget.attrs.update({'class': 'form-control'})
                 self.fields['email'].widget.attrs.update({'class': 'form-control'})
                 self.fields['nombre'].widget.attrs.update({'class': 'form-control'})
                 self.fields['apellido'].widget.attrs.update({'class': 'form-control'})
+                self.fields['sexo'].widget.attrs.update({'class': 'form-control'})
+                self.fields['fecha_de_nacimiento'].widget.attrs.update({'class': 'form-control'})
+                self.fields['direccion'].widget.attrs.update({'class': 'form-control'})
+                self.fields['departmento'].widget.attrs.update({'class': 'form-control'})
+                self.fields['telefono'].widget.attrs.update({'class': 'form-control'})
+
+
+
                 #self.fields['comment'].widget.attrs.update(size='40')
        
 
@@ -47,7 +55,7 @@ class FormularioCrearUsuario(forms.ModelForm):
 
         class Meta:
                 model= Usuarios
-                fields = ['cedula_de_identidad','rol','usuario','email','nombre','apellido']
+                fields = ['cedula_de_identidad','usuario','email','nombre','apellido','sexo','fecha_de_nacimiento','direccion','departmento','telefono']
                 
                 
 

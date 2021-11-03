@@ -11,6 +11,14 @@
 	
 	<h1>Login</h1>
 	
+
+	{% if 'registrado' in request.GET %}
+		<div class="alert alert-success">
+  			<strong>Exito!</strong> Usuario creado correctamente.
+		</div>
+	{% endif %}
+
+
 	<div class="container">
 		<form method="POST"> {% csrf_token %}
 

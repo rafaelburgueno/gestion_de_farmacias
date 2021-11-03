@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestionStock',
-    'gestionUsuarios'
+    'gestionUsuarios',
 ]
 
 MIDDLEWARE = [
@@ -140,7 +141,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+#auth redirects
 LOGIN_REDIRECT_URL= reverse_lazy('inicio')
+LOGOUT_REDIRECT_URL= 'inicio'
 
 
 # Static files (CSS, JavaScript, Images)
