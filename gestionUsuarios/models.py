@@ -79,7 +79,7 @@ class Usuarios(AbstractBaseUser):
         cedula_de_identidad = models.IntegerField(primary_key=True,verbose_name="c.i." , help_text='Para todo usuario es el numero de c.i.')
         
         #rol = models.ForeignKey(Roles, on_delete=models.CASCADE,blank=True, null=True)
-        rol = models.CharField(max_length = 100, choices=ROLES,blank=True, null=True)
+        rol = models.CharField(max_length = 100, choices=ROLES, default='usuario',blank=True, null=True)
         usuario = models.CharField(max_length = 100, unique=True, verbose_name="Nombre de usuario")
         #password = models.CharField(max_length = 100)
 

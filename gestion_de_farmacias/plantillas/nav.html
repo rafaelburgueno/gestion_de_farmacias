@@ -32,14 +32,27 @@
                 <li class="nav-item">
                         <a class="nav-link" href="/recetas/">Recetas</a>
                 </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="/login/">Login</a>
-                </li>
+
+        </ul>
+        
+         <ul class="navbar-nav ">
+                {% if  not request.user.is_authenticated %}
+                        <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                {% else %}
+                        <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                {% endif %}
                 <li class="nav-item">
                         <a class="nav-link" href="/admin/">Admin</a>
                 </li>
-    
+                <li class="nav-item">
+                        <a class="nav-link">{{user}}</a>
+                </li>
         </ul>
+        
 
         <!--
         <form class="form-inline" action="#">
