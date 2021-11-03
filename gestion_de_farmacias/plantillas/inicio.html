@@ -29,24 +29,30 @@ user.rol.nombre hace referencia a la propiedad "nombre" de los objetos de la cla
 -->
 {% if user.is_authenticated%}
 
-	{% if  user.rol.nombre == "medico"  %}
-		<p>el rol.nombre == "medico"</p>
+	{% if  user.rol == "medico"  %}
+		<p>el user.rol == "medico"</p>
 	{% else %}
-		<p>el rol.nombre != "medico"</p>
+		<p>el user.rol != "medico"</p>
 	{% endif %}
 
 
-	{% if  user.rol.nombre == "farmacia"  %}
-		<p>el rol.nombre == "farmacia"</p>
+	{% if  user.rol == "farmacia"  %}
+		<p>el user.rol == "farmacia"</p>
 	{% else %}
-		<p>el rol.nombre != "farmacia"</p>
+		<p>el user.rol != "farmacia"</p>
 	{% endif %}
 
 
-	{% if  user.rol.nombre == "usuario"  %}
-		<p>el rol.nombre == "usuario"</p>
+	{% if  user.rol == "usuario"  %}
+		<p>el user.rol == "usuario"</p>
 	{% else %}
-		<p>el rol.nombre != "usuario"</p>
+		<p>el user.rol != "usuario"</p>
+	{% endif %}
+
+	{% if  user.rol == "stock"  %}
+		<p>el user.rol == "stock"</p>
+	{% else %}
+		<p>el user.rol != "stock"</p>
 	{% endif %}
 
 {% endif %}
@@ -54,6 +60,7 @@ user.rol.nombre hace referencia a la propiedad "nombre" de los objetos de la cla
 </div>
 
 	<div>
+		<p>user.rol: {{user.rol}}</p>
 		<p>user: {{user}}</p>
 		<p>user.group: {{user.group }}</p>
 		<p>user.is_authenticated: {{user.is_authenticated }}</p>
