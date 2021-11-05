@@ -19,7 +19,7 @@ from django.contrib.auth.views import LoginView, logout_then_login
 
 #from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
-from gestionUsuarios.views import RegistrarUsuario, EditarUsuario, ListaDeUsuarios, ListarRecetas, EditarReceta
+from gestionUsuarios.views import RegistrarUsuario, EditarUsuario, ListaDeUsuarios, ListarRecetas, EditarReceta, ActulizarMiUsuario
 from gestionStock.views import ListarMedicamentos, Stock, EditarStock
 
 urlpatterns = [
@@ -55,6 +55,7 @@ urlpatterns = [
     path('lista_de_usuarios/', ListaDeUsuarios.as_view(), name="lista_de_usuarios"),
     path('registrar_usuario/', RegistrarUsuario.as_view(), name="registrar_usuario"),
     path('editar_usuario/<int:pk>', EditarUsuario.as_view(), name="editar_usuario"),
+    path('actualizar_mi_usuario/', ActulizarMiUsuario.as_view(), name="actualizar_mi_usuario"),
     
     
     path('carga_medicamentos/', views.carga_medicamentos, name="carga_medicamentos"),

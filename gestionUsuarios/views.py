@@ -8,6 +8,8 @@ from gestionUsuarios.models import Usuarios, Recetas
 
 from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -44,7 +46,20 @@ class EditarUsuario(UpdateView):
         success_url = reverse_lazy('lista_de_usuarios')
 
 
+@method_decorator(login_required, name='dispatch')
+class ActulizarMiUsuario(UpdateView):
+        model = Usuarios
+        form_class = FormularioEditarUsuario
+        #fields = ['nombre','apellido','sexo','fecha_de_nacimiento','departmento','direccion']
 
+        success_url = reverse_lazy('actualizar_mi_usuario')
+
+        template_name = 'actualizar_mi_usuario.html'
+
+        def get_object(self):
+            
+            usuario, created = Usuarios.objects.get_or_create(usuario=self.request.user)
+            return usuario
 
 
 

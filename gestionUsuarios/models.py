@@ -88,11 +88,11 @@ class Usuarios(AbstractBaseUser):
         usuario_activo = models.BooleanField(default=True)
         usuario_administrador = models.BooleanField(default=False)
         sexo = models.CharField(max_length = 50, blank=True, null=True)
-        fecha_de_nacimiento= models.DateField(blank=True, null=True, verbose_name="Fecha de nacimiento")
+        fecha_de_nacimiento= models.CharField(max_length = 50,blank=True, null=True, verbose_name="Fecha de nacimiento")
         departmento = models.CharField(max_length = 50, blank=True, null=True)
         direccion=models.CharField(max_length=200, blank=True, null=True)
         telefono=models.IntegerField(blank=True, null=True)
-        email=models.EmailField(blank=True, null=True)
+        email=models.EmailField(unique=True)
         created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
         updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 
