@@ -36,6 +36,13 @@
                                 Stock
                         </a>
                 </li>
+
+                {% if  user.is_authenticated %}
+                <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'mi_stock' %}">MI Stock</a>
+                </li>
+                {% endif %}
+
                 <!-- Stock Dropdown -->
                 <li class="nav-item dropdown">
                         <a class="nav-link  text-white" href="#" id="navbardrop" data-toggle="dropdown">

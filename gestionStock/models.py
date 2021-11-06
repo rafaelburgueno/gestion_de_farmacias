@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models.base import Model
 import datetime
+#from gestionUsuarios.models import Usuarios
+#from gestionUsuarios.models import Usuarios
+
 
 #==============
 # Medicamentos =
@@ -40,9 +43,10 @@ class Farmacias(models.Model):
         direccion = models.CharField(max_length=100, blank=True, null=True)
         localidad = models.CharField(max_length=100,blank=True, null=True)
         departamento = models.CharField(max_length=50, blank=True, null=True)
+        funcionarios = models.ManyToManyField('gestionUsuarios.Usuarios',blank=True, null=True, verbose_name="Funcionarios")
 
         def __str__(self):
-                return self.nombre + " " + self.localidad + " " + self.departamento
+                return self.nombre + ", " + self.localidad + ", " + self.departamento
         
         class Meta:
                 verbose_name = "Farmacia"

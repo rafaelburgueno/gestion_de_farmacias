@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
 # vistas basadas en clases
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView, View
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView, View
+
 
 from gestionUsuarios.models import Usuarios, Recetas
+
+from gestionStock.models import Farmacias, Lotes
 
 from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario
 
@@ -12,7 +15,19 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
+#============================================================================================
 
+#    *       *       *****
+#    *       *       **
+#    *       *           ***
+#    *****        *****
+
+#============================================================================================
+
+
+# =======================================================================
+# Lista De Usuarios ===========================================================
+# =======================================================================
 class ListaDeUsuarios(ListView):
         model = Usuarios
 
@@ -23,12 +38,50 @@ class ListaDeUsuarios(ListView):
                 #print(self.model.objects.filter(usuario_activo=True))
                 return self.model.objects.filter(usuario_activo=True)
 
+
+
+# =======================================================================
+# Registrar Usuario ===========================================================
+# =======================================================================
 class RegistrarUsuario(CreateView):
         model = Usuarios
         form_class = FormularioCrearUsuario
 
         template_name = 'registrar_usuario.html'
         success_url = reverse_lazy('lista_de_usuarios')
+
+
+
+
+
+# =======================================================================
+# Mi Usuario ===========================================================
+# =======================================================================
+class MiUsuario(DetailView):
+
+    model = Usuarios
+    template_name = 'mi_usuario.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = "aca van mis variables"
+        context['farmacias'] = Farmacias.objects.all()
+        context['type_farmacias'] = str(type(Farmacias.objects.filter(funcionarios="101")))
+        
+        queryset_mi_farmacia = Farmacias.objects.filter(funcionarios="101")
+        #mi_farmacia = queryset_mi_farmacia.all()[0]
+        mi_farmacia = queryset_mi_farmacia[0]
+
+        context['mi_farmacia'] = mi_farmacia
+        #context['mi_farmacia'] = queryset_mi_farmacia.all()[0]
+        context['stock_mi_farmacia'] =Lotes.objects.filter(ubicacion_id="1")
+        
+
+        #context['mi_farmacia'] = Farmacias.objects.filter(funcionarios="101")
+
+
+        return context
 
 
 
@@ -46,6 +99,7 @@ class EditarUsuario(UpdateView):
         success_url = reverse_lazy('lista_de_usuarios')
 
 
+#========================================================================
 @method_decorator(login_required, name='dispatch')
 class ActulizarMiUsuario(UpdateView):
         model = Usuarios

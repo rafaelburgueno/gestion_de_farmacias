@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 
 # vistas basadas en clases
-from django.views.generic import TemplateView, ListView, CreateView, View, UpdateView
+from django.views.generic import DetailView, TemplateView, ListView, CreateView, View, UpdateView
 
 # Importacion de los Modelos
-from gestionStock.models import Medicamentos, Lotes
+from gestionStock.models import Medicamentos, Lotes, Farmacias
+from gestionUsuarios.models import Usuarios
 
 # FORMULARIOS
 from gestionStock.forms import Formulario_nuevo_medicamento, Formulario_nuevo_stock
@@ -109,4 +110,38 @@ class EditarStock(UpdateView):
 
 
 
+
+# =======================================================================
+# Mi Stock ===========================================================
+# =======================================================================
+class MiStock(ListView):
+
+    model = Usuarios
+    template_name = 'mi_stock.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cedula_del_user = self.request.user.cedula_de_identidad
+        
+        context['farmacias'] = Farmacias.objects.all()
+        context['type_farmacias'] = str(type(Farmacias.objects.filter(funcionarios="101")))
+        
+        #print("el self.request.user  -_-_-_-> " + str(self.request.user.cedula_de_identidad))
+
+        queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
+        #mi_farmacia = queryset_mi_farmacia.all()[0]
+        mi_farmacia = queryset_mi_farmacia[0]
+
+        #print("mi fermacia.id -_-_-> " + str(mi_farmacia.id))
+
+        context['mi_farmacia'] = mi_farmacia
+        #context['mi_farmacia'] = queryset_mi_farmacia.all()[0]
+        context['mi_stock'] =Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
+
+
+        #context['mi_farmacia'] = Farmacias.objects.filter(funcionarios="101")
+
+
+        return context
 

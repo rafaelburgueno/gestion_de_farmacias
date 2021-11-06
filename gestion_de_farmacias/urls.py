@@ -19,8 +19,8 @@ from django.contrib.auth.views import LoginView, logout_then_login
 
 #from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
-from gestionUsuarios.views import RegistrarUsuario, EditarUsuario, ListaDeUsuarios, ListarRecetas, EditarReceta, ActulizarMiUsuario
-from gestionStock.views import ListarMedicamentos, Stock, EditarStock
+from gestionUsuarios.views import RegistrarUsuario, EditarUsuario, ListaDeUsuarios, ListarRecetas, EditarReceta, ActulizarMiUsuario,MiUsuario
+from gestionStock.views import ListarMedicamentos, MiStock, Stock, EditarStock
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,6 +44,7 @@ urlpatterns = [
     path('stock/', Stock.as_view(), name="stock"),
     #path('crear_stock/', views.LoteCreate.as_view(), name="cerar_stock"),
     path('editar_stock/<int:pk>', EditarStock.as_view(), name="editar_stock"),
+    path('mi_stock/', MiStock.as_view(), name="mi_stock"),
 
 
     #path('receta/<int:receta_numero>/<str:usuario>', views.receta, name="receta"),
@@ -56,6 +57,8 @@ urlpatterns = [
     path('registrar_usuario/', RegistrarUsuario.as_view(), name="registrar_usuario"),
     path('editar_usuario/<int:pk>', EditarUsuario.as_view(), name="editar_usuario"),
     path('actualizar_mi_usuario/', ActulizarMiUsuario.as_view(), name="actualizar_mi_usuario"),
+    path('mi_usuario/<int:pk>', MiUsuario.as_view(), name="mi_usuario"),
+
     
     
     path('carga_medicamentos/', views.carga_medicamentos, name="carga_medicamentos"),

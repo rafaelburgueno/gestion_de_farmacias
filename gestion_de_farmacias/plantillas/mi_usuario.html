@@ -1,0 +1,98 @@
+<!-- Contenido estatico de la pagina -->
+{% extends 'base.html' %} 
+
+<!--Titulo de la pagina o pestaña-->
+{% block title %}
+	Mi Usuario
+{% endblock  %}
+
+
+{% block content %}
+	
+	<h1>Stock de {{mi_farmacia.nombre}}</h1>
+
+        <div class="container">
+		
+
+                <table class="table table-hover">
+                        <thead>
+                                <tr>
+                                        <th>Stock</th>
+                                        <th>Medicamento</th>
+                                        <th>vencimiento</th>
+                                 </tr>
+                        </thead>
+                        <tbody>
+                                {% for registro in stock_mi_farmacia %}
+                                <tr>
+                                        <td>{{registro.stock}}</td>
+                                        <td>{{registro.medicamento}}</td>
+                                        <td>{{registro.vencimiento}}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                        </tbody>
+                </table>
+
+               
+	</div>
+          
+          <div class="card">
+		<p>mi_farmacia.direccion -> {{mi_farmacia.direccion}}</p>
+	</div>
+        <div class="card">
+		<p>mi_farmacia.id -> {{mi_farmacia.id}}</p>
+	</div>
+         <div class="card">
+		<p>mi_farmacia -> {{mi_farmacia}}</p>
+	</div>
+        <div class="card">
+		<p>type_farmacia -> {{type_farmacias}}</p>
+	</div>
+
+        <div class="card">
+		<p>farmacias -> {{farmacias}}</p>
+	</div>
+	
+	<div class="card">
+		<p>request.user -> {{request.user}}</p>
+	</div>
+
+        <div class="card">
+		<p>{ { object } }  -> {{object}}</p>
+	</div>
+
+         <div class="card">
+		<p>nombre del modelo Usuarios -> {{usuarios}}</p>
+	</div>
+
+	<div class="border p-3">
+
+		<h3>Mi Usuario</h3>
+	
+
+		<!-- ==============================-->
+		<!-- Tabla con los Usuarios activos -->
+		<!-- ==============================-->
+		{% if object  %}
+
+                        <p class="form-control">c.i.: {{ object.cedula_de_identidad }}</p>
+                        <p class="form-control">rol: {{ object.rol }}</p>
+                        <p class="form-control">usuario: {{ object.usuario }}</p>
+                        <p class="form-control">nombre: {{ object.nombre }}</p>
+                        <p class="form-control">apellido: {{ object.apellido }}</p>
+			<p class="form-control">telefono: {{ object.telefono }}</p>
+			<p class="form-control"><a class="btn btn-sm btn-primary" href="/editar_usuario/{{ object.cedula_de_identidad }}">Editar</a></p>
+          
+		{% endif %}
+
+	</div>
+
+
+
+
+	
+{% endblock content %}
+
+
+	

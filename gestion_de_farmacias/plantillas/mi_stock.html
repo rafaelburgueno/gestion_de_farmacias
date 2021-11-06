@@ -1,0 +1,47 @@
+<!-- Contenido estatico de la pagina -->
+{% extends 'base.html' %} 
+
+<!--Titulo de la pagina o pestaña-->
+{% block title %}
+	Mi Farmacia
+{% endblock  %}
+
+
+{% block content %}
+	
+	<h1>Stock de {{mi_farmacia.nombre}}</h1>
+
+        <div class="container">
+		
+
+                <table class="table table-hover">
+                        <thead>
+                                <tr>
+                                        <th>Stock</th>
+                                        <th>Medicamento</th>
+                                        <th>vencimiento</th>
+                                 </tr>
+                        </thead>
+                        <tbody>
+                                {% for registro in mi_stock %}
+                                <tr>
+                                        <td>{{registro.stock}}</td>
+                                        <td>{{registro.medicamento}}</td>
+                                        <td>{{registro.vencimiento}}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                        </tbody>
+                </table>
+
+               
+	</div >
+          
+
+
+
+	
+{% endblock content %}
+
+
+	
