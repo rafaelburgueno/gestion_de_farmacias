@@ -26,7 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', views.inicio, name="inicio"),
-    path('inicio/', views.inicio, name="inicio"),
+    #path('inicio/', views.inicio, name="inicio"),
+    path('inicio/', views.InicioView.as_view(), name="inicio"),
+
 
     #path('login/', views.login, name="login"),
     #path('login/', LoginView.as_view(template_name='login.html'), name="login"),
