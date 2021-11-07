@@ -15,7 +15,7 @@ class Formulario_nuevo_stock(forms.ModelForm):
 
         class Meta:
                 model = Lotes
-                fields = ['medicamento','stock','ubicacion','vencimiento']
+                fields = ['medicamento','stock','vencimiento']
 
 
         def __init__(self, *args, **kwargs):
@@ -23,7 +23,7 @@ class Formulario_nuevo_stock(forms.ModelForm):
                 self.fields['medicamento'].widget.attrs.update({'class': 'form-control'})
                 self.fields['stock'].widget.attrs.update({'class': 'form-control'})
                 self.fields['stock'].widget.attrs.update(value='100')
-                self.fields['ubicacion'].widget.attrs.update({'class': 'form-control'})
+                #self.fields['ubicacion'].widget.attrs.update({'class': 'form-control'})
                 self.fields['vencimiento'].widget.attrs.update({'class': 'form-control','required':'required'})
 
 

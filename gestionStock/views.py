@@ -116,32 +116,62 @@ class EditarStock(UpdateView):
 # =======================================================================
 class MiStock(ListView):
 
-    model = Usuarios
+    model = Lotes
+    form_class = Formulario_nuevo_stock
     template_name = 'mi_stock.html'
-
+    
+    def get_queryset(self):
+        cedula_del_user = self.request.user.cedula_de_identidad
+        queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
+        mi_farmacia = queryset_mi_farmacia[0]
+        return Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
+        
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cedula_del_user = self.request.user.cedula_de_identidad
-        
-        context['farmacias'] = Farmacias.objects.all()
-        context['type_farmacias'] = str(type(Farmacias.objects.filter(funcionarios="101")))
-        
+        #context['farmacias'] = Farmacias.objects.all()
+        #context['type_farmacias'] = str(type(Farmacias.objects.filter(funcionarios="101")))
         #print("el self.request.user  -_-_-_-> " + str(self.request.user.cedula_de_identidad))
-
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
         #mi_farmacia = queryset_mi_farmacia.all()[0]
         mi_farmacia = queryset_mi_farmacia[0]
-
         #print("mi fermacia.id -_-_-> " + str(mi_farmacia.id))
-
         context['mi_farmacia'] = mi_farmacia
+        context["formulario_nuevo_stock"] = self.form_class
         #context['mi_farmacia'] = queryset_mi_farmacia.all()[0]
-        context['mi_stock'] =Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
-
-
+        #context['mi_stock'] =Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
         #context['mi_farmacia'] = Farmacias.objects.filter(funcionarios="101")
 
 
         return context
+
+
+
+    def post(self,request, *args, **kwargs):
+        # la cedula la necesito para encontrar la farmacia que le correspondea ese usuario
+        cedula_del_user = self.request.user.cedula_de_identidad
+
+        #mi_request_post = self.form_class(request.POST)
+        formulario_nuevo_stock = self.form_class(request.POST)
+        mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
+
+        if formulario_nuevo_stock.is_valid():
+            formulario_nuevo_stock = formulario_nuevo_stock.save(commit=False)
+
+            #formulario_nuevo_stock.stock = 55055
+            #print("*****" + str(type(formulario_nuevo_stock.ubicacion)) + "*****")
+            
+            # a atributo le mandamos una instancia de la clase Farmacias
+            mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
+            #print(str(type(mi_farmacia)))
+            #print(str(type(formulario_nuevo_stock.ubicacion)))
+
+            formulario_nuevo_stock.ubicacion = mi_farmacia
+
+            formulario_nuevo_stock.save()
+
+            return redirect('mi_stock')
+        #return redirect('mi_stock')
+
 

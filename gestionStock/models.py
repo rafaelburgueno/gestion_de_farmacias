@@ -43,7 +43,7 @@ class Farmacias(models.Model):
         direccion = models.CharField(max_length=100, blank=True, null=True)
         localidad = models.CharField(max_length=100,blank=True, null=True)
         departamento = models.CharField(max_length=50, blank=True, null=True)
-        funcionarios = models.ManyToManyField('gestionUsuarios.Usuarios',blank=True, null=True, verbose_name="Funcionarios")
+        funcionarios = models.ManyToManyField('gestionUsuarios.Usuarios',blank=True, verbose_name="Funcionarios")
 
         def __str__(self):
                 return self.nombre + ", " + self.localidad + ", " + self.departamento
