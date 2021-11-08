@@ -48,7 +48,9 @@
                                                         <td>{{ usuario.nombre }}</td>
                                                         <td>{{ usuario.apellido }}</td>
 							<td>{{ usuario.telefono }}</td>
-							<td><a class="btn btn-sm btn-primary" href="/editar_usuario/{{ usuario.cedula_de_identidad }}">Editar</a></td>
+							{% comment "" %}
+							<td><a class="btn btn-sm btn-primary" href="/usuario/{{ usuario.cedula_de_identidad }}">Mas info...</a></td>
+							{% endcomment %}
                                                 </tr>
                                         {% endfor %}
 				</tbody>

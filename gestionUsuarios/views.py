@@ -9,10 +9,10 @@ from gestionUsuarios.models import Usuarios, Recetas
 
 from gestionStock.models import Farmacias, Lotes
 
-from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario
+from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario, FormularioEditarUsuario_2
 
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 #============================================================================================
@@ -91,24 +91,31 @@ class MiUsuario(DetailView):
 # =======================================================================
 # Editar Usuario ===========================================================
 # =======================================================================
+@method_decorator(login_required, name='dispatch')
 class EditarUsuario(UpdateView):
         model = Usuarios
-        form_class = FormularioEditarUsuario
+        form_class = FormularioEditarUsuario_2
 
-        template_name = 'editar_usuario.html'
-        success_url = reverse_lazy('lista_de_usuarios')
+        template_name = 'mi_usuario.html'
+        success_url = reverse_lazy('mi_usuario')
+
+        def get_object(self):
+            usuario = Usuarios.objects.get(cedula_de_identidad=self.request.user.cedula_de_identidad)
+            return usuario
 
 
+# =======================================================================
+# Editar Usuario | esta desactivada =================
 #========================================================================
 @method_decorator(login_required, name='dispatch')
 class ActulizarMiUsuario(UpdateView):
         model = Usuarios
-        form_class = FormularioEditarUsuario
+        form_class = FormularioEditarUsuario_2
         #fields = ['nombre','apellido','sexo','fecha_de_nacimiento','departmento','direccion']
 
-        success_url = reverse_lazy('actualizar_mi_usuario')
+        success_url = reverse_lazy('mi_usuario')
 
-        template_name = 'actualizar_mi_usuario.html'
+        template_name = 'mi_usuario.html'
 
         def get_object(self):
             

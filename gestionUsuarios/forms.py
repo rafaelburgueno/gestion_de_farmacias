@@ -145,7 +145,25 @@ class FormularioEditarUsuario(forms.ModelForm):
                 return user
 
 
+# =======================================================================
+# Formulario Editar Usuario 2 ===========================================================
+# =======================================================================
+# este formulario lo usamos en la pagina mi_usuario
+# no permite editar c.i., usuario, passoword
+class FormularioEditarUsuario_2(forms.ModelForm):
 
+        class Meta:
+                model = Usuarios
+                fields = ['nombre','apellido','email','sexo','fecha_de_nacimiento','telefono']
+
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['nombre'].widget.attrs.update({'class': 'form-control'})
+                self.fields['apellido'].widget.attrs.update({'class': 'form-control'})
+                self.fields['email'].widget.attrs.update({'class': 'form-control'})
+                self.fields['sexo'].widget.attrs.update({'class': 'form-control'})
+                self.fields['fecha_de_nacimiento'].widget.attrs.update({'class': 'form-control','type':'date'})
+                self.fields['telefono'].widget.attrs.update({'class': 'form-control'})
 
 
 
