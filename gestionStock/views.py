@@ -20,18 +20,18 @@ from django.urls import reverse_lazy
 # =====================================================================
 class ListarMedicamentos(ListView):
         model = Medicamentos
-        form_class = Formulario_nuevo_medicamento
-        context_object_name = "medicamentos"
+        #form_class = Formulario_nuevo_medicamento
         template_name = 'medicamentos.html'
+
+        # la siguiente linea define el nombre de la lista de elementos que se mandan al template
+        context_object_name = "medicamentos"
         paginate_by = 100  # if pagination is desired
-    #busqueda_por_farmacias = Lotes.objects.filter(ubicacion="miFarmacia")
-    #busqueda_por_farmacias = Lotes.objects.filter(ubicacion__icontains="miFarmacia")
 
 
 
-# ====================
-# Buscar Medicamento =
-# ==================
+# =============================
+# Buscar Medicamento | no se usa =
+# =============================
 def buscar_medicamento(request):
 
     mensaje = ""
@@ -66,33 +66,41 @@ def buscar_medicamento(request):
 # =====================================================================
 class Stock(View):
     model = Lotes
+
     form_class = Formulario_nuevo_stock
     template_name = 'stock.html'
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion="miFarmacia")
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion__icontains="miFarmacia")
 
     # este metodo devuelve la consulta principal de la vista
+    # aca podemos manipular la consulta que la clase Stock hace a la base de datos
     def get_queryset(self):
         return Lotes.objects.all()
     
     # este metodo devuelve el diccionario de contexto(los datos) que va a ser enviado al template
+    # la usamos para agregar datos que queremos hacer llegar al template
     def get_context_data(self, **kwargs):
         diccionario_de_contexto = {}
         diccionario_de_contexto["lotes_list"] = self.get_queryset()
 
-        #formulario_nuevo_stock
+        #le enviamos el formulario_nuevo_stock como una variabl de contecto
         diccionario_de_contexto["formulario_nuevo_stock"] = self.form_class
         return diccionario_de_contexto
     
-    # este metodo devuelve toda la informacion cuando se hagan este tipo de peticiones
+    # este metodo se ejecuta cuando se envian peticions por GET a la pagina
     def get(self,request, *args, **kwargs):
         return render(request, self.template_name, self.get_context_data())
     
-
+    # este metodo se ejecuta cuando se envian peticions por POST a la pagina
     def post(self,request, *args, **kwargs):
+        
+        # copiamos a una variable los datos que llegaron del formulario
         formulario_nuevo_stock = self.form_class(request.POST)
 
+        # verificamos que los datos esten completos o sean correctos
         if formulario_nuevo_stock.is_valid():
+            
+            # si todo esta bien se guardan los datos de el nuevo registro de stock
             formulario_nuevo_stock.save()
             return redirect('stock')
         
@@ -114,64 +122,74 @@ class EditarStock(UpdateView):
 # =======================================================================
 # Mi Stock ===========================================================
 # =======================================================================
+# MiStock solo muestra los registros de stock asociados a la farmacia a la que pertenezco
 class MiStock(ListView):
 
     model = Lotes
     form_class = Formulario_nuevo_stock
     template_name = 'mi_stock.html'
     
+    # aca definimos que datos queremos mostrar como una lista
+    # en este caso mostramos los datos de stock de la farmacia a la que pertenece el usuario
     def get_queryset(self):
+        # obtenemos la cedula del usuario
         cedula_del_user = self.request.user.cedula_de_identidad
+
+        #con la cedula hacemos la busqueda de la Farmacia que tiene a ese usuario cono funcionario
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
         mi_farmacia = queryset_mi_farmacia[0]
-        return Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
-        
 
+        # con el numero id de la farmacia a la que pertenecemos
+        # hacemos la busqueda de los registros de stock de esa farmacia
+        stock_de_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
+        
+        # y retornamos solo el stock_de_mi_farmacia
+        return stock_de_mi_farmacia
+        
+    # aca le agregamos los datos que vamos a usar en el template
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        # obtenemos la cedula del usuario
         cedula_del_user = self.request.user.cedula_de_identidad
-        #context['farmacias'] = Farmacias.objects.all()
-        #context['type_farmacias'] = str(type(Farmacias.objects.filter(funcionarios="101")))
-        #print("el self.request.user  -_-_-_-> " + str(self.request.user.cedula_de_identidad))
+
+        # obtenemos la farmacias a la que pertenece el usuario 
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
-        #mi_farmacia = queryset_mi_farmacia.all()[0]
         mi_farmacia = queryset_mi_farmacia[0]
-        #print("mi fermacia.id -_-_-> " + str(mi_farmacia.id))
+    
+        
+        # enviamos la farmacia y el formulario como variables de contexto
         context['mi_farmacia'] = mi_farmacia
         context["formulario_nuevo_stock"] = self.form_class
-        #context['mi_farmacia'] = queryset_mi_farmacia.all()[0]
-        #context['mi_stock'] =Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
-        #context['mi_farmacia'] = Farmacias.objects.filter(funcionarios="101")
-
 
         return context
 
 
 
     def post(self,request, *args, **kwargs):
-        # la cedula la necesito para encontrar la farmacia que le correspondea ese usuario
-        cedula_del_user = self.request.user.cedula_de_identidad
 
-        #mi_request_post = self.form_class(request.POST)
-        formulario_nuevo_stock = self.form_class(request.POST)
+        # la cedula la necesito para encontrar la farmacia que le corresponde al usuario
+        cedula_del_user = self.request.user.cedula_de_identidad
         mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
 
+        # cargamos el formulario que nos llega con un nuevo stock
+        formulario_nuevo_stock = self.form_class(request.POST)
+
+        # verificamos si el formulario esta bien
         if formulario_nuevo_stock.is_valid():
+
+            # con esto hacemos que el formulario sea editable
             formulario_nuevo_stock = formulario_nuevo_stock.save(commit=False)
 
-            #formulario_nuevo_stock.stock = 55055
-            #print("*****" + str(type(formulario_nuevo_stock.ubicacion)) + "*****")
             
-            # a atributo le mandamos una instancia de la clase Farmacias
-            mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
-            #print(str(type(mi_farmacia)))
-            #print(str(type(formulario_nuevo_stock.ubicacion)))
-
+            # editamos el atributo ubicacion para que el registro nuevo tenga la ubicacion de nuestra farmacia
             formulario_nuevo_stock.ubicacion = mi_farmacia
 
+            #guardamos el registro del formularios
             formulario_nuevo_stock.save()
 
             return redirect('mi_stock')
+        
         #return redirect('mi_stock')
 
 

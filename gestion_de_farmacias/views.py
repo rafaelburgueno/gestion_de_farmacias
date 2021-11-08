@@ -22,9 +22,9 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 
-# ===============================================================
-# funciones que dan respuesta a las peticion provenientes de urls.py  =
-# ===============================================================
+# =====================================================================
+# funciones que dan respuesta a algunas peticiones provenientes de urls.py  =
+# =====================================================================
 
 
 # ========
@@ -34,46 +34,50 @@ class InicioView(TemplateView):
 
     template_name = "inicio.html"
 
+    # aca se almacena los datos en variables que le llegan al frontend
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # verifica que la persona que accede a la pagina sea un usuario autentificado
         if self.request.user.is_authenticated:
+            
+            # si esta autentificado obtenemos el valor de la cedula de identidad del usuario
         	cedula_del_user = self.request.user.cedula_de_identidad
+            
+            #con el valor de su cedula verificamos si esta registrado como funcionario de farmacia y obtenemos el dato de que farmacia es
         	mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
+
+            #pasamos el dato mi_farmacia al contexto que llega al fronend
         	context['mi_farmacia'] = mi_farmacia
 
         return context
 
 
+
+
+# =====================
+#  Inicio | ya no se usa =
+# =====================
 def inicio(request):
 
-    lista_personas = [{
-        'picture': 'http://placehold.it/32x32',
-        'age': 40,
-        'name': 'Velez William',
-        'email': 'velezwilliam@pearlesex.com'
-    },
-        {
-        'picture': 'http://placehold.it/32x32',
-        'age': 37,
-        'name': 'Walsh Gibbs',
-        'email': 'walshgibbs@pearlesex.com'
-    },
-    ]
     # print("el request.user.rol.nombre dice: " + str(request.user.rol.nombre) )
     # json_personas= json.dumps(lista_personas)
     # json_personas= json.dumps([11,12,13,14,15])
     json_personas = [11, 12, 13, 14, 15]
 
-    diccionario_de_contexto = {"usuario": "Rafael Burgueño"}
+    diccionario_de_contexto = {"usuario": "Fulano Detail"}
 
     return render(request, "inicio.html", diccionario_de_contexto)
 
 
-# =======
-# Login =
-# =======
-class LoginPageView(TemplateView):
+
+
+
+
+# =================================================
+# Login | la clase y la funcion siguientes ya no se usan=
+# =================================================
+"""class LoginPageView(TemplateView):
 
     template_name = "login.html"
 
@@ -81,16 +85,20 @@ class LoginPageView(TemplateView):
         diccionario_de_contexto = {"usuario": "Rafa"}
         return render(request, self.template_name, diccionario_de_contexto)
 
-
+"""
 """def login(request):
 	diccionario_de_contexto={"usuario":"Rafael Burgueño"}
 	return render(request, "login.html", diccionario_de_contexto)
 """
 
 
+
+
 # ===============================
 # Carga de datos a la base de datos =
 # ===============================
+# Se ejecutan cuando cuando se accede a la ruta 'localhost/carga_medicamentos/'
+# al ejecutar esta funcion se cargan registros a la tabla Medicamentos
 def carga_medicamentos(request):
 
     for medicamento in MEDICAMENTOS:
@@ -246,6 +254,8 @@ MEDICAMENTOS = [
 # ===============================
 # Carga Usuarios a la base de datos =
 # ===============================
+# Se ejecutan cuando cuando se accede a la ruta 'localhost/carga_usuarios/'
+# al ejecutar esta funcion se cargan registros a la tabla Usuarios
 def carga_usuarios(request):
 
     ROLES = ['usuario', 'farmacia', 'medico', 'stock']

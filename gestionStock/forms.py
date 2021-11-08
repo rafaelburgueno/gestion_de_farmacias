@@ -9,15 +9,19 @@ from gestionStock.models import Medicamentos, Lotes
 
 
 # =======================================================================
-# Crear Stock ============================================================
+# Formulario Nuevo Stock =================================================
 # =======================================================================
 class Formulario_nuevo_stock(forms.ModelForm):
 
+        # aca se enumeran los campos que se van a mostrar con el formulario
         class Meta:
                 model = Lotes
                 fields = ['medicamento','stock','vencimiento']
 
-
+        #===============================================
+        # aca se definen las clases de bootstrap que se le 
+        # aplican a los campos del formulario _nuevo_stock 
+        #===============================================
         def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 self.fields['medicamento'].widget.attrs.update({'class': 'form-control'})
@@ -32,10 +36,11 @@ class Formulario_nuevo_stock(forms.ModelForm):
 
 
 # =======================================================================
-# Crear Medicamento ======================================================
+# Formulario Nuevo Medicamento ============================================
 # =======================================================================
 class Formulario_nuevo_medicamento(forms.Form):
 
+        # aca se enumeran los campos que se van a mostrar con el formulario
         class Meta:
                 model = Medicamentos
                 fields = ['nombre_comercial','categoria','laboratorio','principio_activo','forma','contraindicaciones']

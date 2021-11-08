@@ -11,59 +11,59 @@
 	
 	<h1>Inicio</h1>
 	
-{% if  user.usuario_activo %}
-<div class="alert alert-success">
-	<p>user.usuario_activo = {{user.usuario_activo}}</p>
-</div>
-{% endif %}
+<div class="p-3">
+	
+	<h4>Prueba de datos que llegan desde el backend</h4>
+	
+	
 
 
 <!--
-el user.rol trae un objeto de la clase Roles, 
-por lo tanto hay que hacer la verificacion  -> if user.rol.nombre == "medico" 
-user.rol.nombre hace referencia a la propiedad "nombre" de los objetos de la clase Roles
+
 -->
 {% if user.is_authenticated%}
-	<div class="alert alert-success">
 
-		<p>user.is_authenticated == {{user.is_authenticated}}</p>
-		<p>mi farmacia es {{mi_farmacia}}</p>
+	{% if  user.usuario_activo %}
+	<p>user.usuario_activo = {{user.usuario_activo}}</p>
+	{% endif %}
+
+	<p>user.is_authenticated == {{user.is_authenticated}}</p>
+	<p>mi farmacia es {{mi_farmacia}}</p>
 
 	{% if  user.rol == "medico"  %}
-		<p>el user.rol == "medico"</p>
+	<p>el user.rol == "medico"</p>
 	{% endif %}
 
 	{% if  user.rol == "farmacia"  %}
-		<p>el user.rol == "farmacia"</p>
+	<p>el user.rol == "farmacia"</p>
 	{% endif %}
 
 	{% if  user.rol == "usuario"  %}
-		<p>el user.rol == "usuario"</p>
+	<p>el user.rol == "usuario"</p>
 	{% endif %}
+
 	{% if  user.rol == "stock"  %}
-		<p>el user.rol == "stock"</p>
+	<p>el user.rol == "stock"</p>
 	{% endif %}
-	</div>
 
 {% endif %}
 
+	<p>user.rol: {{user.rol}}</p>
+	<p>user: {{user}}</p>
+	<p>user.group: {{user.group }}</p>
+	<p>user.is_authenticated: {{user.is_authenticated }}</p>
+	<br>
+	<p>user.rol: {{user.rol }}</p>
+	<p>user.usuario | length: {{user.usuario | length }}</p>
+	<p>user.cedula_de_identidad : {{user.cedula_de_identidad }}</p>
+	<p>user.nombre: {{user.nombre | upper}}</p>
+	<p>user.apellido: {{user.apellido }}</p>
+	<p>user.usuario_activo: {{user.usuario_activo }}</p>
+	<p>request.user.username: {{request.user.username | upper}}</p>
+	<p>request.user.nombre: {{request.user.nombre }}</p>
+	<p>request.user: {{request.user }}</p>
 
-	<div>
-		<p>user.rol: {{user.rol}}</p>
-		<p>user: {{user}}</p>
-		<p>user.group: {{user.group }}</p>
-		<p>user.is_authenticated: {{user.is_authenticated }}</p>
-		<br>
-		<p>user.rol: {{user.rol }}</p>
-		<p>user.usuario | length: {{user.usuario | length }}</p>
-		<p>user.cedula_de_identidad : {{user.cedula_de_identidad }}</p>
-		<p>user.nombre: {{user.nombre | upper}}</p>
-		<p>user.apellido: {{user.apellido }}</p>
-		<p>user.usuario_activo: {{user.usuario_activo }}</p>
-		<p>request.user.username: {{request.user.username | upper}}</p>
-		<p>request.user.nombre: {{request.user.nombre }}</p>
-		<p>request.user: {{request.user }}</p>
-	</div>
+</div>
 
 	
 {% endblock content %}

@@ -25,8 +25,8 @@ from gestionStock.views import ListarMedicamentos, MiStock, Stock, EditarStock
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', views.inicio, name="inicio"),
-    #path('inicio/', views.inicio, name="inicio"),
+    #path('', views.inicio, name="inicio"),
+    path('',  views.InicioView.as_view(), name="inicio"),
     path('inicio/', views.InicioView.as_view(), name="inicio"),
 
 
@@ -62,7 +62,7 @@ urlpatterns = [
     path('mi_usuario/<int:pk>', MiUsuario.as_view(), name="mi_usuario"),
 
     
-    
+    # Rutas para cargar datos a la base de datos
     path('carga_medicamentos/', views.carga_medicamentos, name="carga_medicamentos"),
     path('carga_usuarios/', views.carga_usuarios, name="carga_usuarios"),
 
