@@ -39,13 +39,14 @@ class InicioView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         # verifica que la persona que accede a la pagina sea un usuario autentificado
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.request.user.rol == 'farmacia':
             
             # si esta autentificado obtenemos el valor de la cedula de identidad del usuario
         	cedula_del_user = self.request.user.cedula_de_identidad
             
             #con el valor de su cedula verificamos si esta registrado como funcionario de farmacia y obtenemos el dato de que farmacia es
         	mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
+            
 
             #pasamos el dato mi_farmacia al contexto que llega al fronend
         	context['mi_farmacia'] = mi_farmacia
