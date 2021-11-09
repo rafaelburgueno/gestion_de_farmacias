@@ -114,7 +114,7 @@ class EditarStock(UpdateView):
     form_class = Formulario_nuevo_stock
     template_name = 'editar_stock.html'
 
-    success_url = reverse_lazy('stock')
+    success_url = reverse_lazy('mi_stock')
 
 
 
