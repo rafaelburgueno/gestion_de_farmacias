@@ -11,19 +11,9 @@
 	<!--Nav bar-->
 {% include "nav.html" %}
 
-<div class="container">
+<div class="container my-3">
 	<h1>Lista de Usuarios</h1>
 	
-	<div>
-		<h3>mi usuario es: </h3>
-		<p>{{request.user}}</p>
-	</div>
-
-	<div class="border p-3">
-
-		<h3>Lista de Usuarios</h3>
-	
-
 		<!-- ==============================-->
 		<!-- Tabla con los Usuarios activos -->
 		<!-- ==============================-->
@@ -61,7 +51,7 @@
                         </table>
 		{% endif %}
 
-	</div>
+	
 
 </div>
 
