@@ -186,3 +186,28 @@ class Formulario_nueva_receta(forms.ModelForm):
                 self.fields['vencimiento'].widget.attrs.update({'class': 'form-control','type':'date'})
                 #self.fields['vencimiento'].widget.attrs.update(type='date')
                 self.fields['estado'].widget.attrs.update({'class': 'form-control'})
+
+
+
+class Formulario_receta_usuario(forms.ModelForm):
+
+
+
+        class Meta:
+                
+                model= Usuarios
+                model = Recetas
+        
+                fields = ['medicamento','paciente','medico','descripcion','vencimiento','estado']
+              
+
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['medicamento'].widget=forms.TextInput({'class': 'form-control'})
+                self.fields['paciente'].widget=forms.TextInput({'class': 'form-control'})
+                self.fields['medico'].widget=forms.TextInput({'class': 'form-control'})
+                self.fields['descripcion'].widget=forms.TextInput({'class': 'form-control'})
+                self.fields['vencimiento'].widget=forms.TextInput({'class': 'form-control','type':'date'})
+                self.fields['estado'].widget=forms.TextInput({'class': 'form-control'}) 
+                self.fields['usuario'].widget=forms.TextInput({'class': 'form-control'})
+                self.fields['cedula_de_identidad'].widget=forms.TextInput({'class': 'form-control'})        

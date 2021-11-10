@@ -9,7 +9,7 @@ from gestionUsuarios.models import Usuarios, Recetas
 
 from gestionStock.models import Farmacias, Lotes
 
-from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario, FormularioEditarUsuario_2
+from gestionUsuarios.forms import FormularioCrearUsuario, Formulario_nueva_receta, FormularioEditarUsuario, FormularioEditarUsuario_2, Formulario_receta_usuario
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
@@ -32,6 +32,7 @@ class ListaDeUsuarios(ListView):
         model = Usuarios
 
         template_name = 'lista_de_usuarios.html'
+        paginate_by = 6  # cantidad de elementos por pagina
         
         def get_queryset(self) :
                 #return self.objects.filter(usuario_activo=True)
@@ -173,3 +174,28 @@ class EditarReceta(UpdateView):
 
 
 
+
+
+class MisRecetas(ListView):
+
+    #model = Usuarios
+    model = Recetas
+    form_class = Formulario_receta_usuario
+    template_name = 'mis_recetas.html'
+
+
+    def get_queryset(self):
+        cedula_del_user= self.request.user.cedula_de_identidad
+        queryset_mis_receta = Recetas.objects.filter(paciente=cedula_del_user)
+        #mi_receta = queryset_mis_receta[0]
+        return  queryset_mis_receta
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cedula_del_user = self.request.user.cedula_de_identidad
+
+        #context['Recetas'] = Recetas.objects.all()
+        #context['Usuarios'] = str(type(Usuarios.objects.filter(Usuarios='Nombre')))
+
+        return context         
