@@ -18,8 +18,16 @@
 		</div>
 	{% endif %}
 
-
+	
 	<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<main class="form-signin ">
+			 <!-- Cponer imagen del logo -->
+			 <img class="mb-4" src=" " alt="" width="300" height="150">
+	
+			 <h1 class="h1 mb-3 fw-normal">Acceso de usuario</h1>
+			 <div class="card">
+				<div class="card-header">
 		<form method="POST"> {% csrf_token %}
 
 			<div class="form-group">
@@ -31,10 +39,14 @@
 				<input type="password" class="form-control" name="password">
 			</div>
 
-			<button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Iniciar sesion</button>
+			<button type="submit" class="btn btn-secondary">Iniciar sesion</button>
 
 		</form>
 	</div>
-	
+</div>	
+</main>
+	</div>
+</div>
+
 {% endblock content %}
 

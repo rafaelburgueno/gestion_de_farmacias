@@ -1,7 +1,7 @@
 <!-- Contenido estatico de la pagina -->
 {% extends 'base.html' %} 
 
-<!--Titulo de la pagina o pestaña-->
+Titulo de la pagina o pestaña-->
 {% block title %}
 	Stock
 {% endblock  %}
@@ -16,7 +16,8 @@
 		<p>{{usuario}}</p>
 	</div>
 
-	<div class="">
+	<div class="form-group form-group col-md-10">
+		
 	
 		{% if formulario_nuevo_stock.errors %}
 			<p style="color:red;">Por favor revisa este campo</p>
@@ -32,7 +33,7 @@
 					{{formulario_nuevo_stock.as_p}}
 				</div>
 				<div class="card-footer">
-					<input class="btn btn-primary" type="submit" value="Registrar">
+					<input class="btn btn-secondary" type="submit" value="Registrar">
 				</div>
 			</form>
 		</div>
@@ -51,7 +52,7 @@
 		{% if lotes_list  %}
 			<table class="table table-hover">
                                 
-				<thead>
+				<thead class="thead-dark">
                                         <tr>
                                                 <th>Stock</th>
                                                 <th>Medicamento</th>
@@ -68,7 +69,7 @@
                                                         <td>{{ lote.medicamento }}</td>
                                                         <td>{{ lote.ubicacion }}</td>
 							<td>{{ lote.vencimiento }}</td>
-							<td><a class="btn btn-sm btn-danger" href="/editar_stock/{{ lote.id }}">Editar</a></td>
+							<td><a class="btn btn-secondary" href="/editar_stock/{{ lote.id }}">Editar</a></td>
                                                 </tr>
                                         {% endfor %}
 				</tbody>

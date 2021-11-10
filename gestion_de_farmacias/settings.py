@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestionStock',
     'gestionUsuarios',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATES_PACKS = 'bostrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

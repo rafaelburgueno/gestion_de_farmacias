@@ -1,5 +1,4 @@
 from django import forms
-
 from django.forms import widgets
 
 from gestionStock.models import Medicamentos, Lotes
@@ -41,4 +40,12 @@ class Formulario_nuevo_medicamento(forms.Form):
                 fields = ['nombre_comercial','categoria','laboratorio','principio_activo','forma','contraindicaciones']
 
 
+
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['nombre_comercial'].widget.attrs.update({'class': 'form-control'})
+                self.fields['categoria'].widget.attrs.update({'class': 'form-control'})
+                self.fields['principio_activo'].widget.attrs.update({'class': 'form-control'})
+                self.fields['forma'].widget.attrs.update({'class': 'form-control'})
+                self.fields['contraindicaciones'].widget.attrs.update({'class': 'form-control'})
 
