@@ -86,6 +86,7 @@ class Usuarios(AbstractBaseUser):
         nombre = models.CharField(max_length = 100,blank=True, null=True)
         apellido = models.CharField(max_length = 100,blank=True, null=True)
         usuario_activo = models.BooleanField(default=True)
+        is_active = models.BooleanField(default=True)
         usuario_administrador = models.BooleanField(default=False)
         sexo = models.CharField(max_length = 50, blank=True, null=True)
         fecha_de_nacimiento= models.CharField(max_length = 50,blank=True, null=True, verbose_name="Fecha de nacimiento")
