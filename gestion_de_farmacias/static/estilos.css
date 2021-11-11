@@ -1,6 +1,5 @@
 body {
-    background-color: rgb(255, 140, 140);
-    color: rgb(80, 80, 80);
+    background-color: #f8f9fa;
 }
 
 
@@ -22,3 +21,4 @@ aumentar o disminuir el valor numerico de los campos input*/
 #id_cedula_de_identidad {
     -moz-appearance: textfield;
 }
+
