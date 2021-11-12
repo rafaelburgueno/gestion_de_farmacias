@@ -55,6 +55,7 @@
 
 	<hr>
 	
+	{% if user.rol == 'medico'%}
 	<div class="">
 	
 		{% if formulario_nueva_receta.errors %}
@@ -78,6 +79,7 @@
 		</div>
 
 	</div>
+	{% endif %}
 
 </div>
 
