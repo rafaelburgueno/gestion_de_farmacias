@@ -1,6 +1,8 @@
 // esto corrije el tipo del campo imput 'id_vencimiento' en el formulario para crear recetas
 // por alguna razon no quiere cambiar el type a date
 window.onload = function() {
+   
+ 
     //document.getElementById('id_vencimiento').type = 'date';
     //document.getElementById('id_fecha_de_nacimiento').type = 'date';
     //document.getElementById('id_telefono').type = 'tel';
@@ -24,3 +26,6 @@ window.onload = function() {
 
 
 }
+
+
+  
