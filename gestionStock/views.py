@@ -25,7 +25,7 @@ class ListarMedicamentos(ListView):
 
         # la siguiente linea define el nombre de la lista de elementos que se mandan al template
         context_object_name = "medicamentos"
-        paginate_by = 8  # cantidad de elementos por pagina
+        #paginate_by = 8  # cantidad de elementos por pagina
 
 
 

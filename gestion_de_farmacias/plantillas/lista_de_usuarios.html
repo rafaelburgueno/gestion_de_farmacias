@@ -15,8 +15,16 @@
     <!-- ==============================-->
     {% if object_list %}
 
+    <div class="consulta usuario mb-3">
+        <h3>
+            <p>Criterios de búsqueda</p>
+        </h3>
+        <input type="text" onkeyup="buscar_usuario()" id="usuario_buscado" class="form-control mb-2" id="cc-number" placeholder="c.i. ,  usuario, nombre, apellido" required="">
+        <!--<button onclick="buscar_usuario()" class="btn btn-secondary btn-lg btn-block" type="submit">Buscar</button>-->
+    </div>
+
     <div class="table-responsive">
-        <table class="table table-hover">
+        <table id="tabla_de_usuarios" class="table table-hover">
 
             <thead class="thead-dark">
                 <tr>
