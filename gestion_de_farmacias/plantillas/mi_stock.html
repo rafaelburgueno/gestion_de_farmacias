@@ -65,7 +65,7 @@
     </div>
     {% endif %}
 
-    <div id="formulario" class="card my-3">
+    <div id="formulario" class="form-group form-group col-md-12">
         <div class="card-header">
             <h3>Registrar stock</h3>
         </div>
@@ -74,7 +74,7 @@
             {% csrf_token %}
             <div class="card-body">{{formulario_nuevo_stock.as_p}}</div>
             <div class="card-footer">
-                <input class="btn btn-primary" type="submit" value="Registrar" />
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Registrar" />
             </div>
         </form>
     </div>
