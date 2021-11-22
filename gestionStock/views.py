@@ -38,7 +38,7 @@ class ListarFarmacias(ListView):
         template_name = 'farmacias.html'
 
         context_object_name = "farmacias"
-        paginate_by = 10  
+        #paginate_by = 10  
 
 
 

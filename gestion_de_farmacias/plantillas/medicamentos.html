@@ -27,6 +27,7 @@
         <!-- Tabla con los Medicamentos -->
         <!-- ==============================-->
         {% if medicamentos %}
+        
         <table id="tabla_de_medicamentos" class="table table-hover">
 
             <thead class="thead-darkk">
@@ -55,6 +56,10 @@
             </tbody>
 
         </table>
+        {% else %}
+        <div class="alert alert-warning">
+            <strong>Atencion!</strong>  No existen registros.
+        </div>
         {% endif %}
     </div>
 
