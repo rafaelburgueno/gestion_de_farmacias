@@ -1,69 +1,64 @@
-  
-
-
 {% extends 'base.html' %}
 <!-- Contenido estatico de la pagina -->
 
 <!--Titulo de la pagina o pestaña-->
-{% block title %} Lista de Usuarios {% endblock %} {% block content %}
+{% block title %} Farmacias {% endblock %} {% block content %}
 
 <!--Nav bar-->
 {% include "nav.html" %}
 
 <div class="m-3">
-    <h1>Lista de Usuarios</h1>
+    <h1>Farmacias</h1>
 
-    <!-- ==============================-->
-    <!-- Tabla con los Usuarios activos -->
-    <!-- ==============================-->
-    {% if object_list %}
-
+    {% comment %} BUSCADOR {% endcomment %}
     {% comment %}
-    <div class="consulta usuario mb-3">
+    <div class="consulta farmacias mb-3 ">
         <h3>
             <p>Criterios de búsqueda</p>
         </h3>
-        <input type="text" onkeyup="buscar_usuario()" id="usuario_buscado" class="form-control mb-2" id="cc-number" placeholder="c.i. ,  usuario, nombre, apellido" required="">
-        <!--<button onclick="buscar_usuario()" class="btn btn-secondary btn-lg btn-block" type="submit">Buscar</button>-->
+        <input type="text" class="form-control mb-2" id="cc-number" placeholder="Nombre, Departamento, Localidad" required="">
+        <button class="btn btn-secondary btn-lg btn-block" type="submit">Buscar</button>
     </div>
     {% endcomment %}
 
+    {% comment %} TABLA DE FARMACIAS {% endcomment %}
     <div class="table-responsive">
-        <table id="tabla_de_usuarios" class="table table-hover">
+
+
+        {% if farmacias %}
+        <table id="tabla_de_farmacias" class="table table-hover">
 
             <thead class="thead-darkk">
                 <tr>
-                    <th>C.i.</th>
-                    <th>Rol</th>
-                    <th>Usuario</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Telefono</th>
-                    <th>Ver</th>
+                    <th>Nombre </th>
+                    <th>Departamento</th>
+                    <th>Localidad</th>
+                    <th>Direccion</th>
+
                 </tr>
             </thead>
 
             <tbody>
-                {% for usuario in object_list %}
+                {% for farmacia in farmacias %}
                 <tr>
-                    <td>{{ usuario.cedula_de_identidad }}</td>
-                    <td>{{ usuario.rol }}</td>
-                    <td>{{ usuario.usuario }}</td>
-                    <td>{{ usuario.nombre }}</td>
-                    <td>{{ usuario.apellido }}</td>
-                    <td>{{ usuario.telefono }}</td>
-                    
-                    <td>
-                        <a   class="btn btn-primary btn-lg btn-block" href="/recetas_usuario/{{ usuario.cedula_de_identidad }}">Ver recetas</a></td> 
-                    </tr>
+                    <td>{{ farmacia.nombre }}</td>
+                    <td>{{ farmacia.departamento }}</td>
+                    <td>{{ farmacia.localidad }}</td>
+                    <td>{{ farmacia.direccion }}</td>
+                    {% comment %}
+                    <td>{{ farmacia.forma }}</td>
+                    farmacia.forma? {% endcomment %}
+
+                </tr>
                 {% endfor %}
             </tbody>
 
         </table>
+        {% endif %}
     </div>
 
-    {% endif %}
-    <br>
+
+
     <!-- Menú de paginación -->
     {% if is_paginated %}
     <nav aria-label="Page navigation">
@@ -93,6 +88,9 @@
     </nav>
     {% endif %}
 
+
+
 </div>
+
 
 {% endblock content %}

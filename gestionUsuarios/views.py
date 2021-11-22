@@ -32,7 +32,7 @@ class ListaDeUsuarios(ListView):
         model = Usuarios
 
         template_name = 'lista_de_usuarios.html'
-        paginate_by = 6  # cantidad de elementos por pagina
+        #paginate_by = 6  # cantidad de elementos por pagina
         
         def get_queryset(self) :
                 #return self.objects.filter(usuario_activo=True)
