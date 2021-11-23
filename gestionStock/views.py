@@ -243,6 +243,6 @@ class GestionarReceta(TemplateView):
             #print(principio_activo)
             context['opciones_de_medicamentos'] = Medicamentos.objects.filter(principio_activo=principio_activo)
             #context['opciones_de_medicamentos'] = Medicamentos.objects.all()
-            print(context['opciones_de_medicamentos'])
+            #print(context['opciones_de_medicamentos'])
 
         return context
