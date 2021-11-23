@@ -16,31 +16,30 @@
 
             <thead class="thead-darkk">
                 <tr>
-                    <th> medicamento </th>
+                    <th> Principio activo </th>
                     <th> paciente </th>
                     <th> medico </th>
                     <th> descripcion </th>
                     <th> vencimiento </th>
                     <th> estado </th>
 
-                    {% comment "" %}
-                    <th>...</th>
-                    {% endcomment %}
+                    <th>gestionar</th>
+
                 </tr>
             </thead>
 
             <tbody>
                 {% for receta in Recetas %}
                 <tr>
-                    <td>{{ receta.medicamento }}</td>
+                    <td>{{ receta.principio_activo }}</td>
                     <td>{{ receta.paciente }}</td>
                     <td>{{ receta.medico }}</td>
                     <td>{{ receta.descripcion }}</td>
                     <td>{{ receta.vencimiento }}</td>
                     <td>{{ receta.estado }}</td>
-                    {% comment %}
-                    <td><a class="btn btn-danger btn-lg btn-block" href="/mi_receta/{{ receta.id }}">Editar</a></td>
-                    {% endcomment %}
+                    
+                    <td><a class="btn btn-danger btn-lg btn-block" href="/gestionar_receta/{{ receta.id }}">Gestionar</a></td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>

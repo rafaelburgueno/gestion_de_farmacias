@@ -19,7 +19,7 @@
 
             <thead class="thead-darkk">
                 <tr>
-                    <th>Medicamento</th>
+                    <th>Principio activo</th>
                     <th>Paciente</th>
                     <th>Medico</th>
                     <th>Descripcion</th>
@@ -32,7 +32,7 @@
             <tbody>
                 {% for receta in recetas_list %}
                 <tr>
-                    <td>{{ receta.medicamento }}</td>
+                    <td>{{ receta.principio_activo }}</td>
                     <td>{{ receta.paciente }}</td>
                     <td>{{ receta.medico }}</td>
                     <td>{{ receta.descripcion }}</td>
