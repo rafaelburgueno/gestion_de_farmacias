@@ -20,7 +20,7 @@
             <thead class="thead-darkk">
                 <tr>
                     <th>Stock</th>
-		    <th></th>
+                    <th></th>
                     <th>Medicamento</th>
                     <th>Vencimiento</th>
                     <th>Codigo</th>
@@ -31,17 +31,17 @@
                 {% for lote in lotes_list %}
                 <tr>
                     <td>
-                        {{lote.stock}} 
-		    </td>
-		    <td>
-		    	{% if lote.stock < 50 %} 
-			<span class="badge badge-danger">¡muy bajo stock!</span>
-                        {% else %}
-				{% if lote.stock < 100 %} 
-				<span class="badge badge-warning">¡bajo stock!</span>
-				{% endif %}
-			{% endif %}
-		    </td>
+                        {{lote.stock}}
+                    </td>
+                    <td>
+                        {% if lote.stock < 50 %} 
+                            <span class="badge badge-danger">¡muy bajo stock!</span>
+                        {% else %} 
+                            {% if lote.stock < 100 %} 
+                                <span class="badge badge-warning">¡bajo stock!</span>
+                            {% endif %} 
+                        {% endif %}
+                    </td>
                     <td>{{lote.medicamento}}</td>
                     <td>{{lote.vencimiento}}</td>
                     <td>{{lote.id}}</td>
@@ -81,7 +81,7 @@
 
     {% else %}
     <div class="alert alert-warning">
-        <strong>Atencion!</strong> El usuario no esta asignado a ninguna farmacia.
+        <strong>Atencion!</strong> Su usuario no esta asignado a ninguna farmacia.
     </div>
     {% endif %}
 

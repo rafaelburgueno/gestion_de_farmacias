@@ -234,6 +234,16 @@ class GestionarReceta(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        cedula_del_funcionario = self.request.user.cedula_de_identidad
+
+        # obtenemos la farmacias a la que pertenece el usuario 
+        queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_funcionario)
+        #print("================================")
+        #print(queryset_mi_farmacia)
+        if len(queryset_mi_farmacia)==0:
+            context['mensaje'] = "Su usuario no esta asignado a ninguna farmacia."
+            return context
+
         #obtenemos de la url el numero de receta que queremos consultar
         numero_de_receta =self.kwargs['pk']
         #buscamos la receta en la base de datos con el fin de obtener el principio_activo que se ha recetado
@@ -251,6 +261,8 @@ class GestionarReceta(TemplateView):
         for medicamento in  queryset_opciones_de_medicamentos:
             #aca iria el codigo para revisar si existe stock de ese medicamento
             pass
+
+
 
         context['opciones_de_medicamentos'] =queryset_opciones_de_medicamentos
 
@@ -273,8 +285,8 @@ class GestionarReceta(TemplateView):
         cedula_del_user = self.request.user.cedula_de_identidad
         #queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
         queryset_mi_farmacia = get_list_or_404(Farmacias, funcionarios=cedula_del_user)
-        print("===============================")
-        print(cedula_del_user)
+        #print("===============================")
+        #print(cedula_del_user)
         #este if previene un error generado cuando el funcionario no esta asignado a ninguna farmacia
         if len(queryset_mi_farmacia)>0:
             #obtenemos el object que representa a nuestra farmacia
@@ -286,9 +298,9 @@ class GestionarReceta(TemplateView):
             
             #con este if prevenimos el error generado al no encontrar registros de stock para ese medicamento
             if len (queryset_stock_de_mi_farmacia)>0:   
-                print("si entra al ultimo if")
+                #print("si entra al ultimo if")
                 stock_de_mi_farmacia = queryset_stock_de_mi_farmacia[0]
-                print(stock_de_mi_farmacia)
+                #print(stock_de_mi_farmacia)
                 stock_de_mi_farmacia.stock = stock_de_mi_farmacia.stock - 1
 
                 stock_de_mi_farmacia.save()

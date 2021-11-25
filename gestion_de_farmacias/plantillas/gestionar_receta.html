@@ -8,11 +8,16 @@
 {% include "nav.html" %}
 
 <div class="m-3">
+    {% if mensaje %}
+     <div class="alert alert-warning">
+            <strong>Atencion!</strong>  {{mensaje}}
+        </div>
+    {% endif %}
 {# {% if receta.estado == "RES" %} #}
     {% if receta %}
     <h3>{{receta}} </h3>
-    
-    <h4>Existen  {{ opciones_de_medicamentos |length }} medicamentos para satisfacer la receta.</h4>
+    {% if opciones_de_medicamentos %}
+        <h4>Existen  {{ opciones_de_medicamentos |length }} medicamentos para satisfacer la receta.</h4>
 
         <table id="tabla_de_medicamentos" class="table table-hover">
 
@@ -51,6 +56,7 @@
             </tbody>
 
         </table>
+        {% endif %}
 
     {% endif %}
 

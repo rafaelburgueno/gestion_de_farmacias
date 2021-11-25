@@ -16,6 +16,7 @@
 
             <thead class="thead-darkk">
                 <tr>
+                    <th>Nro.</th>
                     <th> Principio activo </th>
                     <th> paciente </th>
                     <th> medico </th>
@@ -35,6 +36,7 @@
                 {% else %}
                 <tr>
                 {% endif %}
+                    <td>{{ receta.id }}</td>
                     <td>{{ receta.principio_activo }}</td>
                     <td>{{ receta.paciente }}</td>
                     <td>{{ receta.medico }}</td>
