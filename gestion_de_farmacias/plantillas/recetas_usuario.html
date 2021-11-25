@@ -23,8 +23,11 @@
                     <th> descripcion </th>
                     <th> vencimiento </th>
                     <th> estado </th>
-
+                    {% if user.rol == "farmacia" %}
                     <th>gestionar</th>
+                    {% else %}
+                    <th></th>
+                    {% endif %}
 
                 </tr>
             </thead>

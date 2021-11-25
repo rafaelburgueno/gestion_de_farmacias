@@ -145,7 +145,7 @@ class Recetas(models.Model):
 
         descripcion = models.CharField(max_length = 500, blank=True, null=True)
         vencimiento= models.CharField(max_length = 50,blank=True, null=True, verbose_name="Fecha de vencimiento")
-        estado = models.CharField(max_length = 50,choices=ESTADOS_DE_UNA_RECETA,blank=True, null=True) # el estado se refiere a si el medicamento esta reservado o ya fue retirado
+        estado = models.CharField(max_length = 50,choices=ESTADOS_DE_UNA_RECETA,default="RES") # el estado se refiere a si el medicamento esta reservado o ya fue retirado
         created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
         updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 

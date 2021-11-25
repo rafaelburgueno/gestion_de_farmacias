@@ -476,6 +476,17 @@ USUARIOS = [
         "direccion": "384 Randolph Street, Eagletown, Utah, 8901"
     },
     {
+        "cedula_de_identidad": 56574425,
+        "rol": 0,
+        "usuario": "anamar22",
+        "nombre": "Ana María",
+        "apellido": "Perez Collins",
+        "fecha_de_nacimiento": "2085-11-05",
+        "email": "anamar22@parcoe.com",
+        "telefono": 94515908,
+        "direccion": "384 Random Street, Eagletown, Utah, 8901"
+    },
+    {
         "cedula_de_identidad": 40239210,
         "rol": 3,
         "usuario": "Hendricks755",

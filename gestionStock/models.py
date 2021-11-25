@@ -65,7 +65,7 @@ class Lotes(models.Model):
         
         #medicamento (id_medicamento)
         medicamento = models.ForeignKey(Medicamentos, on_delete=models.CASCADE)
-        
+        principio_activo = models.CharField(max_length=200,blank=True, null=True)
         stock = models.IntegerField()
         
         #ubicacion (id_farmacia)

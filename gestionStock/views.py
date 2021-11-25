@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.urls import reverse
+from django.db.models import Sum
 # re-cableando la mente
 # vistas basadas en clases
 from django.views.generic import DetailView, TemplateView, ListView, CreateView, View, UpdateView
@@ -181,11 +182,69 @@ class MiStock(ListView):
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
         if len(queryset_mi_farmacia)>0:
             mi_farmacia = queryset_mi_farmacia[0]
-    
-        
-        # enviamos la farmacia y el formulario como variables de contexto
+            # enviamos la farmacia y el formulario como variables de contexto
             context['mi_farmacia'] = mi_farmacia
+
+    
+
+
+
+
+#===============================================================
+            #STOCK ACUMULADO
+            #este algoritmo va a ser muy ineficiente XD
+#===============================================================
+            queryset_stock_total_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
+
+            stock_acumulado = []
+
+            for cada_registro_de_stock_de_mi_farmacia in queryset_stock_total_mi_farmacia:
+                #print("=================REGISTRO DE STOCK ====================")
+                #print(cada_registro_de_stock_de_mi_farmacia.medicamento.id)
+                stock_acumulado_del_medicamento = 0
+
+                registros_stock_duplicados = queryset_stock_total_mi_farmacia.filter(medicamento=cada_registro_de_stock_de_mi_farmacia.medicamento.id)
+                # returns {'price__sum': 1000} for example
+                
+                #este for suma los valores y los pone en la variablestock_acumulado_de_medicamentos
+                for registro in registros_stock_duplicados:
+                    stock_acumulado_del_medicamento += registro.stock
+                
+                if not stock_acumulado.__contains__({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento}):
+                    stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
+                #print(cada_registro_de_stock_de_mi_farmacia)
+                print(type(cada_registro_de_stock_de_mi_farmacia.medicamento))
+                #stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
+                #con esto logro crear una tabla de tuplas (id_medicamento, stock_acumulado_de_mi_farmacia)
+
+            #print("=================MEDICAMENTO===========AAAA====")
+            #stock_acumulado = list(set(stock_acumulado))
+            #print(stock_acumulado)
+            #print(type(stock_acumulado))
+
+
+
+
+                #print("======registro_de_stock=======")
+                #print(type(registro_de_stock)) #devuelve -> <class 'gestionStock.models.Lotes'>
+                #print(registro_de_stock.medicamento)
+            #if registro_de_stock.medicamento == 96:
+                #context['stock_acumulado']=registro_de_stock.medicamento
+                    #print("encontre el 96 :")
+                    #print( registro_de_stock.medicamento)
+                
+
+            #context['stock_acumulado']= queryset_stock_total.filter(medicamento=96)
+            context['stock_acumulado']= stock_acumulado
+            
+            #print(len(context['stock_acumulado']))
+            #print(context['stock_acumulado'])
         
+
+
+
+
+
         context["formulario_nuevo_stock"] = self.form_class
 
         return context
@@ -196,17 +255,28 @@ class MiStock(ListView):
 
         # la cedula la necesito para encontrar la farmacia que le corresponde al usuario
         cedula_del_user = self.request.user.cedula_de_identidad
+        formulario_nuevo_stock = self.form_class(request.POST)
+        #medicamento=request.POST.get('id_stock')
+        id_medicamento=request.POST.get('medicamento')
+        medicamento = Medicamentos.objects.get(id=id_medicamento)
+        #medicamento=formulario_nuevo_stock.get('id_medicamento')
+        #request.POST.get('id_receta')
+        #print(medicamento.principio_activo)
+        #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
         mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)[0]
 
         # cargamos el formulario que nos llega con un nuevo stock
-        formulario_nuevo_stock = self.form_class(request.POST)
-
+        #print(type(formulario_nuevo_stock.id_medicamento))
         # verificamos si el formulario esta bien
         if formulario_nuevo_stock.is_valid():
+            #medicamento = Medicamentos.objects.get(id=medicamento)
+            #print(medicamento)
 
             # con esto hacemos que el formulario sea editable
             formulario_nuevo_stock = formulario_nuevo_stock.save(commit=False)
 
+            formulario_nuevo_stock.principio_activo = medicamento.principio_activo
             
             # editamos el atributo ubicacion para que el registro nuevo tenga la ubicacion de nuestra farmacia
             formulario_nuevo_stock.ubicacion = mi_farmacia
@@ -292,18 +362,28 @@ class GestionarReceta(TemplateView):
             #obtenemos el object que representa a nuestra farmacia
             mi_farmacia = queryset_mi_farmacia[0]
             
-            #buscamos en losregistros de stock de nuestra farmacia, algun registro de ese medicamentos
+            #buscamos en el stock de nuestra farmacia, todos los registro de ese medicamentos
             #con el fin de restar un elemento al registro
-            queryset_stock_de_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id).filter(medicamento=medicamento_entregado)
+            #uticizamos .order_by('-created') para que el queryset nos llegue con los registros antiguos primero
+            queryset_stock_de_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id).filter(medicamento=medicamento_entregado).order_by('-created')
             
             #con este if prevenimos el error generado al no encontrar registros de stock para ese medicamento
             if len (queryset_stock_de_mi_farmacia)>0:   
-                #print("si entra al ultimo if")
-                stock_de_mi_farmacia = queryset_stock_de_mi_farmacia[0]
-                #print(stock_de_mi_farmacia)
-                stock_de_mi_farmacia.stock = stock_de_mi_farmacia.stock - 1
+                
+                #analizamos cada registro para encontras stock positivo de donde restar el medicamento entregado
+                for registro in queryset_stock_de_mi_farmacia:
+                    if registro.stock > 0:
+                        registro.stock = registro.stock -1
+                        registro.save()
+                        break
 
-                stock_de_mi_farmacia.save()
+                #con esto elegimos el ultimo registro de lote para restar el medicamento entregado
+                #stock_de_mi_farmacia = queryset_stock_de_mi_farmacia[len(queryset_stock_de_mi_farmacia)-1]
+                #stock_de_mi_farmacia.stock = stock_de_mi_farmacia.stock - 1
+
+                #finalmente les restamos 1 al registro esto significa el ql medicamento fue entregado 
+
+                #stock_de_mi_farmacia.save()
 
                 #si todo va bien, podemos cambiar el estado a retirado(RET)
                 #obtenemos el id de la receta y actualizamos su estado

@@ -34,6 +34,7 @@
 
             <thead class="thead-darkk">
                 <tr>
+                    <th>id.</th>
                     <th>Nombre Comercial</th>
                     <th>Categoria</th>
                     <th>Laboratorio</th>
@@ -46,6 +47,7 @@
             <tbody>
                 {% for medicamentos in medicamentos %}
                 <tr>
+                    <td>{{ medicamentos.id }}</td>
                     <td>{{ medicamentos.nombre_comercial }}</td>
                     <td>{{ medicamentos.categoria }}</td>
                     <td>{{ medicamentos.laboratorio }}</td>

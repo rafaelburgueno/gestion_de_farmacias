@@ -27,6 +27,8 @@
                     <th>Estado</th>
                     {% if  user.rol == 'farmacia'%}
                     <th>Gestionar</th>
+                    {% else %}
+                    <th>...</th>
                     {% endif %}
                 </tr>
             </thead>
