@@ -25,7 +25,7 @@ class Medicamentos(models.Model):
         contraindicaciones = models.CharField(max_length=1000,blank=True, null=True)
 
         def __str__(self):
-                return self.nombre_comercial
+                return self.nombre_comercial + " -> "+ self.principio_activo
         
         class Meta:
                 verbose_name = "Medicamento"

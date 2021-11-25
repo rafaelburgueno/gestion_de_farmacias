@@ -31,17 +31,22 @@
 
             <tbody>
                 {% for receta in object_list %}
-                <tr>
-                    <td>{{ receta.medicamento }}</td>
-                    <td>{{ receta.paciente }}</td>
-                    <td>{{ receta.medico }}</td>
-                    <td>{{ receta.descripcion }}</td>
-                    <td>{{ receta.vencimiento }}</td>
-                    <td>{{ receta.estado }}</td>
+                    {% if receta.estado == "RES" %}
+                    <tr class="table-warning">
+                    {% else %}
+                    <tr>
+                    {% endif %}
+                        <td>{{ receta.medicamento }}</td>
+                        <td>{{ receta.paciente }}</td>
+                        <td>{{ receta.medico }}</td>
+                        <td>{{ receta.descripcion }}</td>
+                        <td>{{ receta.vencimiento }}</td>
+                        <td>{{ receta.estado }}</td>
+                    
                     {% comment %}
                     <td><a class="btn btn-sm btn-danger" href="/mi_receta/{{ receta.id }}">Editar</a></td>
                     {% endcomment %}
-                </tr>
+                    </tr>
                 {% endfor %}
             </tbody>
 
