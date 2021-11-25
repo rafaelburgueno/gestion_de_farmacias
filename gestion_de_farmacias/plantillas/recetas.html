@@ -25,20 +25,36 @@
                     <th>Descripcion</th>
                     <th>Vencimiento</th>
                     <th>Estado</th>
-                    <th>...</th>
+                    {% if  user.rol == 'farmacia'%}
+                    <th>Gestionar</th>
+                    {% endif %}
                 </tr>
             </thead>
 
             <tbody>
                 {% for receta in recetas_list %}
+                {% if receta.estado == "RES" %}
+                <tr class="table-warning">
+                {% else %}
                 <tr>
+                {% endif %}
                     <td>{{ receta.principio_activo }}</td>
                     <td>{{ receta.paciente }}</td>
                     <td>{{ receta.medico }}</td>
                     <td>{{ receta.descripcion }}</td>
                     <td>{{ receta.vencimiento }}</td>
                     <td>{{ receta.estado }}</td>
-                    <td><a class="btn btn-sm btn-primary" href="/editar_receta/{{ receta.id }}">Editar</a></td>
+                    {% comment %}
+                    {% if  user.rol == 'medico'%}
+                        <td><a class="btn btn-sm btn-primary" href="/editar_receta/{{ receta.id }}">Editar</a></td>    
+                    {% endif %}
+                    {% endcomment %}
+                    
+                    {% if  receta.estado == "RES" and user.rol == 'farmacia'%}
+                    <td><a class="btn btn-sm btn-outline-primary" href="/gestionar_receta/{{ receta.id }}">Gestionar</a></td>
+                    {% else %}
+                        <td><p></p></td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

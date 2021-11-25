@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.urls import reverse
 # re-cableando la mente
 # vistas basadas en clases
 from django.views.generic import DetailView, TemplateView, ListView, CreateView, View, UpdateView
@@ -151,9 +152,11 @@ class MiStock(ListView):
 
         #con la cedula hacemos la busqueda de la Farmacia que tiene a ese usuario cono funcionario
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
+        #queryset_mi_farmacia = get_list_or_404(Farmacias, funcionarios=cedula_del_user)
         #print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
         #print("el len(queryset_mi_farmacia) dice: vvvv")
         #print(len(queryset_mi_farmacia))
+        
         if len(queryset_mi_farmacia)>0:
             mi_farmacia = queryset_mi_farmacia[0]
 
@@ -222,27 +225,80 @@ class MiStock(ListView):
 # Gestionar Receta ===========================================================
 # =======================================================================
 class GestionarReceta(TemplateView):
-    #model = Lotes
-    #form_class = Formulario_nuevo_stock
+    
     template_name = 'gestionar_receta.html'
 
     #success_url = reverse_lazy('lista_de_usuarios')
 
-
+    # recopilamos los datos que se van a mostrar en la vista
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        #obtenemos de la url el numero de receta que queremos consultar
         numero_de_receta =self.kwargs['pk']
-        queryset_recetas = Recetas.objects.filter(id=numero_de_receta)
+        #buscamos la receta en la base de datos con el fin de obtener el principio_activo que se ha recetado
+        #queryset_recetas = Recetas.objects.filter(id=numero_de_receta)
+        context['receta'] = Recetas.objects.get(id=numero_de_receta)
+        usuario_del_paciente = context['receta'].paciente
+        #paciente = Usuarios.objects.get(usuario=usuario_del_paciente)
+        paciente = get_object_or_404(Usuarios, usuario=usuario_del_paciente)
+        context['paciente'] = paciente
+
+        #obtenemos el principio activo
+        principio_activo = context['receta'].principio_activo
+        #ya con el principio activo buscamos los medicamentos que satisfacen a esa receta
+        queryset_opciones_de_medicamentos = Medicamentos.objects.filter(principio_activo=principio_activo)
+        for medicamento in  queryset_opciones_de_medicamentos:
+            #aca iria el codigo para revisar si existe stock de ese medicamento
+            pass
+
+        context['opciones_de_medicamentos'] =queryset_opciones_de_medicamentos
+
         
-        if len(queryset_recetas) > 0:
-            context['receta'] = queryset_recetas[0]
+        #if len(queryset_recetas) > 0:
+            #context['receta'] = queryset_recetas[0]
         
-            #print("===========medicamentos desde gestionStock=========")
-            #print(context['receta'].principio_activo)
-            principio_activo = context['receta'].principio_activo
-            #print(principio_activo)
-            context['opciones_de_medicamentos'] = Medicamentos.objects.filter(principio_activo=principio_activo)
-            #context['opciones_de_medicamentos'] = Medicamentos.objects.all()
-            #print(context['opciones_de_medicamentos'])
 
         return context
+
+    #con este metodo capturamos la interaccion para despachar algun medicamento especifico
+    def post(self,request, *args, **kwargs): 
+
+        #obtenemos el id del medicamento que se elije despachar
+        medicamento_entregado=request.POST.get('id_medicamento')
+
+        cedula_del_paciente=int(request.POST.get('cedula_del_paciente'))
+        
+        #la cedula la necesitamos para buscar la farmacia del funcionario que realiza la gestion
+        cedula_del_user = self.request.user.cedula_de_identidad
+        #queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_user)
+        queryset_mi_farmacia = get_list_or_404(Farmacias, funcionarios=cedula_del_user)
+        print("===============================")
+        print(cedula_del_user)
+        #este if previene un error generado cuando el funcionario no esta asignado a ninguna farmacia
+        if len(queryset_mi_farmacia)>0:
+            #obtenemos el object que representa a nuestra farmacia
+            mi_farmacia = queryset_mi_farmacia[0]
+            
+            #buscamos en losregistros de stock de nuestra farmacia, algun registro de ese medicamentos
+            #con el fin de restar un elemento al registro
+            queryset_stock_de_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id).filter(medicamento=medicamento_entregado)
+            
+            #con este if prevenimos el error generado al no encontrar registros de stock para ese medicamento
+            if len (queryset_stock_de_mi_farmacia)>0:   
+                print("si entra al ultimo if")
+                stock_de_mi_farmacia = queryset_stock_de_mi_farmacia[0]
+                print(stock_de_mi_farmacia)
+                stock_de_mi_farmacia.stock = stock_de_mi_farmacia.stock - 1
+
+                stock_de_mi_farmacia.save()
+
+                #si todo va bien, podemos cambiar el estado a retirado(RET)
+                #obtenemos el id de la receta y actualizamos su estado
+                receta_entregada=request.POST.get('id_receta')
+                Recetas.objects.filter(id=receta_entregada).update(estado='RET')
+
+        #return reverse('article_details', args=(pk, slug))
+        #return  redirect('recetas_usuario/'+cedula_del_paciente + '/') 
+        return  redirect('lista_de_usuarios')
+        #return reverse('recetas_usuario', args=([cedula_del_paciente]))

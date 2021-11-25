@@ -8,11 +8,11 @@
 {% include "nav.html" %}
 
 <div class="m-3">
-
+{# {% if receta.estado == "RES" %} #}
     {% if receta %}
-    <h1>{{receta}} </h1>
+    <h3>{{receta}} </h3>
     
-    <h3>Las opciones son: </h3>
+    <h4>Existen  {{ opciones_de_medicamentos |length }} medicamentos para satisfacer la receta.</h4>
 
         <table id="tabla_de_medicamentos" class="table table-hover">
 
@@ -37,7 +37,15 @@
                     <td>{{ medicamento.laboratorio }}</td>
                     <td>{{ medicamento.forma }}</td>
                     <td>{{ medicamento.contraindicaciones }}</td>
-                    <td><a class="btn btn-sm btn-danger" href="/despachar_medicamento/{{ medicamento.id }}">Despachar</a></td>-->
+                    <td>
+                        <form method="post" >
+                        {% csrf_token %}
+                            <input type="hidden" name="cedula_del_paciente" value="{{ paciente.cedula_de_identidad }}">
+                            <input type="hidden" name="id_receta" value="{{ receta.id }}">
+                            <input type="hidden" name="id_medicamento" value="{{ medicamento.id }}">
+                            <input type="submit" value="Despachar" class="btn btn-primary"> 
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
