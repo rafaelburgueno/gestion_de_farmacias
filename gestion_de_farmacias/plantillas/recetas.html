@@ -19,12 +19,12 @@
 
             <thead class="thead-darkk">
                 <tr>
+                    <th>Estado</th>
                     <th>Principio activo</th>
                     <th>Paciente</th>
                     <th>Medico</th>
                     <th>Descripcion</th>
                     <th>Vencimiento</th>
-                    <th>Estado</th>
                     {% if  user.rol == 'farmacia'%}
                     <th>Gestionar</th>
                     {% else %}
@@ -40,12 +40,12 @@
                 {% else %}
                 <tr>
                 {% endif %}
+                    <td>{{ receta.estado }}</td>
                     <td>{{ receta.principio_activo }}</td>
                     <td>{{ receta.paciente }}</td>
                     <td>{{ receta.medico }}</td>
                     <td>{{ receta.descripcion }}</td>
                     <td>{{ receta.vencimiento }}</td>
-                    <td>{{ receta.estado }}</td>
                     {% comment %}
                     {% if  user.rol == 'medico'%}
                         <td><a class="btn btn-sm btn-primary" href="/editar_receta/{{ receta.id }}">Editar</a></td>    
