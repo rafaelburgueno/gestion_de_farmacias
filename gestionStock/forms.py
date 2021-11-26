@@ -13,10 +13,12 @@ from gestionStock.models import Medicamentos, Lotes
 # =======================================================================
 class Formulario_nuevo_stock(forms.ModelForm):
 
+        #principio_activo = forms.CharField()
         # aca se enumeran los campos que se van a mostrar con el formulario
         class Meta:
                 model = Lotes
                 fields = ['medicamento','stock','vencimiento']
+
 
         #===============================================
         # aca se definen las clases de bootstrap que se le 

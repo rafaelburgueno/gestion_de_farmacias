@@ -11,17 +11,70 @@
 
     <div class="">
         <a class="btn btn-success float-right" href="#formulario">+ Stock</a>
-        <h1>Stock de {{mi_farmacia.nombre}}</h1>
+        <h1>{{mi_farmacia.nombre}}</h1>
     </div>
 
+    <hr>
+
+    <h2>Stock acumulado</h2>
+    <div class="table-responsive">
+        {% if stock_acumulado %}
+        <table id="tabla_de_stock_acumulado" class="table table-hover">
+            <thead class="thead-darkk">
+                <tr>
+                    <th>Stock</th>
+                    <th></th>
+                    <th>Medicamento</th>
+                    <th>Principio activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lote in stock_acumulado %}
+                {% comment %}
+                <h4>{{lote.medicamento}}</h4> <p>{{lote.stock}}</p>
+                {% endcomment %}
+                    
+                    <tr>
+                        <td>
+                        {{lote.stock}}
+                        </td>
+                        <td>
+                        {% if lote.stock < 50 %} 
+                            <span class="badge badge-danger">¡muy bajo stock!</span>
+                        {% else %} 
+                            {% if lote.stock < 100 %} 
+                                <span class="badge badge-warning">¡bajo stock!</span>
+                            {% endif %} 
+                        {% endif %}
+                        </td>
+                        <td>{{lote.medicamento.nombre_comercial}}</td>
+                        <td>{{lote.medicamento.principio_activo}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-warning">
+            <strong>Atencion!</strong> La farmacia no tiene registros de stock.
+        </div>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <h2>Registros de stock</h2>
     <div class="table-responsive">
         {% if lotes_list %}
         <table id="tabla_de_stock" class="table table-hover">
             <thead class="thead-darkk">
                 <tr>
                     <th>Stock</th>
+                    {% comment %}
                     <th></th>
+                    {% endcomment %}    
                     <th>Medicamento</th>
+                    <th>Principio activo</th>        
+                    <th>Funcionario</th>             
                     <th>Vencimiento</th>
                     <th>Codigo</th>
                     <th></th>
@@ -33,6 +86,7 @@
                     <td>
                         {{lote.stock}}
                     </td>
+                    {% comment %}
                     <td>
                         {% if lote.stock < 50 %} 
                             <span class="badge badge-danger">¡muy bajo stock!</span>
@@ -42,7 +96,10 @@
                             {% endif %} 
                         {% endif %}
                     </td>
+                    {% endcomment %}
                     <td>{{lote.medicamento}}</td>
+                    <td>{{lote.principio_activo}}</td>
+                    <td>{{lote.funcionario}}</td>
                     <td>{{lote.vencimiento}}</td>
                     <td>{{lote.id}}</td>
                     <td><a class="btn btn-sm btn-primary" href="/editar_stock/{{ lote.id }}">editar...</a></td>
