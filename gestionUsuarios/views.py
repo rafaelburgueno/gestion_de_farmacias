@@ -235,25 +235,3 @@ class RecetasUsuario(DetailView):
         return context
 
 
-
-
-# =======================================================================
-# Gestionar Receta ========================================================
-# =======================================================================
-"""class GestionarReceta(DetailView):
-    model = Recetas
-    template_name = 'gestionar_receta.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        numero_de_receta =self.kwargs['pk']
-        queryset_recetas = Recetas.objects.filter(id=numero_de_receta)
-        
-        if len(queryset_recetas) > 0:
-            context['receta'] = queryset_recetas[0]
-        
-        #print("===========================")
-        #print(context['receta'])
-
-        return context
-        """

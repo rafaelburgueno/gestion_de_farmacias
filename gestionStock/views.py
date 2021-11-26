@@ -116,6 +116,9 @@ class Stock(View):
         # verificamos que los datos esten completos o sean correctos
         if formulario_nuevo_stock.is_valid():
             
+            # con esto hacemos que el formulario sea editable
+            formulario_nuevo_stock = formulario_nuevo_stock.save(commit=False)
+
             # si todo esta bien se guardan los datos de el nuevo registro de stock
             formulario_nuevo_stock.save()
             return redirect('stock')
@@ -213,7 +216,7 @@ class MiStock(ListView):
                 if not stock_acumulado.__contains__({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento}):
                     stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
                 #print(cada_registro_de_stock_de_mi_farmacia)
-                print(type(cada_registro_de_stock_de_mi_farmacia.medicamento))
+                #print(type(cada_registro_de_stock_de_mi_farmacia.medicamento))
                 #stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
                 #con esto logro crear una tabla de tuplas (id_medicamento, stock_acumulado_de_mi_farmacia)
 
@@ -275,6 +278,10 @@ class MiStock(ListView):
 
             # con esto hacemos que el formulario sea editable
             formulario_nuevo_stock = formulario_nuevo_stock.save(commit=False)
+
+            # editamos el atributo funcionario para que el registro nuevo tenga como funcionario firmante al usuario que ingresa el registro de stock
+            #luego le habilitamos el form solo a los usuarios que tienen rol == 'farmacia'
+            formulario_nuevo_stock.funcionario = self.request.user
 
             formulario_nuevo_stock.principio_activo = medicamento.principio_activo
             
@@ -343,12 +350,19 @@ class GestionarReceta(TemplateView):
 
         return context
 
+
+
+
+
+    #======================================================================
+    #============================POST==================================
+    #======================================================================
     #con este metodo capturamos la interaccion para despachar algun medicamento especifico
     def post(self,request, *args, **kwargs): 
 
         #obtenemos el id del medicamento que se elije despachar
-        medicamento_entregado=request.POST.get('id_medicamento')
-
+        id_medicamento_entregado=request.POST.get('id_medicamento')
+        id_receta_entregada=request.POST.get('id_receta')
         cedula_del_paciente=int(request.POST.get('cedula_del_paciente'))
         
         #la cedula la necesitamos para buscar la farmacia del funcionario que realiza la gestion
@@ -365,30 +379,50 @@ class GestionarReceta(TemplateView):
             #buscamos en el stock de nuestra farmacia, todos los registro de ese medicamentos
             #con el fin de restar un elemento al registro
             #uticizamos .order_by('-created') para que el queryset nos llegue con los registros antiguos primero
-            queryset_stock_de_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id).filter(medicamento=medicamento_entregado).order_by('-created')
+            queryset_stock_de_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id).filter(medicamento=id_medicamento_entregado).order_by('created')
             
             #con este if prevenimos el error generado al no encontrar registros de stock para ese medicamento
             if len (queryset_stock_de_mi_farmacia)>0:   
-                
+                registro_de_stock_que_satisface_la_receta = queryset_stock_de_mi_farmacia[0]
+                #print("====================medicamento_entregado==========================")
+                #print(type(registro_de_stock_que_satisface_la_receta))
                 #analizamos cada registro para encontras stock positivo de donde restar el medicamento entregado
+                """
+                #comente este bucle for para que la actulizacion del stock sea con un registro negativo 
+                # y no modificando un registro existente
                 for registro in queryset_stock_de_mi_farmacia:
                     if registro.stock > 0:
                         registro.stock = registro.stock -1
                         registro.save()
                         break
-
+                """
                 #con esto elegimos el ultimo registro de lote para restar el medicamento entregado
                 #stock_de_mi_farmacia = queryset_stock_de_mi_farmacia[len(queryset_stock_de_mi_farmacia)-1]
                 #stock_de_mi_farmacia.stock = stock_de_mi_farmacia.stock - 1
 
                 #finalmente les restamos 1 al registro esto significa el ql medicamento fue entregado 
-
+                medicamento_entregado =  Medicamentos.objects.get(id=id_medicamento_entregado)
+                funcionario =  Usuarios.objects.get(cedula_de_identidad=cedula_del_user)
+                principio_activo_del_medicamento_entregado =medicamento_entregado.principio_activo
+                receta_de_destino =  Recetas.objects.get(id=id_receta_entregada)
+                
+                #print(medicamento_entregado)
+                #print(type(medicamento_entregado))
+                #print(receta_de_destino.id)
+                #print(principio_activo_del_medicamento_entregado)
                 #stock_de_mi_farmacia.save()
-
+                Lotes.objects.create(
+                    medicamento=medicamento_entregado,
+                    principio_activo=principio_activo_del_medicamento_entregado,
+                    funcionario=funcionario,
+                    stock=-1,
+                    ubicacion=mi_farmacia,
+                    receta_de_destino=receta_de_destino,
+                    vencimiento=registro_de_stock_que_satisface_la_receta.vencimiento
+                    )
                 #si todo va bien, podemos cambiar el estado a retirado(RET)
                 #obtenemos el id de la receta y actualizamos su estado
-                receta_entregada=request.POST.get('id_receta')
-                Recetas.objects.filter(id=receta_entregada).update(estado='RET')
+                Recetas.objects.filter(id=id_receta_entregada).update(estado='RET')
 
         #return reverse('article_details', args=(pk, slug))
         #return  redirect('recetas_usuario/'+cedula_del_paciente + '/') 
