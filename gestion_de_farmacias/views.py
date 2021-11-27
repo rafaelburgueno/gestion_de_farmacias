@@ -443,7 +443,7 @@ def carga_usuarios(request):
     ROLES = ['usuario', 'farmacia', 'medico', 'stock']
 
     for usuario in USUARIOS:
-
+        
         usuario_nuevo = Usuarios.objects.create(
             cedula_de_identidad=usuario['cedula_de_identidad'],
             rol=ROLES[usuario["rol"]],

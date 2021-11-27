@@ -49,9 +49,10 @@ class RegistrarUsuario(CreateView):
         form_class = FormularioCrearUsuario
 
         template_name = 'registrar_usuario.html'
-        success_url = reverse_lazy('login')
-
-
+        #success_url = reverse_lazy('login')
+    
+        def get_success_url(self):
+                return reverse_lazy('login') + '?registro_exitoso'
 
 
 
