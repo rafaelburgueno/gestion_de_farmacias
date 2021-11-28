@@ -126,6 +126,11 @@ $(document).ready(function() {
             [0, 'asc']
         ]
     });
+    $('#tabla_de_stock_nacional').DataTable({
+        order: [
+            [2, 'asc']
+        ]
+    });
     //$('#tabla_de_stock_acumulado').DataTable();
     $('#tabla_de_recetas').DataTable({
         order: [
