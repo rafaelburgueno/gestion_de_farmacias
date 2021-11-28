@@ -49,6 +49,14 @@
                         </div>
                         
                         {% else %}
+                        {% if medicamento.categoria == "RV" %}
+                        <div class="alert alert-warning h6 " >
+                          <strong>Atencion!</strong> Este medicamento debe ser retirado por el usuario en persona.
+                        </div>
+                        {% endif %}
+                        
+                        
+
                         <form method="post" >
                         {% csrf_token %}
                             <input type="hidden" name="cedula_del_paciente" value="{{ paciente.cedula_de_identidad }}">
