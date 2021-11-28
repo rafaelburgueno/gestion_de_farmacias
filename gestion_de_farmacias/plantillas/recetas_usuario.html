@@ -18,6 +18,7 @@
                 <tr>
                     <th>Numero de receta</th>
                     <th>Estado </th>
+                    <th>Tipo</th>
                     <th>Principio activo </th>
                     <th>Paciente </th>
                     <th>Medico </th>
@@ -40,6 +41,13 @@
                         {% endif %}
                         <td>{{ receta.id }}</td>
                         <td>{{ receta.estado }}</td>
+                        <td>
+                    {% if receta.cronico %}
+                        <span class="badge badge-pill badge-danger">Cronico</span>
+                    {% else %}
+                        <span class="badge badge-pill badge-success">No cronico</span>
+                    {% endif %}
+                    </td>
                         <td>{{ receta.principio_activo }}</td>
                         <td>{{ receta.paciente }}</td>
                         <td>{{ receta.medico }}</td>

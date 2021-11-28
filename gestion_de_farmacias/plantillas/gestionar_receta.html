@@ -43,6 +43,20 @@
                     <td>{{ medicamento.forma }}</td>
                     <td>{{ medicamento.contraindicaciones }}</td>
                     <td>
+                        {% if medicamento.categoria == "FNR" %}
+                        <div class="alert alert-warning h6 " >
+                          <strong>Atencion!</strong> Este medicamento pertece al FNR y debe gestionar su despacho con el Quimico responsable del sector.
+                        </div>
+                        
+                        {% else %}
+                        {% if medicamento.categoria == "RV" %}
+                        <div class="alert alert-warning h6 " >
+                          <strong>Atencion!</strong> Este medicamento debe ser retirado por el usuario en persona.
+                        </div>
+                        {% endif %}
+                        
+                        
+
                         <form method="post" >
                         {% csrf_token %}
                             <input type="hidden" name="cedula_del_paciente" value="{{ paciente.cedula_de_identidad }}">
@@ -50,6 +64,8 @@
                             <input type="hidden" name="id_medicamento" value="{{ medicamento.id }}">
                             <input type="submit" value="Despachar" class="btn btn-primary"> 
                         </form>
+                        {% endif %}
+
                     </td>
                 </tr>
                 {% endfor %}

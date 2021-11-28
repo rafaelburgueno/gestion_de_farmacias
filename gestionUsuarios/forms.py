@@ -204,7 +204,7 @@ class Formulario_nueva_receta(forms.ModelForm):
                 model = Recetas
                 
                 #borramos el campo 'medico' porque se agrega automaticamente el usuario medico cuando se crea la receta
-                fields = ['principio_activo','paciente','descripcion','vencimiento']
+                fields = ['principio_activo','paciente','descripcion','vencimiento','cronico']
 
 
         def __init__(self, *args, **kwargs):

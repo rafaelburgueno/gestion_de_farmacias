@@ -18,6 +18,7 @@
             <thead class="thead-darkk">
                 <tr>
                     <th>Emitida el</th>
+                    <th>Tipo</th>
                     <th>Estado</th>
                     <th>Principio activo</th>
                     <th>Descripcion</th>
@@ -37,6 +38,13 @@
                     <tr>
                     {% endif %}
                         <td>{{ receta.created_at }}</td>
+                        <td>
+                    {% if receta.cronico %}
+                        <span class="badge badge-pill badge-danger">Cronico</span>
+                    {% else %}
+                        <span class="badge badge-pill badge-success">No cronico</span>
+                    {% endif %}
+                        </td>
                         <td>{{ receta.estado }}</td>
                         <td>{{ receta.principio_activo }}</td>
                         <td>{{ receta.descripcion }}</td>
