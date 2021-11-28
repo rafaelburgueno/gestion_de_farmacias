@@ -238,4 +238,18 @@ class RecetasUsuario(DetailView):
 
         return context
 
+class MisPacientes(ListView):
+    model = Usuarios
+    template_name = 'lista_de_usuarios.html'
 
+    def get_queryset(self):
+        cedula_del_user= self.request.user.cedula_de_identidad
+        queryset_mis_receta = Recetas.objects.filter(medico=cedula_del_user)
+        mis_pacientes = []
+        
+        for receta in queryset_mis_receta:
+
+            mis_pacientes.append(Usuarios.objects.get(cedula_de_identidad=receta.paciente.cedula_de_identidad))
+            #print(receta.paciente.cedula_de_identidad)
+        
+        return list(set(mis_pacientes))
