@@ -10,6 +10,11 @@ from django.urls import reverse_lazy
 
 from gestionUsuarios.models import Usuarios
 
+
+
+#=======================================================
+# Esta clase no se usa, el registro de usuarios lo gestiona RegistrarUsuario en la app gestionUsuarios
+#=======================================================
 # Create your views here.
 class SignUpView(CreateView):
         model = Usuarios
@@ -26,8 +31,8 @@ class SignUpView(CreateView):
         #esta funcion es opcional a la variable success_url que esta mas arriba
         #pero hacerlo asi permite egregar algo por metodo get
         def get_success_url(self):
-            #return reverse_lazy('login') + '?register'
-            return reverse('pedo')
+            return reverse_lazy('login') + '?registro_exitoso'
+            #return reverse('pppp')
             #return reverse('login', kwargs={'mensaje': 'Se ha registrado con exito.'})
             #return render(self.request, 'repairs/delete_repair.html', context) 
             #return reverse("login", {"mensaje": 'Se ha registrado con exito.'})

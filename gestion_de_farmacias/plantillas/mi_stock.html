@@ -22,8 +22,8 @@
         <table id="tabla_de_stock_acumulado" class="table table-hover">
             <thead class="thead-darkk">
                 <tr>
+                    <th>Cantidad</th>
                     <th>Stock</th>
-                    <th></th>
                     <th>Medicamento</th>
                     <th>Principio activo</th>
                 </tr>
@@ -34,16 +34,20 @@
                 <h4>{{lote.medicamento}}</h4> <p>{{lote.stock}}</p>
                 {% endcomment %}
                     
-                    <tr>
+                    <tr 
+                        {% if lote.stock < 50 %}class="table-danger"{% endif %}
+                        {% if lote.stock < 100 %}class="table-warning"{% else %}class="table-successs"{% endif %}>
                         <td>
                         {{lote.stock}}
                         </td>
                         <td>
                         {% if lote.stock < 50 %} 
-                            <span class="badge badge-danger">¡muy bajo stock!</span>
+                            <span class="badge badge-danger">muy bajo</span>
                         {% else %} 
                             {% if lote.stock < 100 %} 
-                                <span class="badge badge-warning">¡bajo stock!</span>
+                                <span class="badge badge-warning">bajo </span>
+                                {% else %} 
+                                    <span class="badge badge-success">ok</span>
                             {% endif %} 
                         {% endif %}
                         </td>
@@ -68,10 +72,12 @@
         <table id="tabla_de_stock" class="table table-hover">
             <thead class="thead-darkk">
                 <tr>
-                    <th>Stock</th>
+                    <th>Ingreso</th>
+                    <th>Cantidad</th>
                     {% comment %}
                     <th></th>
                     {% endcomment %}    
+                    
                     <th>Medicamento</th>
                     <th>Principio activo</th>        
                     <th>Funcionario</th>             
@@ -83,9 +89,8 @@
             <tbody>
                 {% for lote in lotes_list %}
                 <tr>
-                    <td>
-                        {{lote.stock}}
-                    </td>
+                    <td>{{lote.ingreso}}</td>
+                    <td>{{lote.stock}}</td>
                     {% comment %}
                     <td>
                         {% if lote.stock < 50 %} 
@@ -97,6 +102,7 @@
                         {% endif %}
                     </td>
                     {% endcomment %}
+                    
                     <td>{{lote.medicamento}}</td>
                     <td>{{lote.principio_activo}}</td>
                     <td>{{lote.funcionario}}</td>
@@ -115,12 +121,8 @@
     </div>
 
 
-
-    {% if formulario_nuevo_stock.errors %}
-    <div class="alert alert-danger" role="alert">
-        <p class="">Por favor revisa los campos</p>
-    </div>
-    {% endif %}
+<hr>
+    
 
     <div id="formulario" class="form-group form-group col-md-12">
         <div class="card-header">
@@ -129,7 +131,13 @@
 
         <form method="POST">
             {% csrf_token %}
-            <div class="card-body">{{formulario_nuevo_stock.as_p}}</div>
+            <div class="card-body">
+            {% if formulario_nuevo_stock.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <p class="">Por favor revisa los campos</p>
+                </div>
+            {% endif %}
+            {{formulario_nuevo_stock.as_p}}</div>
             <div class="card-footer">
                 <input class="btn btn-primary btn-lg btn-block" type="submit" value="Registrar" />
             </div>

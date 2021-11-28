@@ -1,7 +1,4 @@
-  
-
-
-{% extends 'base.html' %}
+ {% extends 'base.html' %}
 <!-- Contenido estatico de la pagina -->
 
 <!--Titulo de la pagina o pestaña-->
@@ -16,9 +13,7 @@
     <!-- ==============================-->
     <!-- Tabla con los Usuarios activos -->
     <!-- ==============================-->
-    {% if object_list %}
-
-    {% comment %}
+    {% if object_list %} {% comment %}
     <div class="consulta usuario mb-3">
         <h3>
             <p>Criterios de búsqueda</p>
@@ -34,11 +29,9 @@
             <thead class="thead-darkk">
                 <tr>
                     <th>C.i.</th>
-                    <th>Rol</th>
-                    <th>Usuario</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Telefono</th>
+                    <th>Rol</th>
                     <th>Ver</th>
                 </tr>
             </thead>
@@ -47,15 +40,12 @@
                 {% for usuario in object_list %}
                 <tr>
                     <td>{{ usuario.cedula_de_identidad }}</td>
-                    <td>{{ usuario.rol }}</td>
-                    <td>{{ usuario.usuario }}</td>
                     <td>{{ usuario.nombre }}</td>
                     <td>{{ usuario.apellido }}</td>
-                    <td>{{ usuario.telefono }}</td>
-                    
+                    <td>{{ usuario.rol }}</td>
                     <td>
-                        <a   class="btn btn-primary btn-block" href="/recetas_usuario/{{ usuario.cedula_de_identidad }}">Ver recetas</a></td> 
-                    </tr>
+                        <a class="btn btn-outline-primary btn-block " href="/recetas_usuario/{{ usuario.cedula_de_identidad }}">Ver usuario</a></td>
+                </tr>
                 {% endfor %}
             </tbody>
 

@@ -6,74 +6,97 @@
 {% include "nav.html" %}
 
 <div class="m-3" id="featured-3">
-
+    <div class="text-center">
     <h1 class="">Bienvenido al sistema de Gestion de Farmacia</h1>
-
-    <h2 class="pb-2 border-bottom">Una nueva forma que facilitará el acceso a la medicacion</h2>
+    <h2 class="pb-2 border-bottom">Una nueva forma de acceso a la medicación</h2>
+    </div>
     <div class="row g- py-5 row-cols-1 row-cols-lg-2">
-        <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient">
-            </div>
-
+        
+        <div class="feature col mb-5">
+                <h4>Usuarios</h4>
             <ul>
-                <h2>Usuarios</h2>
-                <li> Reserva de medicacion</li>
-                <li>Consulta de medicacion disponible</li>
-                <li> Historial de medicacion</li>
+                <li>Consultar informacion de medicamentos.</li>
+                <li>Consulta de farmacias</li>
+                <li>Ver trazabilidad de recetas propias.</li>
+                <li>Historial de medicacion</li>
             </ul>
         </div>
-        <div class="feature col">
+
+        <div class="feature col mb-5">
+                <h4>Personal de Farmacia</h4>
             <ul>
-                <h2>Personal de Farmacia</h2>
+                <li>Consultar informacion de medicamentos.</li>
+                <li>Consultar informacion de usuarios.</li>
                 <li>Desde el sistema se podrá administrar el stock de medicamentos a nivel nacional y en las unidades de farmacia a nivel local.</li>
-                <li> Da trazabilidad a los medicamentosn</li>
+                <li>Ver trazabilidad de recetas.</li>
                 <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
             </ul>
         </div>
-        <div class="feature col">
 
+        <div class="feature col mb-5">
+                <h4>Medicos</h4>
+            <ul>
+                <li>Consultar informacion de medicamentos.</li>
+                <li>Crear recetas</li>
+                <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
+            </ul>
+        </div>
 
+        <div class="feature col mb-5">
+                <h4>Integrantes de PANDORA software:</h4>
+            <ul>
+                <li>Rafael Burgueño</li>
+                <li>Andrés Iglesias</li>
+                <li>Marcelo Doti</li>
+                <li>Leonardo Ballesta</li>
+            </ul>
+        </div>
 
-            <!--
-    <h4>Prueba de datos que llegan desde el backend</h4>
+        <div class="feature col mb-5">
 
+            <h4>Prueba de datos que llegan desde el backend</h4>
+            <ul>
+            {% if user.is_authenticated%} 
+                {% if user.usuario_activo %} 
+                    user.usuario_activo = {{user.usuario_activo}}<br> 
+                {% endif %} 
+                    
+                user.is_authenticated == {{user.is_authenticated}}<br> 
+                mi farmacia es {{mi_farmacia}}<br> 
+                
+                {% if user.rol == "medico" %}
+                    el user.rol == "medico"<br> 
+                {% endif %} 
+                
+                {% if user.rol == "farmacia" %} 
+                    el user.rol == "farmacia"<br> 
+                {% endif %} 
+                
+                {% if user.rol == "usuario" %} 
+                    el user.rol == "usuario"<br> 
+                {% endif %} 
+                
+                {% if user.rol == "stock" %} 
+                    el user.rol == "stock"<br>
+                {% endif %}
+                
+            {% endif %} 
+            
+            user.rol: {{user.rol}}<br> 
+            user.usuario_administrador: {{user.usuario_administrador}}<br> 
+            user: {{user}}<br> 
+            user.group: {{user.group }}<br> 
+            user.is_authenticated: {{user.is_authenticated }}<br> 
+            user.rol: {{user.rol}}<br> 
+            user.usuario | length: {{user.usuario | length }}<br> 
+            user.cedula_de_identidad : {{user.cedula_de_identidad }}<br> 
+            user.nombre: {{user.nombre | upper}}<br> user.apellido: {{user.apellido }}<br> 
+            user.usuario_activo: {{user.usuario_activo}}<br> 
+            request.user.username: {{request.user.username | upper}}<br> 
+            request.user.nombre: {{request.user.nombre }}<br> 
+            request.user: {{request.user }}<br>
 
-    
-
-	
-    {% if user.is_authenticated%} {% if user.usuario_activo %}
-    <p>user.usuario_activo = {{user.usuario_activo}}</p>
-    {% endif %}
-
-    <p>user.is_authenticated == {{user.is_authenticated}}</p>
-    <p>mi farmacia es {{mi_farmacia}}</p>
-
-    {% if user.rol == "medico" %}
-    <p>el user.rol == "medico"</p>
-    {% endif %} {% if user.rol == "farmacia" %}
-    <p>el user.rol == "farmacia"</p>
-    {% endif %} {% if user.rol == "usuario" %}
-    <p>el user.rol == "usuario"</p>
-    {% endif %} {% if user.rol == "stock" %}
-    <p>el user.rol == "stock"</p>
-    {% endif %} {% endif %}
-
-    <p>user.rol: {{user.rol}}</p>
-    <p>user.usuario_administrador: {{user.usuario_administrador}}</p>
-    <p>user: {{user}}</p>
-    <p>user.group: {{user.group }}</p>
-    <p>user.is_authenticated: {{user.is_authenticated }}</p>
-    <br>
-    <p>user.rol: {{user.rol }}</p>
-    <p>user.usuario | length: {{user.usuario | length }}</p>
-    <p>user.cedula_de_identidad : {{user.cedula_de_identidad }}</p>
-    <p>user.nombre: {{user.nombre | upper}}</p>
-    <p>user.apellido: {{user.apellido }}</p>
-    <p>user.usuario_activo: {{user.usuario_activo }}</p>
-    <p>request.user.username: {{request.user.username | upper}}</p>
-    <p>request.user.nombre: {{request.user.nombre }}</p>
-    <p>request.user: {{request.user }}</p>
--->
+            </ul>
 
         </div>
 

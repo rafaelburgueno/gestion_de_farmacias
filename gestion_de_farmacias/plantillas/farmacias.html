@@ -30,9 +30,9 @@
 
             <thead class="thead-darkk">
                 <tr>
-                    <th>Nombre </th>
                     <th>Departamento</th>
                     <th>Localidad</th>
+                    <th>Nombre </th>
                     <th>Direccion</th>
 
                 </tr>
@@ -41,9 +41,9 @@
             <tbody>
                 {% for farmacia in farmacias %}
                 <tr>
-                    <td>{{ farmacia.nombre }}</td>
                     <td>{{ farmacia.departamento }}</td>
                     <td>{{ farmacia.localidad }}</td>
+                    <td>{{ farmacia.nombre }}</td>
                     <td>{{ farmacia.direccion }}</td>
                     {% comment %}
                     <td>{{ farmacia.forma }}</td>
@@ -64,6 +64,9 @@
 
 
     <!-- Menú de paginación -->
+    {% comment %}
+        
+    
     {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination  justify-content-center">
@@ -92,7 +95,7 @@
     </nav>
     {% endif %}
 
-
+{% endcomment %}
 
 </div>
 

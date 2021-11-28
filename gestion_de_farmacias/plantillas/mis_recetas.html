@@ -17,12 +17,12 @@
 
             <thead class="thead-darkk">
                 <tr>
-                    <th>Medicamento</th>
-                    <th>Paciente</th>
-                    <th>Medico</th>
-                    <th>Descripcion</th>
-                    <th>Vencimiento</th>
+                    <th>Emitida el</th>
                     <th>Estado</th>
+                    <th>Principio activo</th>
+                    <th>Descripcion</th>
+                    <th>Medico</th>
+                    <th>Vencimiento</th>
                     {% comment "" %}
                     <th>...</th>
                     {% endcomment %}
@@ -36,12 +36,12 @@
                     {% else %}
                     <tr>
                     {% endif %}
-                        <td>{{ receta.medicamento }}</td>
-                        <td>{{ receta.paciente }}</td>
-                        <td>{{ receta.medico }}</td>
-                        <td>{{ receta.descripcion }}</td>
-                        <td>{{ receta.vencimiento }}</td>
+                        <td>{{ receta.created_at }}</td>
                         <td>{{ receta.estado }}</td>
+                        <td>{{ receta.principio_activo }}</td>
+                        <td>{{ receta.descripcion }}</td>
+                        <td>{{ receta.medico }}</td>
+                        <td>{{ receta.vencimiento }}</td>
                     
                     {% comment %}
                     <td><a class="btn btn-sm btn-danger" href="/mi_receta/{{ receta.id }}">Editar</a></td>

@@ -104,10 +104,33 @@ function buscar_usuario() {
 }*/
 
 $(document).ready(function() {
-    $('#tabla_de_medicamentos').DataTable();
-    $('#tabla_de_usuarios').DataTable();
+    $('#tabla_de_medicamentos').DataTable({
+        // order [1,'asc'] significa que la columna con index 1 se va a ordenar de forma ascendente
+        order: [
+            [1, 'asc']
+        ]
+    });
+    $('#tabla_de_usuarios').DataTable({
+        order: [
+            [2, 'asc']
+        ]
+    });
     $('#tabla_de_farmacias').DataTable();
-    $('#tabla_de_stock').DataTable();
-    $('#tabla_de_stock_acumulado').DataTable();
-    $('#tabla_de_recetas').DataTable();
+    $('#tabla_de_stock').DataTable({
+        order: [
+            [0, 'desc']
+        ]
+    });
+    $('#tabla_de_stock_acumulado').DataTable({
+        order: [
+            [0, 'asc']
+        ]
+    });
+    //$('#tabla_de_stock_acumulado').DataTable();
+    $('#tabla_de_recetas').DataTable({
+        order: [
+            [0, 'desc']
+        ]
+    });
+    //$('#tabla_de_recetas').DataTable();
 });

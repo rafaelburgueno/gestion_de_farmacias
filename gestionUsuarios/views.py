@@ -99,11 +99,14 @@ class EditarUsuario(UpdateView):
         form_class = FormularioEditarUsuario_2
 
         template_name = 'mi_usuario.html'
-        success_url = reverse_lazy('mi_usuario')
+        #success_url = reverse_lazy('mi_usuario')
 
         def get_object(self):
             usuario = Usuarios.objects.get(cedula_de_identidad=self.request.user.cedula_de_identidad)
             return usuario
+
+        def get_success_url(self):
+            return reverse_lazy('mi_usuario') + '?editado_correctamente'
 
 
 # =======================================================================
