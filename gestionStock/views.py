@@ -10,7 +10,7 @@ from gestionStock.models import Medicamentos, Lotes, Farmacias
 from gestionUsuarios.models import Usuarios, Recetas
 
 # FORMULARIOS
-from gestionStock.forms import Formulario_nuevo_medicamento, Formulario_nuevo_stock
+from gestionStock.forms import Formulario_nuevo_medicamento, Formulario_nuevo_stock, Formulario_nuevo_stock_con_farmacias
 
 #from django.core.urlresolvers import reverse_lazy
 from django.urls import reverse_lazy
@@ -83,7 +83,7 @@ def buscar_medicamento(request):
 class Stock(View):
     model = Lotes
 
-    form_class = Formulario_nuevo_stock
+    form_class = Formulario_nuevo_stock_con_farmacias
     template_name = 'stock.html'
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion="miFarmacia")
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion__icontains="miFarmacia")
@@ -91,7 +91,9 @@ class Stock(View):
     # este metodo devuelve la consulta principal de la vista
     # aca podemos manipular la consulta que la clase Stock hace a la base de datos
     def get_queryset(self):
-        return Lotes.objects.all()
+        #con el filter(receta_de_destino=None) traemos los registros que no estan asignados a ninguna receta
+        #los registros despachados quedan registrados como registros negativos y con un objeto Recetas en la variable receta_de_destino
+        return Lotes.objects.all().filter(receta_de_destino=None)
     
     # este metodo devuelve el diccionario de contexto(los datos) que va a ser enviado al template
     # la usamos para agregar datos que queremos hacer llegar al template
@@ -113,11 +115,18 @@ class Stock(View):
         # copiamos a una variable los datos que llegaron del formulario
         formulario_nuevo_stock = self.form_class(request.POST)
 
+        id_medicamento=request.POST.get('medicamento')
+        medicamento = Medicamentos.objects.get(id=id_medicamento)
+
         # verificamos que los datos esten completos o sean correctos
         if formulario_nuevo_stock.is_valid():
             
             # con esto hacemos que el formulario sea editable
             formulario_nuevo_stock = formulario_nuevo_stock.save(commit=False)
+
+            formulario_nuevo_stock.funcionario = self.request.user
+            formulario_nuevo_stock.principio_activo = medicamento.principio_activo
+
 
             # si todo esta bien se guardan los datos de el nuevo registro de stock
             formulario_nuevo_stock.save()

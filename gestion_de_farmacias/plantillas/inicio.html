@@ -13,48 +13,86 @@
     <div class="row g- py-5 row-cols-1 row-cols-lg-2">
         
         <div class="feature col mb-5">
-                <h4>Usuarios</h4>
-            <ul>
-                <li>Consultar informacion de medicamentos.</li>
-                <li>Consulta de farmacias</li>
-                <li>Ver trazabilidad de recetas propias.</li>
-                <li>Historial de medicacion</li>
-            </ul>
+                <h4>Usuarios de ASSE.</h4>
+                <hr>
+                <ul>
+                    <p>Principal beneficiario del sistema para poder saber que recetas y medicamentos tiene para retirar.</p>
+                    <ul>
+                        <li>Consultar informacion de <a class="text-primary" href="{% url 'medicamentos' %}">medicamentos.</a></li>
+                        <li>Consulta de <a class="text-primary" href="{% url 'farmacias' %}">farmacias.</a></li>
+                        <li>Ver trazabilidad de <a class="text-primary" href="{% url 'mis_recetas' %}">recetas propias.</a></li>
+                        <li>Historial de medicacion</li>
+                    </ul>
+                </ul>
         </div>
 
         <div class="feature col mb-5">
-                <h4>Personal de Farmacia</h4>
-            <ul>
-                <li>Consultar informacion de medicamentos.</li>
-                <li>Consultar informacion de usuarios.</li>
-                <li>Desde el sistema se podrá administrar el stock de medicamentos a nivel nacional y en las unidades de farmacia a nivel local.</li>
-                <li>Ver trazabilidad de recetas.</li>
-                <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
-            </ul>
+                <h4>Funcionarios Auxiliares de Farmacia Hospitalaria.</h4>
+                <hr>
+                <ul>
+                <p>Usuario del sistema, cuyo rol principal se centra en entregar medicamentos mediante el ingreso al perfil del usuario.</p>
+                    <ul>
+                        <li>Consultar informacion de <a class="text-primary" href="{% url 'medicamentos' %}">medicamentos.</a></li>
+                        <li>Consultar informacion de <a class="text-primary" href="{% url 'lista_de_usuarios' %}">usuarios.</a></li>
+                        <li>Desde el sistema se podrá administrar el stock de medicamentos a nivel nacional y en las unidades de farmacia a nivel local.</li>
+                        <li>Ver trazabilidad de recetas.</li>
+                        <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
+                    </ul>
+                </ul>
         </div>
 
         <div class="feature col mb-5">
-                <h4>Medicos</h4>
-            <ul>
-                <li>Consultar informacion de medicamentos.</li>
-                <li>Crear recetas</li>
-                <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
-            </ul>
+                <h4>Médicos.</h4>
+                <hr>
+                <ul>
+                    <p>Usuario del sistema, que hace referencia a la persona que genera recetas de  medicamentos. Además, tiene acceso a módulos de registro de recetas,  ver medicamentos disponibles. Cabe notar que este usuario no podrá actualizar ni ingresar los  medicamentos.</p>
+                    <ul>
+                        <li>Consultar informacion de <a class="text-primary" href="{% url 'medicamentos' %}">medicamentos.</a></li>
+                        <li>Crear recetas</li>
+                        <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
+                    </ul>
+                <ul>
+        </div>
+
+        <div class="feature col mb-5">
+                <h4>Funcionarios de manejo de Stock.</h4>
+                <hr>
+                <ul>
+                    <p>Actor que tiene como rol principal el ingreso, actualización y reporte de los  medicamentos del sistema. Este usuario no tendrá acceso a otras funcionalidades del sistema</p>
+                    <ul>
+                        <li>Consultar informacion de stock de medicamentos.</li>
+                        <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
+                    </ul>
+                </ul>
+        </div>
+
+        <div class="feature col mb-5">
+                <h4>Auditoría.</h4>
+                <hr>
+                <ul>
+                <p>Actor que tiene como rol principal el ingreso, actualización y reporte de los  medicamentos del sistema. Este usuario no tendrá acceso a otras funcionalidades del sistema</p>
+                    <ul>
+                        <li>Consultar informacion de <a class="text-primary" href="{% url 'stock' %}">stock nacional de medicamentos.</a></li>
+                        <li> Permite realizar consultas sobre vencimientos, cantidades, ubicación, despacho, medicamentos alternativosn</li>
+                    </ul>
+                </ul>
         </div>
 
         <div class="feature col mb-5">
                 <h4>Integrantes de PANDORA software:</h4>
+                <hr>
             <ul>
-                <li>Rafael Burgueño</li>
-                <li>Andrés Iglesias</li>
-                <li>Marcelo Doti</li>
-                <li>Leonardo Ballesta</li>
+                <li>Leonardo Ballesta - d.t.leo037@gmail.com</li>
+                <li>Rafael Burgueño - rafaelburg@gmail.com</li>
+                <li>Marcelo Doti - marcelodotirisotto@gmail.com</li>
+                <li>Andrés Iglesias - andresiglesias1996@gmail.com</li>
             </ul>
         </div>
 
         <div class="feature col mb-5">
 
             <h4>Prueba de datos que llegan desde el backend</h4>
+            <hr>
             <ul>
             {% if user.is_authenticated%} 
                 {% if user.usuario_activo %} 
