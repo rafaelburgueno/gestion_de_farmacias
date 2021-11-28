@@ -133,6 +133,7 @@ class Recetas(models.Model):
         ESTADOS_DE_UNA_RECETA = [
                 ('RES', 'Reservado'),
                 ('RET','Retirado')
+               
         ]
         
         #LISTA_DE_PRINCIPIOS_ACTIVOS = principios_activos()
@@ -142,7 +143,7 @@ class Recetas(models.Model):
         principio_activo = models.CharField(max_length = 100, default="----")
         paciente = models.ForeignKey(Usuarios, null=True, on_delete=models.CASCADE, related_name='+')
         medico = models.ForeignKey(Usuarios, null=True, on_delete=models.CASCADE, related_name='+')
-
+        cronico = models.BooleanField(default=False)
         descripcion = models.CharField(max_length = 500, blank=True, null=True)
         vencimiento= models.CharField(max_length = 50,blank=True, null=True, verbose_name="Fecha de vencimiento")
         estado = models.CharField(max_length = 50,choices=ESTADOS_DE_UNA_RECETA,default="RES") # el estado se refiere a si el medicamento esta reservado o ya fue retirado

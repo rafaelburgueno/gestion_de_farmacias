@@ -431,7 +431,10 @@ class GestionarReceta(TemplateView):
                     )
                 #si todo va bien, podemos cambiar el estado a retirado(RET)
                 #obtenemos el id de la receta y actualizamos su estado
-                Recetas.objects.filter(id=id_receta_entregada).update(estado='RET')
+                if receta_de_destino.cronico == False:
+                    #receta_de_destino.estado='RET'
+
+                    Recetas.objects.filter(id=id_receta_entregada).update(estado='RET')
 
         #return reverse('article_details', args=(pk, slug))
         #return  redirect('recetas_usuario/'+cedula_del_paciente + '/') 
