@@ -22,6 +22,7 @@ from gestion_de_farmacias import views
 from gestionUsuarios.views import  RecetasUsuario, MisRecetas, RegistrarUsuario, EditarUsuario, ListaDeUsuarios, ListarRecetas, EditarReceta, ActulizarMiUsuario,MiUsuario
 from gestionStock.views import GestionarReceta, ListarFarmacias,ListarMedicamentos, MiStock, Stock, EditarStock
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -33,8 +34,8 @@ urlpatterns = [
     #path('login/', views.login, name="login"),
     #path('login/', LoginView.as_view(template_name='login.html'), name="login"),
     #path('logout/', logout_then_login.as_view(template_name='login.html'), name="logout"),
-    path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
 
 

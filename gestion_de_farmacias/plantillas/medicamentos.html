@@ -34,12 +34,12 @@
 
             <thead class="thead-darkk">
                 <tr>
-                    <th>id.</th>
+                    <th>Codigo</th>
                     <th>Nombre Comercial</th>
-                    <th>Categoria</th>
-                    <th>Laboratorio</th>
                     <th>Principio activo</th>
                     <th>Forma</th>
+                    <th>Categoria</th>
+                    <th>Laboratorio</th>
                     <!--<th>Contraindicaciones</th>-->
                 </tr>
             </thead>
@@ -49,10 +49,10 @@
                 <tr>
                     <td>{{ medicamentos.id }}</td>
                     <td>{{ medicamentos.nombre_comercial }}</td>
-                    <td>{{ medicamentos.categoria }}</td>
-                    <td>{{ medicamentos.laboratorio }}</td>
                     <td>{{ medicamentos.principio_activo }}</td>
                     <td>{{ medicamentos.forma }}</td>
+                    <td>{{ medicamentos.categoria }}</td>
+                    <td>{{ medicamentos.laboratorio }}</td>
                     <!--<td>{{ medicamentos.contraindicaciones }}</td>-->
                     <!--<td><a class="btn btn-sm btn-danger" href="/editar_stock/{{ medicamentos.id }}">Editar</a></td>-->
                 </tr>
@@ -67,9 +67,12 @@
         {% endif %}
     </div>
 
-    <br>
+
 
     <!-- Menú de paginación -->
+    {% comment %}
+        
+    
     {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination  justify-content-center">
@@ -97,7 +100,7 @@
         </ul>
     </nav>
     {% endif %}
-
+{% endcomment %}
 
 
 </div>

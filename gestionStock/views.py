@@ -426,5 +426,6 @@ class GestionarReceta(TemplateView):
 
         #return reverse('article_details', args=(pk, slug))
         #return  redirect('recetas_usuario/'+cedula_del_paciente + '/') 
-        return  redirect('lista_de_usuarios')
+        return redirect('recetas_usuario', pk=cedula_del_paciente)
+        #return  redirect('lista_de_usuarios')
         #return reverse('recetas_usuario', args=([cedula_del_paciente]))

@@ -16,15 +16,15 @@
 
             <thead class="thead-darkk">
                 <tr>
-                    <th>Nro.</th>
-                    <th> Principio activo </th>
-                    <th> paciente </th>
-                    <th> medico </th>
-                    <th> descripcion </th>
-                    <th> vencimiento </th>
-                    <th> estado </th>
+                    <th>Numero de receta</th>
+                    <th>Estado </th>
+                    <th>Principio activo </th>
+                    <th>Paciente </th>
+                    <th>Medico </th>
+                    <th>Descripcion </th>
+                    <th>Vencimiento </th>
                     {% if user.rol == "farmacia" %}
-                    <th>gestionar</th>
+                    <th>Gestionar</th>
                     {% else %}
                     <th></th>
                     {% endif %}
@@ -33,26 +33,27 @@
             </thead>
 
             <tbody>
-                {% for receta in Recetas %}
-                {% if receta.estado == "RES" %}
+                {% for receta in Recetas %} {% if receta.estado == "RES" %}
                 <tr class="table-warning">
-                {% else %}
-                <tr>
-                {% endif %}
-                    <td>{{ receta.id }}</td>
-                    <td>{{ receta.principio_activo }}</td>
-                    <td>{{ receta.paciente }}</td>
-                    <td>{{ receta.medico }}</td>
-                    <td>{{ receta.descripcion }}</td>
-                    <td>{{ receta.vencimiento }}</td>
-                    <td>{{ receta.estado }}</td>
-                    {% if receta.estado == "RES"  and  user.rol == "farmacia" %}
-                        <td><a class="btn btn-primary" href="/gestionar_receta/{{ receta.id }}">Gestionar</a></td>
                     {% else %}
-                        <td><p></p></td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+                    <tr>
+                        {% endif %}
+                        <td>{{ receta.id }}</td>
+                        <td>{{ receta.estado }}</td>
+                        <td>{{ receta.principio_activo }}</td>
+                        <td>{{ receta.paciente }}</td>
+                        <td>{{ receta.medico }}</td>
+                        <td>{{ receta.descripcion }}</td>
+                        <td>{{ receta.vencimiento }}</td>
+                        {% if receta.estado == "RES" and user.rol == "farmacia" %}
+                        <td><a class="btn btn-primary" href="/gestionar_receta/{{ receta.id }}">Gestionar</a></td>
+                        {% else %}
+                        <td>
+                            <p></p>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
             </tbody>
 
         </table>
