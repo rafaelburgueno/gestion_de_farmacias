@@ -137,5 +137,10 @@ $(document).ready(function() {
             [0, 'desc']
         ]
     });
+    $('#tabla_de_disponibilidad_en_farmacias').DataTable({
+        order: [
+            [0, 'desc']
+        ]
+    });
     //$('#tabla_de_recetas').DataTable();
 });

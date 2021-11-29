@@ -47,6 +47,17 @@ class Farmacias(models.Model):
 
         def __str__(self):
                 return self.nombre + ", " + self.localidad + ", " + self.departamento
+
+        def consultar_stock_acumulado(self, id_medicamento):
+
+                stock_acumulado = 0
+
+                lotes = Lotes.objects.filter(ubicacion=self.id).filter(medicamento=id_medicamento)
+                for lote in lotes:
+                        stock_acumulado += lote.stock
+
+
+                return stock_acumulado
         
         class Meta:
                 verbose_name = "Farmacia"

@@ -238,6 +238,13 @@ class RecetasUsuario(DetailView):
 
         return context
 
+
+
+
+
+# =======================================================================
+# MisPacientes ========================================================
+# =======================================================================
 class MisPacientes(ListView):
     model = Usuarios
     template_name = 'lista_de_usuarios.html'

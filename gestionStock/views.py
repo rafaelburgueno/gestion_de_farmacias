@@ -454,3 +454,52 @@ class GestionarReceta(TemplateView):
         return redirect('recetas_usuario', pk=cedula_del_paciente)
         #return  redirect('lista_de_usuarios')
         #return reverse('recetas_usuario', args=([cedula_del_paciente]))
+
+
+
+
+
+# =======================================================================
+# InfoDelMedicamento ==========================================
+# =======================================================================
+class InfoDelMedicamento(TemplateView):
+    #model = Farmacias
+    template_name = 'info_del_medicamento.html'
+
+    #context_object_name = "farmacias"
+    #pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+         #Farmacias.objects.get(id=numero_de_receta)
+
+        id_medicamento =self.kwargs['pk']
+        medicamento=Medicamentos.objects.get(id=id_medicamento)
+        context['medicamento'] = medicamento
+
+
+
+        queryset_registros_de_stock = Lotes.objects.filter(medicamento=id_medicamento)
+        farmacias_con_stock = []
+        for registro in queryset_registros_de_stock:
+            farmacias_con_stock.append( registro.ubicacion )
+
+        #elimino las farmacias duplicadas
+        farmacias_con_stock= list(set(farmacias_con_stock))
+        #farmacias_con_stock= Farmacias.objects.all()
+
+        ubicacion_y_stock=[]
+        for farmacia in farmacias_con_stock:
+
+            ubicacion_y_stock.append( [farmacia, farmacia.consultar_stock_acumulado(id_medicamento)] )
+            
+
+
+        #print("=================queryset REGISTROs DE STOCK ====================")
+        #print(ubicacion_y_stock)
+                
+        context['farmacias'] = ubicacion_y_stock
+        #context['farmacias'] = Farmacias.objects.all()
+
+        return context
+
