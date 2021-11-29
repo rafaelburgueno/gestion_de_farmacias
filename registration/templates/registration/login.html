@@ -9,7 +9,7 @@
 
 <div class="m-3">
 
-{% if 'registro_exitoso' in request.GET %}
+{% if 'registro_exitoso' in request.GET  and not form.non_field_errors %}
 <div class="container">
     <div class="alert alert-success">
         <strong>Exito!</strong> Usuario creado correctamente.
