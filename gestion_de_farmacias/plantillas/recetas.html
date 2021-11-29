@@ -28,7 +28,11 @@
                     {% if  user.rol == 'farmacia'%}
                     <th>Gestionar</th>
                     {% else %}
-                    <th>...</th>
+                        {% if  user.rol == 'medico'%}
+                        <th>Editar</th>
+                        {% else %}
+                        <th>...</th>
+                        {% endif %}
                     {% endif %}
                 </tr>
             </thead>
@@ -61,7 +65,11 @@
                     {% if  receta.estado == "RES" and user.rol == 'farmacia'%}
                     <td><a class="btn btn-sm btn-outline-primary" href="/gestionar_receta/{{ receta.id }}">Gestionar</a></td>
                     {% else %}
+                        {% if  user.rol == 'medico'%}
+                        <td><a class="btn btn-sm btn-primary" href="/editar_receta/{{ receta.id }}">Editar</a></td>    
+                        {% else %}
                         <td><p></p></td>
+                        {% endif %}
                     {% endif %}
                 </tr>
                 {% endfor %}

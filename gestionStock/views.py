@@ -324,6 +324,7 @@ class GestionarReceta(TemplateView):
 
         # obtenemos la farmacias a la que pertenece el usuario 
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_funcionario)
+        
         #print("================================")
         #print(queryset_mi_farmacia)
         if len(queryset_mi_farmacia)==0:
@@ -344,13 +345,25 @@ class GestionarReceta(TemplateView):
         principio_activo = context['receta'].principio_activo
         #ya con el principio activo buscamos los medicamentos que satisfacen a esa receta
         queryset_opciones_de_medicamentos = Medicamentos.objects.filter(principio_activo=principio_activo)
+        queryset_con_stock = Lotes.objects.filter(ubicacion=queryset_mi_farmacia[0].id).filter(principio_activo=principio_activo)
+
+        opciones_con_info_de_stock = []
         for medicamento in  queryset_opciones_de_medicamentos:
             #aca iria el codigo para revisar si existe stock de ese medicamento
-            pass
+            stock_disponible =False
+            registro_de_stock_del_medicamento= queryset_con_stock.filter(medicamento=medicamento.id)
+            if len(registro_de_stock_del_medicamento) > 0:
+                if registro_de_stock_del_medicamento[0].stock > 0:
+                    stock_disponible = True
+
+            opciones_con_info_de_stock.append([medicamento, stock_disponible])
 
 
-
-        context['opciones_de_medicamentos'] =queryset_opciones_de_medicamentos
+        #print("==========================================================")
+        #print(queryset_con_stock)
+        #print(opciones_con_info_de_stock)
+        #context['opciones_de_medicamentos'] =queryset_opciones_de_medicamentos
+        context['opciones_de_medicamentos'] =opciones_con_info_de_stock
 
         
         #if len(queryset_recetas) > 0:

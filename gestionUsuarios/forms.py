@@ -227,7 +227,7 @@ class Formulario_nueva_receta(forms.ModelForm):
                 self.fields['descripcion'].widget.attrs.update({'class': 'form-control'})
                 self.fields['vencimiento'].widget.attrs.update({'class': 'form-control','type':'date'})
                 #self.fields['vencimiento'].widget.attrs.update(type='date')
-                #self.fields['estado'].widget.attrs.update({'class': 'form-control'})
+                self.fields['cronico'].widget.attrs.update({'class': 'radio'})
 
 
 
