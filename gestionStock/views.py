@@ -83,7 +83,7 @@ def buscar_medicamento(request):
 class Stock(View):
     model = Lotes
 
-    form_class = Formulario_nuevo_stock_con_farmacias
+    form_class = Formulario_nuevo_stock
     template_name = 'stock.html'
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion="miFarmacia")
     #busqueda_por_farmacias = Lotes.objects.filter(ubicacion__icontains="miFarmacia")
@@ -103,6 +103,33 @@ class Stock(View):
 
         #le enviamos el formulario_nuevo_stock como una variabl de contecto
         diccionario_de_contexto["formulario_nuevo_stock"] = self.form_class
+        #===============================================================
+            #STOCK ACUMULADO
+            #este algoritmo va a ser muy ineficiente XD
+#===============================================================
+        queryset_stock_total_mi_farmacia = Lotes.objects.all()
+
+        stock_acumulado = []
+
+        for cada_registro_de_stock_de_mi_farmacia in queryset_stock_total_mi_farmacia:
+                
+            stock_acumulado_del_medicamento = 0
+
+            registros_stock_duplicados = queryset_stock_total_mi_farmacia.filter(medicamento=cada_registro_de_stock_de_mi_farmacia.medicamento.id)
+                
+                
+            #este for suma los valores y los pone en la variablestock_acumulado_de_medicamentos
+            for registro in registros_stock_duplicados:
+                stock_acumulado_del_medicamento += registro.stock
+                
+            if not stock_acumulado.__contains__({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento}):
+                stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
+            
+                
+
+            #context['stock_acumulado']= queryset_stock_total.filter(medicamento=96)
+            diccionario_de_contexto['stock_acumulado']= stock_acumulado
+        
         return diccionario_de_contexto
     
     # este metodo se ejecuta cuando se envian peticions por GET a la pagina
@@ -117,6 +144,7 @@ class Stock(View):
 
         id_medicamento=request.POST.get('medicamento')
         medicamento = Medicamentos.objects.get(id=id_medicamento)
+        mi_farmacia = Farmacias.objects.filter(funcionarios=request.user.cedula_de_identidad)[0]
 
         # verificamos que los datos esten completos o sean correctos
         if formulario_nuevo_stock.is_valid():
@@ -126,6 +154,7 @@ class Stock(View):
 
             formulario_nuevo_stock.funcionario = self.request.user
             formulario_nuevo_stock.principio_activo = medicamento.principio_activo
+            formulario_nuevo_stock.ubicacion = mi_farmacia
 
 
             # si todo esta bien se guardan los datos de el nuevo registro de stock
@@ -271,6 +300,8 @@ class MiStock(ListView):
         #medicamento=request.POST.get('id_stock')
         id_medicamento=request.POST.get('medicamento')
         medicamento = Medicamentos.objects.get(id=id_medicamento)
+        farmacia_general=Farmacias.objects.get(nombre='Farmacia General')
+
         #medicamento=formulario_nuevo_stock.get('id_medicamento')
         #request.POST.get('id_receta')
         #print(medicamento.principio_activo)
@@ -282,6 +313,16 @@ class MiStock(ListView):
         #print(type(formulario_nuevo_stock.id_medicamento))
         # verificamos si el formulario esta bien
         if formulario_nuevo_stock.is_valid():
+            if mi_farmacia.id != farmacia_general.id:
+                Lotes.objects.create(
+                    medicamento=medicamento,
+                    principio_activo=medicamento.principio_activo,
+                    funcionario=self.request.user,
+                    stock= -int(request.POST.get('stock')),
+                    ubicacion=farmacia_general,
+                    vencimiento=request.POST.get('vencimiento')
+                    ) 
+               
             #medicamento = Medicamentos.objects.get(id=medicamento)
             #print(medicamento)
 
@@ -324,6 +365,7 @@ class GestionarReceta(TemplateView):
 
         # obtenemos la farmacias a la que pertenece el usuario 
         queryset_mi_farmacia = Farmacias.objects.filter(funcionarios=cedula_del_funcionario)
+        
         #print("================================")
         #print(queryset_mi_farmacia)
         if len(queryset_mi_farmacia)==0:
@@ -344,13 +386,25 @@ class GestionarReceta(TemplateView):
         principio_activo = context['receta'].principio_activo
         #ya con el principio activo buscamos los medicamentos que satisfacen a esa receta
         queryset_opciones_de_medicamentos = Medicamentos.objects.filter(principio_activo=principio_activo)
+        queryset_con_stock = Lotes.objects.filter(ubicacion=queryset_mi_farmacia[0].id).filter(principio_activo=principio_activo)
+
+        opciones_con_info_de_stock = []
         for medicamento in  queryset_opciones_de_medicamentos:
             #aca iria el codigo para revisar si existe stock de ese medicamento
-            pass
+            stock_disponible =False
+            registro_de_stock_del_medicamento= queryset_con_stock.filter(medicamento=medicamento.id)
+            if len(registro_de_stock_del_medicamento) > 0:
+                if registro_de_stock_del_medicamento[0].stock > 0:
+                    stock_disponible = True
+
+            opciones_con_info_de_stock.append([medicamento, stock_disponible])
 
 
-
-        context['opciones_de_medicamentos'] =queryset_opciones_de_medicamentos
+        #print("==========================================================")
+        #print(queryset_con_stock)
+        #print(opciones_con_info_de_stock)
+        #context['opciones_de_medicamentos'] =queryset_opciones_de_medicamentos
+        context['opciones_de_medicamentos'] =opciones_con_info_de_stock
 
         
         #if len(queryset_recetas) > 0:
@@ -441,3 +495,52 @@ class GestionarReceta(TemplateView):
         return redirect('recetas_usuario', pk=cedula_del_paciente)
         #return  redirect('lista_de_usuarios')
         #return reverse('recetas_usuario', args=([cedula_del_paciente]))
+
+
+
+
+
+# =======================================================================
+# InfoDelMedicamento ==========================================
+# =======================================================================
+class InfoDelMedicamento(TemplateView):
+    #model = Farmacias
+    template_name = 'info_del_medicamento.html'
+
+    #context_object_name = "farmacias"
+    #pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+         #Farmacias.objects.get(id=numero_de_receta)
+
+        id_medicamento =self.kwargs['pk']
+        medicamento=Medicamentos.objects.get(id=id_medicamento)
+        context['medicamento'] = medicamento
+
+
+
+        queryset_registros_de_stock = Lotes.objects.filter(medicamento=id_medicamento)
+        farmacias_con_stock = []
+        for registro in queryset_registros_de_stock:
+            farmacias_con_stock.append( registro.ubicacion )
+
+        #elimino las farmacias duplicadas
+        farmacias_con_stock= list(set(farmacias_con_stock))
+        #farmacias_con_stock= Farmacias.objects.all()
+
+        ubicacion_y_stock=[]
+        for farmacia in farmacias_con_stock:
+
+            ubicacion_y_stock.append( [farmacia, farmacia.consultar_stock_acumulado(id_medicamento)] )
+            
+
+
+        #print("=================queryset REGISTROs DE STOCK ====================")
+        #print(ubicacion_y_stock)
+                
+        context['farmacias'] = ubicacion_y_stock
+        #context['farmacias'] = Farmacias.objects.all()
+
+        return context
+

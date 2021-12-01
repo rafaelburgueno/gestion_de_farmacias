@@ -20,7 +20,7 @@ from django.contrib.auth.views import LoginView, logout_then_login
 #from gestion_de_farmacias.views import login, inicio
 from gestion_de_farmacias import views
 from gestionUsuarios.views import  RecetasUsuario, MisRecetas, RegistrarUsuario, EditarUsuario, ListaDeUsuarios, ListarRecetas, EditarReceta, ActulizarMiUsuario,MiUsuario, MisPacientes
-from gestionStock.views import GestionarReceta, ListarFarmacias,ListarMedicamentos, MiStock, Stock, EditarStock
+from gestionStock.views import InfoDelMedicamento,GestionarReceta, ListarFarmacias,ListarMedicamentos, MiStock, Stock, EditarStock
 
 
 urlpatterns = [
@@ -43,6 +43,7 @@ urlpatterns = [
     path('medicamentos/', ListarMedicamentos.as_view(), name="medicamentos"),
     #path('buscar_medicamento/', buscar_medicamento, name="buscar_medicamento"),
     path('farmacias/', ListarFarmacias.as_view(), name="farmacias"),
+    path('info_del_medicamento/<int:pk>/', InfoDelMedicamento.as_view(), name="info_del_medicamento"),
 
     path('stock/', Stock.as_view(), name="stock"),
     #path('crear_stock/', views.LoteCreate.as_view(), name="cerar_stock"),
