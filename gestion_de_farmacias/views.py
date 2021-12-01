@@ -413,6 +413,7 @@ def carga_farmacias(request):
     return redirect('farmacias')
 
 FARMACIAS = [
+
 {'nombre':'Farmacia General'  , 'departamento':'', 'direccion':   '', 'localidad':''},
 {'nombre':'Montevideo Central'  , 'departamento':'Montevideo', 'direccion':   '18 de julio 1234', 'localidad':'  Montevideo'},
 {'nombre':'Montevideo Curva de Maroñas' , 'departamento':'Montevideo', 'direccion':   '8 de octubre 1234', 'localidad':' Montevideo'},

@@ -10,7 +10,7 @@
 <div class="m-3">
     <h1>Medicamentos</h1>
 
-    {% comment  %}
+    {% comment %}
     <div class="consulta medicamento mb-3">
         <h3>
             <p>Criterios de búsqueda</p>
@@ -29,7 +29,7 @@
         <!-- Tabla con los Medicamentos -->
         <!-- ==============================-->
         {% if medicamentos %}
-        
+
         <table id="tabla_de_medicamentos" class="table table-hover">
 
             <thead class="thead-darkk">
@@ -40,7 +40,7 @@
                     <th>Forma</th>
                     <th>Categoria</th>
                     <th>Laboratorio</th>
-                    <!--<th>Contraindicaciones</th>-->
+                    <th>Info</th>
                 </tr>
             </thead>
 
@@ -54,7 +54,7 @@
                     <td>{{ medicamentos.categoria }}</td>
                     <td>{{ medicamentos.laboratorio }}</td>
                     <!--<td>{{ medicamentos.contraindicaciones }}</td>-->
-                    <!--<td><a class="btn btn-sm btn-danger" href="/editar_stock/{{ medicamentos.id }}">Editar</a></td>-->
+                    <td><a class="btn btn-sm btn-danger" href="/info_del_medicamento/{{ medicamentos.id }}">Ver</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -62,7 +62,7 @@
         </table>
         {% else %}
         <div class="alert alert-warning">
-            <strong>Atencion!</strong>  No existen registros.
+            <strong>Atencion!</strong> No existen registros.
         </div>
         {% endif %}
     </div>
@@ -70,10 +70,7 @@
 
 
     <!-- Menú de paginación -->
-    {% comment %}
-        
-    
-    {% if is_paginated %}
+    {% comment %} {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination  justify-content-center">
             {% if page_obj.has_previous %}
@@ -99,8 +96,7 @@
             {% endif %}
         </ul>
     </nav>
-    {% endif %}
-{% endcomment %}
+    {% endif %} {% endcomment %}
 
 
 </div>
