@@ -59,14 +59,18 @@ class InicioView(TemplateView):
 # =====================
 def inicio(request):
 
-    # print("el request.user.rol.nombre dice: " + str(request.user.rol.nombre) )
-    # json_personas= json.dumps(lista_personas)
-    # json_personas= json.dumps([11,12,13,14,15])
-    json_personas = [11, 12, 13, 14, 15]
-
     diccionario_de_contexto = {"usuario": "Fulano Detail"}
 
     return render(request, "inicio.html", diccionario_de_contexto)
+
+
+# =====================
+#  SIN STOCK ===========
+# =====================
+def sin_stock(request):
+
+    return render(request, "sin_stock.html")
+
 
 
 # =================================================
@@ -271,7 +275,7 @@ MEDICAMENTOS = [
     'categoria':'RC'
     },
 {
-    'nombre_comercial':'lantus 100 U/mL' ,           
+    'nombre_comercial':'Lantus 100 U/mL' ,           
     'laboratorio':'Sanofi'          ,           
     'principio_activo':'Insulina glargina'  ,                          
     'forma':'solución inyectable' ,                           
@@ -279,7 +283,7 @@ MEDICAMENTOS = [
     'categoria':'FNR'
     },
 {
-    'nombre_comercial':'dyslor 500 U',
+    'nombre_comercial':'Dyslor 500 U',
     'laboratorio': 'Roemmers-Iclos',  
     'principio_activo':'Toxina botulinica', 
     'forma':  'solucion inyectable' , 
@@ -287,7 +291,7 @@ MEDICAMENTOS = [
     'categoria':'FNR'
     },
 {
-    'nombre_comercial':'tacrolimus sandoz 1 mg'  ,    
+    'nombre_comercial':'Tacrolimus sandoz 1 mg'  ,    
     'laboratorio':'Scienza-Novartis' ,         
     'principio_activo':'Tacrolimús'  ,                                  
     'forma':'Capsula'     ,                                
@@ -310,7 +314,7 @@ MEDICAMENTOS = [
     'contraindicaciones':'Hipersensibilidad a interferón-ß natural o recombinante; embarazo; depresión grave activa y/o ideación suicida', 
     'categoria':'FNR'},
 {
-    'nombre_comercial':'quetipax 200 mg',               
+    'nombre_comercial':'Quetipax 200 mg',               
     'laboratorio':'Roemmers-Rowe'  ,          
     'principio_activo':'Quetiapina'   ,                                  
     'forma':'Comprimidos'  ,                                    
@@ -318,7 +322,7 @@ MEDICAMENTOS = [
     'categoria': 'RV'
     },
 {
-    'nombre_comercial':'ondil 2 mg',                 
+    'nombre_comercial':'Ondil 2 mg',                 
     'laboratorio':'Roemmers-Rowe' ,              
     'principio_activo':  'Alprazolam'  ,                                  
     'forma':'Comprimidos',                                 
@@ -326,7 +330,7 @@ MEDICAMENTOS = [
     'categoria':'RV'
     },
 {
-    'nombre_comercial':'bropan 12 mg',               
+    'nombre_comercial':'Bropan 12 mg',               
     'laboratorio':'Fármaco Uruguayo',            
     'principio_activo':'Bromazepam'   ,                                
     'forma':'Comprimidos' ,                                    
@@ -357,7 +361,7 @@ MEDICAMENTOS = [
     'contraindicaciones':'Hipersensibilidad, miastenia gravis, síndrome de apnea del sueño, insuf. respiratoria severa, I.H. severa, tto. simultáneo con opiáceos, barbitúricos, neurolépticos' ,
     'categoria':'RV'},
 {
-    'nombre_comercial':'abretia 40 mg',                 
+    'nombre_comercial':'Abretia 40 mg',                 
     'laboratorio':'Roemmers',                   
     'principio_activo':'Atomoxetina',                                  
     'forma':'Capsula',                                      
@@ -365,7 +369,7 @@ MEDICAMENTOS = [
     'categoria':'RV'
     },
 {
-    'nombre_comercial':'ezentius 20 mg',                 
+    'nombre_comercial':'Ezentius 20 mg',                 
     'laboratorio':'Roemmers'  ,               
     'principio_activo':'Escitalopram',                               
     'forma':'Comprimidos',                                    
@@ -409,27 +413,28 @@ def carga_farmacias(request):
         departamento=farmacia['departamento'],
         )
         farmacia_nueva.save()
+        print(farmacia_nueva)
 
     return redirect('farmacias')
 
 FARMACIAS = [
-    
-{'nombre':'Farmacia General'  , 'departamento':'Montevideo', 'direccion':   'Sarandi 234', 'localidad':'  Montevideo'},    
-{'nombre':'Montevideo Central'  , 'departamento':'Montevideo', 'direccion':   '18 de julio 1234', 'localidad':'  Montevideo'},
-{'nombre':'Montevideo Curva de Maroñas' , 'departamento':'Montevideo', 'direccion':   '8 de octubre 1234', 'localidad':' Montevideo'},
-{'nombre':'Montevideo Pocitos'  , 'departamento':'Montevideo', 'direccion':   'Tezanos 1234', 'localidad':'  Montevideo'},
-{'nombre':'Montevideo Cerro'  , 'departamento':'Montevideo', 'direccion':   'Rusia 1234', 'localidad':'  Montevideo'},
-{'nombre':'Montevideo Prado'  , 'departamento':'Montevideo', 'direccion':   'Millan 1234', 'localidad':' Montevideo'},
-{'nombre':'Canelones Zona Sur'  , 'departamento':'Canelones', 'direccion':  'Las violetas 2345', 'localidad':' Pando'},
-{'nombre':'San Jose Oeste'  , 'departamento':'San Jose', 'direccion':   'Miraflores 3456', 'localidad':' Libertad'},
-{'nombre':'Maldonado Central' , 'departamento':'Maldonado', 'direccion':  'Dr Puey 3456', 'localidad':'  Maldonado'},
-{'nombre':'Canelones Central' , 'departamento':'Canelones', 'direccion':  'Edison 5645', 'localidad':' Canelones'},
-{'nombre':'  Maldonado  Norte'  , 'departamento':'Maldonado', 'direccion':  'Los ceibos 2345', 'localidad':' Aigua'},
-{'nombre':'  San Jose Central'  , 'departamento':'San Jose', 'direccion':   'Avda Gutierrez', 'localidad':' 4567', 'localidad':' San Jose'},
-{'nombre':'  Durazno Central' , 'departamento':'Durazno', 'direccion':  'Juan Carlos Reyles 6785', 'localidad':' Durazno'},
-{'nombre':'  Durazno Este'  , 'departamento':'Durazno', 'direccion':  'Los abetos 5678', 'localidad':' Sarandi del Yi'},
-{'nombre':'  Artigas Central' , 'departamento':'Artigas', 'direccion':  'Manuel Lavalleja 3456', 'localidad':' Artigas'},
-{'nombre':'  Artigas Norte' , 'departamento':'Artigas', 'direccion':  'Brandzen 6789', 'localidad':' Bella Union'},
+
+{'nombre':'Farmacia General', 'departamento':'Montevideo', 'direccion':'Deposito', 'localidad':'Ciudad Vieja'},
+{'nombre':'Montevideo Central', 'departamento':'Montevideo', 'direccion':   '18 de julio 1234', 'localidad':'  Montevideo'},
+{'nombre':'Montevideo Curva de Maroñas', 'departamento':'Montevideo', 'direccion':   '8 de octubre 1234', 'localidad':' Montevideo'},
+{'nombre':'Montevideo Pocitos', 'departamento':'Montevideo', 'direccion':   'Tezanos 1234', 'localidad':'  Montevideo'},
+{'nombre':'Montevideo Cerro', 'departamento':'Montevideo', 'direccion':   'Rusia 1234', 'localidad':'  Montevideo'},
+{'nombre':'Montevideo Prado', 'departamento':'Montevideo', 'direccion':   'Millan 1234', 'localidad':' Montevideo'},
+{'nombre':'Canelones Zona Sur', 'departamento':'Canelones', 'direccion':  'Las violetas 2345', 'localidad':' Pando'},
+{'nombre':'San Jose Oeste', 'departamento':'San Jose', 'direccion':   'Miraflores 3456', 'localidad':' Libertad'},
+{'nombre':'Maldonado Central', 'departamento':'Maldonado', 'direccion':  'Dr Puey 3456', 'localidad':'  Maldonado'},
+{'nombre':'Canelones Central', 'departamento':'Canelones', 'direccion':  'Edison 5645', 'localidad':' Canelones'},
+{'nombre':'Maldonado  Norte', 'departamento':'Maldonado', 'direccion':  'Los ceibos 2345', 'localidad':' Aigua'},
+{'nombre':'San Jose Central', 'departamento':'San Jose', 'direccion':   'Avda Gutierrez', 'localidad':' 4567', 'localidad':' San Jose'},
+{'nombre':'Durazno Central', 'departamento':'Durazno', 'direccion':  'Juan Carlos Reyles 6785', 'localidad':' Durazno'},
+{'nombre':'Durazno Este', 'departamento':'Durazno', 'direccion':  'Los abetos 5678', 'localidad':' Sarandi del Yi'},
+{'nombre':'Artigas Central', 'departamento':'Artigas', 'direccion':  'Manuel Lavalleja 3456', 'localidad':' Artigas'},
+{'nombre':'Artigas Norte', 'departamento':'Artigas', 'direccion':  'Brandzen 6789', 'localidad':' Bella Union'},
 ]
 
 
@@ -460,16 +465,60 @@ def carga_usuarios(request):
 
         usuario_nuevo.save()
 
-    print("paso por la funcion carga_usuaros")
+    #print("paso por la funcion carga_usuaros")
 
     return redirect('lista_de_usuarios')
 
 
 USUARIOS = [
     {
+        "cedula_de_identidad": 32256383,
+        "rol": 2,
+        "usuario": "LeonardoBallesta",
+        "nombre": "Leonardo",
+        "apellido": "Ballesta",
+        "fecha_de_nacimiento": "1967-08-11",
+        "email": "leonardo@gmail.com",
+        "telefono": 99546286,
+        "direccion": "384 Randolph Street, Eagletown, Utah, 8901"
+    },
+    {
+        "cedula_de_identidad": 41026383,
+        "rol": 1,
+        "usuario": "RafaelBurgueño",
+        "nombre": "Rafael",
+        "apellido": "Burgueño",
+        "fecha_de_nacimiento": "1985-10-01",
+        "email": "rafael@gmail.com",
+        "telefono": 94741095,
+        "direccion": "384 Randolph Street, Eagletown, Utah, 8901"
+    },
+    {
+        "cedula_de_identidad": 40076383,
+        "rol": 0,
+        "usuario": "MarceloDoti",
+        "nombre": "Marcelo",
+        "apellido": "Doti",
+        "fecha_de_nacimiento": "1980-11-05",
+        "email": "marcelo@gmail.com",
+        "telefono": 95007985,
+        "direccion": "384 Randolph Street, Eagletown, Utah, 8901"
+    },
+    {
+        "cedula_de_identidad": 56576383,
+        "rol": 3,
+        "usuario": "AndresIglesias",
+        "nombre": "Andrés",
+        "apellido": "Iglesias",
+        "fecha_de_nacimiento": "1990-11-05",
+        "email": "andres@gmail.com",
+        "telefono": 95247985,
+        "direccion": "384 Randolph Street, Eagletown, Utah, 8901"
+    },
+    {
         "cedula_de_identidad": 26576383,
         "rol": 0,
-        "usuario": "Rowe872",
+        "usuario": "SantiCol872",
         "nombre": "Santiago",
         "apellido": "Collins",
         "fecha_de_nacimiento": "2009-11-05",
@@ -491,7 +540,7 @@ USUARIOS = [
     {
         "cedula_de_identidad": 40239210,
         "rol": 3,
-        "usuario": "Hendricks755",
+        "usuario": "allypage755",
         "nombre": "Allyson",
         "apellido": "Page",
         "fecha_de_nacimiento": "1986-05-31",
@@ -502,7 +551,7 @@ USUARIOS = [
     {
         "cedula_de_identidad": 17147749,
         "rol": 0,
-        "usuario": "Jana588",
+        "usuario": "earline588",
         "nombre": "Earline",
         "apellido": "Blake",
         "fecha_de_nacimiento": "1954-10-28",
@@ -513,8 +562,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 48479504,
         "rol": 1,
-        "usuario": "Trisha959",
-        "nombre": "Gonzalez",
+        "usuario": "gonza959",
+        "nombre": "Gonzalo",
         "apellido": "Grant",
         "fecha_de_nacimiento": "1962-08-20",
         "email": "gonzalezgrant@parcoe.com",
@@ -524,9 +573,9 @@ USUARIOS = [
     {
         "cedula_de_identidad": 64955168,
         "rol": 3,
-        "usuario": "Huffman372",
-        "nombre": "Powell",
-        "apellido": "Cantu",
+        "usuario": "PaulaCantou",
+        "nombre": "Paula",
+        "apellido": "Cantou",
         "fecha_de_nacimiento": "1999-02-03",
         "email": "powellcantu@parcoe.com",
         "telefono": 98787305,
@@ -535,8 +584,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 49146380,
         "rol": 3,
-        "usuario": "Fry372",
-        "nombre": "Josephine",
+        "usuario": "fina372",
+        "nombre": "Josefina",
         "apellido": "Golden",
         "fecha_de_nacimiento": "1943-04-19",
         "email": "josephinegolden@parcoe.com",
@@ -546,8 +595,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 32155540,
         "rol": 0,
-        "usuario": "Parker135",
-        "nombre": "Davis",
+        "usuario": "david5",
+        "nombre": "David",
         "apellido": "Hubbard",
         "fecha_de_nacimiento": "1987-07-22",
         "email": "davishubbard@parcoe.com",
@@ -557,8 +606,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 38982891,
         "rol": 2,
-        "usuario": "Hall876",
-        "nombre": "Spencer",
+        "usuario": "alcan876",
+        "nombre": "Alvaro",
         "apellido": "Cantrell",
         "fecha_de_nacimiento": "1999-09-03",
         "email": "spencercantrell@parcoe.com",
@@ -568,8 +617,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 57343062,
         "rol": 2,
-        "usuario": "Kerr728",
-        "nombre": "Dee",
+        "usuario": "ElDario",
+        "nombre": "Dario",
         "apellido": "Irwin",
         "fecha_de_nacimiento": "2012-08-01",
         "email": "deeirwin@parcoe.com",
@@ -579,8 +628,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 57939214,
         "rol": 2,
-        "usuario": "Perry610",
-        "nombre": "Antoinette",
+        "usuario": "tony8",
+        "nombre": "Antonio",
         "apellido": "Mccoy",
         "fecha_de_nacimiento": "1996-07-23",
         "email": "antoinettemccoy@parcoe.com",
@@ -591,8 +640,8 @@ USUARIOS = [
         "cedula_de_identidad": 18926939,
         "rol": 1,
         "usuario": "Castro455",
-        "nombre": "Stanton",
-        "apellido": "Robertson",
+        "nombre": "Esteban",
+        "apellido": "Castro",
         "fecha_de_nacimiento": "2010-07-13",
         "email": "stantonrobertson@parcoe.com",
         "telefono": 99447516,
@@ -601,8 +650,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 35254813,
         "rol": 3,
-        "usuario": "Hollie326",
-        "nombre": "Pauline",
+        "usuario": "pauli777",
+        "nombre": "Paulina",
         "apellido": "Farley",
         "fecha_de_nacimiento": "1977-05-06",
         "email": "paulinefarley@parcoe.com",
@@ -612,8 +661,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 68020846,
         "rol": 0,
-        "usuario": "Irwin819",
-        "nombre": "Cole",
+        "usuario": "lucho819",
+        "nombre": "Carlos",
         "apellido": "Mcintyre",
         "fecha_de_nacimiento": "2018-01-27",
         "email": "colemcintyre@parcoe.com",
@@ -623,8 +672,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 12471780,
         "rol": 3,
-        "usuario": "Merle334",
-        "nombre": "Shepard",
+        "usuario": "Marley334",
+        "nombre": "Marley",
         "apellido": "Crawford",
         "fecha_de_nacimiento": "2020-10-13",
         "email": "shepardcrawford@parcoe.com",
@@ -634,8 +683,8 @@ USUARIOS = [
     {
         "cedula_de_identidad": 45918227,
         "rol": 3,
-        "usuario": "Sherry121",
-        "nombre": "Downs",
+        "usuario": "mingo11",
+        "nombre": "Domingo",
         "apellido": "Kelley",
         "fecha_de_nacimiento": "2004-01-22",
         "email": "downskelley@parcoe.com",
@@ -645,9 +694,9 @@ USUARIOS = [
     {
         "cedula_de_identidad": 61380698,
         "rol": 3,
-        "usuario": "Maryellen799",
-        "nombre": "Langley",
-        "apellido": "Stafford",
+        "usuario": "lea799",
+        "nombre": "Leandro",
+        "apellido": "Sordo",
         "fecha_de_nacimiento": "1956-07-17",
         "email": "langleystafford@parcoe.com",
         "telefono": 97431998,
