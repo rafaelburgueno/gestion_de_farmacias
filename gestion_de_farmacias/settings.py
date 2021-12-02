@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'gestion_de_farmacias.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -107,7 +107,7 @@ DATABASES = {
     }
 }
 
-
+"""
 """
 DATABASES = {
     'default': {
