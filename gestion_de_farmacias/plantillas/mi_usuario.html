@@ -7,7 +7,9 @@
 <!--Nav bar-->
 {% include "nav.html" %}
 
-<div class="m-3">
+
+
+<div  class="m-3">
 
     {% if 'editado_correctamente' in request.GET and not form.errors %}
     <div class="container">
@@ -50,7 +52,7 @@
                         {% endcomment %}
 
                         <h5>
-                            <p>si deseas cambiar tu contraseña has click <a class="colora" href="{% url 'password_change' %}">aquí</a>.</p>
+                            <p>Si deseas cambiar tu contraseña haz clic <a class="colora" href="{% url 'password_change' %}">aquí</a>.</p>
                         </h5>
                     </div>
                     <div class="card-footer">
