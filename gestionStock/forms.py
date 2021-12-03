@@ -2,7 +2,7 @@ from django import forms
 
 from django.forms import widgets
 
-from gestionStock.models import Medicamentos, Lotes
+from gestionStock.models import Medicamentos, Lotes, Farmacias
 
 
 
@@ -73,3 +73,23 @@ class Formulario_nuevo_medicamento(forms.Form):
 
 
 
+class Formulario_nueva_farmacia(forms.ModelForm):
+
+        #principio_activo = forms.CharField()
+        # aca se enumeran los campos que se van a mostrar con el formulario
+        class Meta:
+                model = Farmacias
+                fields = ['nombre','direccion','localidad','departamento','funcionarios']
+
+
+        #===============================================
+        # aca se definen las clases de bootstrap que se le 
+        # aplican a los campos del formulario _nuevo_stock 
+        #===============================================
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['nombre'].widget.attrs.update({'class': 'form-control'})
+                self.fields['direccion'].widget.attrs.update({'class': 'form-control'})
+                self.fields['localidad'].widget.attrs.update({'class': 'form-control'})
+                self.fields['departamento'].widget.attrs.update({'class': 'form-control'})
+                self.fields['funcionarios'].widget.attrs.update({'class': 'form-control'})

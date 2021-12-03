@@ -34,6 +34,7 @@
                     <th>Localidad</th>
                     <th>Nombre </th>
                     <th>Direccion</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -45,6 +46,15 @@
                     <td>{{ farmacia.localidad }}</td>
                     <td>{{ farmacia.nombre }}</td>
                     <td>{{ farmacia.direccion }}</td>
+                    <td>
+                        {% if user.rol ==  'administrador' %}
+
+                          <a class="btn btn-sm btn-outline-primary" href="/editar_farmacia/{{ farmacia.id }}">Editar</a>
+                  
+                                
+                                
+                        {% endif %}
+                    </td>
                     {% comment %}
                     <td>{{ farmacia.forma }}</td>
                     farmacia.forma? {% endcomment %}
