@@ -586,9 +586,9 @@ class InfoDelMedicamento(TemplateView):
         medicamento=Medicamentos.objects.get(id=id_medicamento)
         context['medicamento'] = medicamento
 
+        farmacia_general = Farmacias.objects.get(nombre="Farmacia General")
 
-
-        queryset_registros_de_stock = Lotes.objects.filter(medicamento=id_medicamento)
+        queryset_registros_de_stock = Lotes.objects.filter(medicamento=id_medicamento).exclude(ubicacion=farmacia_general)
         farmacias_con_stock = []
         for registro in queryset_registros_de_stock:
             farmacias_con_stock.append( registro.ubicacion )
