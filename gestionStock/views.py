@@ -453,7 +453,16 @@ class GestionarReceta(TemplateView):
             stock_disponible =False
             registro_de_stock_del_medicamento= queryset_con_stock.filter(medicamento=medicamento.id)
             if len(registro_de_stock_del_medicamento) > 0:
-                if registro_de_stock_del_medicamento[0].stock > 0:
+                
+                cantidad_acumulada_del_medicamento_en_mi_farmacia = 0
+                for registro in registro_de_stock_del_medicamento:
+                    cantidad_acumulada_del_medicamento_en_mi_farmacia += registro.stock
+
+                #print("VVVVVVVVVVVVVVcantidadacumulada del medicamentoVVVVVVVVVVVVVVVVVVV")
+                #print(cantidad_acumulada_del_medicamento_en_mi_farmacia)
+
+
+                if cantidad_acumulada_del_medicamento_en_mi_farmacia > 0:
                     stock_disponible = True
 
             opciones_con_info_de_stock.append([medicamento, stock_disponible])
