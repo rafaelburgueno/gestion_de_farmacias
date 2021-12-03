@@ -111,36 +111,39 @@ class Stock(View):
         #===============================================================
             #STOCK ACUMULADO
             #este algoritmo va a ser muy ineficiente XD
-#===============================================================
-        mi_farmacia =get_object_or_404(Farmacias, funcionarios=self.request.user.cedula_de_identidad)
-        #mis_farmacias = Farmacias.objects.filter(funcionarios=self.request.user.cedula_de_identidad)
-        #if len(mis_farmacias) == 0:
-        #    return {"mensaje":"No esta autorizado a ver el stock."}
+        #===============================================================
+        #mi_farmacia =get_object_or_404(Farmacias, funcionarios=self.request.user.cedula_de_identidad)
+        mis_farmacias = Farmacias.objects.filter(funcionarios=self.request.user.cedula_de_identidad)
+        #print(mis_farmacias)
+        if len(mis_farmacias) < 1:
+            #print("el usuario no esta en ninguna farmacia")
+            #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+            diccionario_de_contexto["no_esta_autorizado"] = "No esta autorizado a ver el stock."
+        else:
+            mi_farmacia = mis_farmacias[0]
         
-        #mi_farmacia = mis_farmacias[0]
-        
-        queryset_stock_total_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
+            queryset_stock_total_mi_farmacia = Lotes.objects.filter(ubicacion_id=mi_farmacia.id)
 
-        stock_acumulado = []
+            stock_acumulado = []
 
-        for cada_registro_de_stock_de_mi_farmacia in queryset_stock_total_mi_farmacia:
+            for cada_registro_de_stock_de_mi_farmacia in queryset_stock_total_mi_farmacia:
                 
-            stock_acumulado_del_medicamento = 0
+                stock_acumulado_del_medicamento = 0
 
-            registros_stock_duplicados = queryset_stock_total_mi_farmacia.filter(medicamento=cada_registro_de_stock_de_mi_farmacia.medicamento.id)
+                registros_stock_duplicados = queryset_stock_total_mi_farmacia.filter(medicamento=cada_registro_de_stock_de_mi_farmacia.medicamento.id)
                 
                 
-            #este for suma los valores y los pone en la variablestock_acumulado_de_medicamentos
-            for registro in registros_stock_duplicados:
-                stock_acumulado_del_medicamento += registro.stock
+                #este for suma los valores y los pone en la variablestock_acumulado_de_medicamentos
+                for registro in registros_stock_duplicados:
+                    stock_acumulado_del_medicamento += registro.stock
                 
-            if not stock_acumulado.__contains__({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento}):
-                stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
+                if not stock_acumulado.__contains__({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento}):
+                    stock_acumulado.append({"medicamento":cada_registro_de_stock_de_mi_farmacia.medicamento,"stock":stock_acumulado_del_medicamento})
             
                 
 
-            #context['stock_acumulado']= queryset_stock_total.filter(medicamento=96)
-            diccionario_de_contexto['stock_acumulado']= stock_acumulado
+                #context['stock_acumulado']= queryset_stock_total.filter(medicamento=96)
+                diccionario_de_contexto['stock_acumulado']= stock_acumulado
         
         return diccionario_de_contexto
     
@@ -450,7 +453,16 @@ class GestionarReceta(TemplateView):
             stock_disponible =False
             registro_de_stock_del_medicamento= queryset_con_stock.filter(medicamento=medicamento.id)
             if len(registro_de_stock_del_medicamento) > 0:
-                if registro_de_stock_del_medicamento[0].stock > 0:
+                
+                cantidad_acumulada_del_medicamento_en_mi_farmacia = 0
+                for registro in registro_de_stock_del_medicamento:
+                    cantidad_acumulada_del_medicamento_en_mi_farmacia += registro.stock
+
+                #print("VVVVVVVVVVVVVVcantidadacumulada del medicamentoVVVVVVVVVVVVVVVVVVV")
+                #print(cantidad_acumulada_del_medicamento_en_mi_farmacia)
+
+
+                if cantidad_acumulada_del_medicamento_en_mi_farmacia > 0:
                     stock_disponible = True
 
             opciones_con_info_de_stock.append([medicamento, stock_disponible])

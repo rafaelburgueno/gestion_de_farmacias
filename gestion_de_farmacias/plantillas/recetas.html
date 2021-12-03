@@ -52,6 +52,7 @@
                     <th>Tipo</th>
                     <th>Estado</th>
                     <th>Principio activo</th>
+                    <th>Médico</th>
                     <th>Paciente</th>
                     <th>Descripcion</th>
                     {% if user.rol == 'farmacia'%}
@@ -65,11 +66,12 @@
             </thead>
 
             <tbody>
-                {% for receta in recetas_list %} {% if receta.estado == "RES" %}
-                <tr class="table-warning">
+                {% for receta in recetas_list %} 
+                    {% if receta.estado == "RES" %}
+                        <tr class="table-warning">
                     {% else %}
-                    <tr>
-                        {% endif %}
+                            <tr>
+                    {% endif %}
                         <td>{{ receta.created_at }}</td>
                         <td>
                             {% if receta.cronico %}
@@ -78,6 +80,7 @@
                         </td>
                         <td>{{ receta.estado }}</td>
                         <td>{{ receta.principio_activo }}</td>
+                        <td>{{ receta.medico }}</td>
                         <td>{{ receta.paciente }}</td>
                         <td>{{ receta.descripcion }}</td>
                         {% comment %} {% if user.rol == 'medico'%}

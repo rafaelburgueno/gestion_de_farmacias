@@ -74,5 +74,7 @@ urlpatterns = [
     path('carga_medicamentos/', views.carga_medicamentos, name="carga_medicamentos"),
     path('carga_usuarios/', views.carga_usuarios, name="carga_usuarios"),
     path('carga_farmacias/',views.carga_farmacias, name="carga_farmacias"),
+    path('carga_stock/',views.carga_stock, name="carga_stock"),
+    path('carga_recetas/',views.carga_recetas, name="carga_recetas"),
     
 ]

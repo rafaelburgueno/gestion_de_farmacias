@@ -23,18 +23,18 @@ class Formulario_nuevo_stock(forms.ModelForm):
                 fields = ['medicamento','stock','vencimiento']
 
         # intento hacer la verificacion de la fechas 
-        """
-        def clean_vencimiento(self):
-                today = date.today()
-                vencimiento = self.cleaned_data['vencimiento']
-                if vencimiento < str(today):
-                        print("la fecha esta vencida")
-                        raise forms.ValidationError("La fecha de vencimiento no puede ser anterior a hoy!")
-                if vencimiento > str(today):
-                        print("la fecha NO esta vencida")
-                        #raise forms.ValidationError("La fecha de vencimiento no puede ser anterior a hoy!")
-                return vencimiento
-        """
+        
+        #def clean_vencimiento(self):
+        #        today = date.today()
+        #        vencimiento = self.cleaned_data['vencimiento']
+        #        if vencimiento < str(today):
+        #                print("la fecha esta vencida")
+        #                raise forms.ValidationError("La fecha de vencimiento no puede ser anterior a hoy!")
+        #        if vencimiento > str(today):
+        #                print("la fecha NO esta vencida")
+        #                #raise forms.ValidationError("La fecha de vencimiento no puede ser anterior a hoy!")
+        #        return vencimiento
+
 
         #===============================================
         # aca se definen las clases de bootstrap que se le 
