@@ -10,7 +10,7 @@ from gestionStock.models import Medicamentos, Lotes, Farmacias
 from gestionUsuarios.models import Usuarios, Recetas
 
 # FORMULARIOS
-from gestionStock.forms import Formulario_nuevo_medicamento, Formulario_nuevo_stock, Formulario_nuevo_stock_con_farmacias
+from gestionStock.forms import Formulario_nueva_farmacia ,Formulario_nuevo_medicamento, Formulario_nuevo_stock, Formulario_nuevo_stock_con_farmacias
 
 #from django.core.urlresolvers import reverse_lazy
 from django.urls import reverse_lazy
@@ -612,3 +612,20 @@ class InfoDelMedicamento(TemplateView):
 
         return context
 
+class CrearFarmacia(CreateView):
+        model = Farmacias
+        form_class = Formulario_nueva_farmacia
+
+        template_name = 'crear_farmacia.html'
+        #success_url = reverse_lazy('login')
+    
+        def get_success_url(self):
+                return reverse_lazy('farmacias') + '?registro_exitoso'
+
+class EditarFarmacia(UpdateView):
+    model = Farmacias
+    form_class = Formulario_nueva_farmacia
+    template_name = 'editar_farmacia.html'
+
+    def get_success_url(self):
+        return reverse_lazy('farmacias') + '?registro_exitoso'

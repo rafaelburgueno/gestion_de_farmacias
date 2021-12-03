@@ -51,6 +51,9 @@
                     <td>{{ usuario.rol }}</td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" href="/recetas_usuario/{{ usuario.cedula_de_identidad }}">Ver usuario</a>
+                        {% if user.rol ==  'administrador' %}
+                        <a class="btn btn-sm btn-outline-primary" href="/editar_usuario/{{ usuario.cedula_de_identidad }}">Editar Rol</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
